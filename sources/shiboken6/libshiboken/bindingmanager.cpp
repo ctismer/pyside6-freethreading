@@ -487,34 +487,23 @@ WrapperRef BindingManager::acquireWrapper(const void *cptr, PyTypeObject *typeOb
 }
 #endif
 
+#ifndef Py_GIL_DISABLED
 SbkObject *BindingManager::retrieveWrapper(const void *cptr) const
 {
     std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
     auto iter = m_d->wrapperMapper.find(cptr);
     if (iter == m_d->wrapperMapper.end())
         return nullptr;
-#ifdef Py_GIL_DISABLED
-    // The map holds an entry rather than a pointer now; this one hands out
-    // the borrowed pointer it always did. Callers move to acquireWrapper()
-    // two commits from here, and then this goes away.
-    return iter->second.borrowed();
-#else
     return iter->second;
-#endif
 }
 
 SbkObject *BindingManager::retrieveWrapper(const void *cptr, PyTypeObject *typeObject) const
 {
     std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
     const auto it = m_d->findByType(cptr, typeObject);
-    if (it == m_d->wrapperMapper.cend())
-        return nullptr;
-#ifdef Py_GIL_DISABLED
-    return it->second.borrowed();
-#else
-    return it->second;
-#endif
+    return it != m_d->wrapperMapper.cend() ? it->second : nullptr;
 }
+#endif // !Py_GIL_DISABLED
 
 PyObject *BindingManager::getOverride(SbkObject *wrapper, PyObject *pyMethodName)
 {
@@ -611,14 +600,8 @@ std::set<PyObject *> BindingManager::getAllPyObjects()
     std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
     const WrapperMap &wrappersMap = m_d->wrapperMapper;
     auto it = wrappersMap.begin();
-    for (; it != wrappersMap.end(); ++it) {
-#ifdef Py_GIL_DISABLED
-        auto *wrapper = it->second.borrowed();
-#else
-        auto *wrapper = it->second;
-#endif
-        pyObjects.insert(reinterpret_cast<PyObject *>(wrapper));
-    }
+    for (; it != wrappersMap.end(); ++it)
+        pyObjects.insert(reinterpret_cast<PyObject *>(it->second));
 
     return pyObjects;
 }
@@ -644,11 +627,7 @@ void BindingManager::visitAllPyObjects(ObjectVisitor visitor, void *data)
         copy = m_d->wrapperMapper;
     }
     for (const auto &p : copy) {
-#ifdef Py_GIL_DISABLED
-        auto *o = p.second.borrowed();
-#else
         auto *o = p.second;
-#endif
         bool present = false;
         {
             std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);

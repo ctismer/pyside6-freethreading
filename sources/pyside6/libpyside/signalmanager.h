@@ -30,6 +30,14 @@ namespace PySide::SignalManager
     // used to discovery metaobject
     PYSIDE_API const QMetaObject* retrieveMetaObject(PyObject *self);
 
+#ifdef Py_GIL_DISABLED
+    /// The same from the C++ pointer, for the generated metaObject().
+    /// nullptr when there is no Python wrapper. Takes a void pointer, not a
+    /// QObject one: it is a wrapper map key, and under multiple inheritance
+    /// the QObject subobject is not at the registered address.
+    PYSIDE_API const QMetaObject *retrieveMetaObjectForCppObject(const void *cppSelf);
+#endif
+
 } // namespace PySide::SignalManager
 
 #endif // SIGNALMANAGER_H

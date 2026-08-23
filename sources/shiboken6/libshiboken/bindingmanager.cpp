@@ -485,8 +485,8 @@ WrapperRef BindingManager::acquireWrapper(const void *cptr, PyTypeObject *typeOb
     }
     return {};
 }
+#endif
 
-#endif // Py_GIL_DISABLED
 SbkObject *BindingManager::retrieveWrapper(const void *cptr) const
 {
     std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
@@ -586,6 +586,25 @@ PyTypeObject *BindingManager::resolveType(void **cptr, PyTypeObject *type)
     return result.first != nullptr ? result.first : type;
 }
 
+#ifdef Py_GIL_DISABLED
+std::vector<WrapperRef> BindingManager::getAllPyObjects()
+{
+    std::vector<WrapperRef> result;
+    // Multiple inheritance registers one wrapper under several C++ pointers,
+    // so the same wrapper can be met more than once. The set the build with a
+    // GIL returns does that for free.
+    std::set<const SbkObject *> seen;
+    std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
+    for (const auto &entry : m_d->wrapperMapper) {
+        // Taking a reference under the lock is allowed - it runs no Python.
+        auto ref = WrapperRef::fromOwned(entry.second.acquire());
+        if (ref.isNull() || !seen.insert(ref.object()).second)
+            continue;   // already deallocating, or already collected
+        result.push_back(std::move(ref));
+    }
+    return result;
+}
+#else
 std::set<PyObject *> BindingManager::getAllPyObjects()
 {
     std::set<PyObject *> pyObjects;
@@ -603,12 +622,22 @@ std::set<PyObject *> BindingManager::getAllPyObjects()
 
     return pyObjects;
 }
+#endif
 
 void BindingManager::visitAllPyObjects(ObjectVisitor visitor, void *data)
 {
-    // The map has its own lock because C++ touches it without a thread state -
-    // releaseWrapper() runs from destructors. This was the one place that read
-    // it without taking that lock, both for the copy and for the check below.
+#ifdef Py_GIL_DISABLED
+    // Collect first, visit afterwards. The visitor runs Python and C++
+    // destructors, which take this lock again and mutate the map, so it must
+    // not run underneath it - and the references taken here are what keeps
+    // the collected wrappers alive until their turn comes.
+    std::vector<WrapperRef> wrappers = getAllPyObjects();
+    for (const auto &wrapper : wrappers)
+        visitor(wrapper.object(), data);
+#else
+    // The map has its own lock because C++ reaches it without a thread state -
+    // releaseWrapper() runs from destructors. The visitor stays outside it: it
+    // runs Python and C++ destructors, which take it again and mutate the map.
     WrapperMap copy;
     {
         std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
@@ -625,11 +654,10 @@ void BindingManager::visitAllPyObjects(ObjectVisitor visitor, void *data)
             std::lock_guard<std::recursive_mutex> guard(m_d->wrapperMapLock);
             present = m_d->findSbkObject(p.first, o) != m_d->wrapperMapper.cend();
         }
-        // Outside the lock: the visitor runs Python and C++ destructors, which
-        // take it again and mutate the map.
         if (present)
             visitor(o, data);
     }
+#endif
 }
 
 bool BindingManager::dumpTypeGraph(const char *fileName) const

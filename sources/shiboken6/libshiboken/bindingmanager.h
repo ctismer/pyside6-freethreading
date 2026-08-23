@@ -14,6 +14,9 @@
 
 #include <set>
 #include <utility>
+#ifdef Py_GIL_DISABLED
+#  include <vector>
+#endif
 
 struct SbkObject;
 
@@ -48,6 +51,7 @@ public:
 
     void runDeletionInMainThread();
     void addToDeletionInMainThread(const DestructorEntry &);
+#ifdef Py_GIL_DISABLED
 
 #ifdef Py_GIL_DISABLED
     /// Look up a wrapper and take a reference to it in one step. Returns an
@@ -56,6 +60,7 @@ public:
     /// sites should use; see sbkwrapperref.h for why.
     [[nodiscard]] WrapperRef acquireWrapper(const void *cptr, PyTypeObject *typeObject) const;
     [[nodiscard]] WrapperRef acquireWrapper(const void *cptr) const;
+#endif
 
 #endif // Py_GIL_DISABLED
     /// \deprecated Hands out the borrowed reference the map holds, which the
@@ -83,7 +88,17 @@ public:
      */
     [[deprecated]] PyTypeObject *resolveType(void **cptr, PyTypeObject *type);
 
+#ifdef Py_GIL_DISABLED
+    /// Every live wrapper, each with a reference taken. Wrappers that are
+    /// already being deallocated are left out rather than handed over: the
+    /// caller could not tell them apart, and incrementing one afterwards is
+    /// the resurrection this class exists to prevent.
+#endif
+#ifdef Py_GIL_DISABLED
+    std::vector<WrapperRef> getAllPyObjects();
+#else
     std::set<PyObject *> getAllPyObjects();
+#endif
 
     /**
      * Calls the function \p visitor for each object registered on binding manager.

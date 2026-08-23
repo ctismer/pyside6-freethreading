@@ -75,6 +75,15 @@ PYSIDE_API PyObject *getWrapperForQObject(QObject *cppSelf, PyTypeObject *sbk_ty
 /// \return type object
 PYSIDE_API PyTypeObject *getTypeForQObject(const QObject *cppSelf);
 
+#ifdef Py_GIL_DISABLED
+/// Check whether a QObject's type is desiredType or derived from it
+/// (Helper for QObject.findChild(ren)()). Unlike getTypeForQObject(), the
+/// type is not handed out, so it cannot outlive the wrapper it belongs to.
+/// \param cppSelf QObject instance
+/// \param desiredType type to match against
+PYSIDE_API bool qObjectTypeMatches(const QObject *cppSelf, PyTypeObject *desiredType);
+#endif
+
 } //namespace PySide
 
 /// Deletion handler for "delete-in-owner-thread"

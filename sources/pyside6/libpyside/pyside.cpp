@@ -441,7 +441,13 @@ void destroyQCoreApplication()
         return;
 
     Shiboken::BindingManager &bm = Shiboken::BindingManager::instance();
+#ifdef Py_GIL_DISABLED
+    auto pyQAppRef = bm.acquireWrapper(app);
+    SbkObject *pyQApp = pyQAppRef.object();
+#else
     SbkObject *pyQApp = bm.retrieveWrapper(app);
+#endif
+
     PyTypeObject *pyQObjectType = PySide::qObjectType();
     assert(pyQObjectType);
 
@@ -741,8 +747,13 @@ static void invalidatePtr(any_t *object)
     auto &bindingManager = Shiboken::BindingManager::instance();
     if (bindingManager.hasWrapper(object)) {
         Shiboken::GilState state;
+#ifdef Py_GIL_DISABLED
+        if (auto wrapper = bindingManager.acquireWrapper(object))
+            bindingManager.releaseWrapper(wrapper.object());
+#else
         if (SbkObject *wrapper = bindingManager.retrieveWrapper(object))
             bindingManager.releaseWrapper(wrapper);
+#endif
     }
 }
 
@@ -795,20 +806,48 @@ PyTypeObject *getTypeForQObject(const QObject *cppSelf)
 {
     // First check if there are any instances of Python implementations
     // inheriting a PySide class.
+#ifdef Py_GIL_DISABLED
+    auto existing = Shiboken::BindingManager::instance().acquireWrapper(cppSelf);
+    if (!existing.isNull())
+        return Py_TYPE(existing.pyObject());
+#else
     auto *existing = Shiboken::BindingManager::instance().retrieveWrapper(cppSelf);
     if (existing != nullptr)
         return reinterpret_cast<PyObject *>(existing)->ob_type;
+#endif
     // Find the best match (will return a PySide type)
     return Shiboken::ObjectType::typeForTypeName(typeName(cppSelf));
 }
 
+#ifdef Py_GIL_DISABLED
+bool qObjectTypeMatches(const QObject *cppSelf, PyTypeObject *desiredType)
+{
+    // Compare while the reference is still held. Handing the type out, as
+    // getTypeForQObject() does, outlives it - which is why this exists only
+    // where the wrapper can die under the caller's feet.
+    auto existing = Shiboken::BindingManager::instance().acquireWrapper(cppSelf);
+    if (!existing.isNull())
+        return PyType_IsSubtype(Py_TYPE(existing.pyObject()), desiredType) != 0;
+    auto *type = Shiboken::ObjectType::typeForTypeName(typeName(cppSelf));
+    return type != nullptr && PyType_IsSubtype(type, desiredType) != 0;
+}
+#endif
+
 PyObject *getWrapperForQObject(QObject *cppSelf, PyTypeObject *sbk_type)
 {
+#ifdef Py_GIL_DISABLED
+    // This used to increment the borrowed reference the map handed back -
+    // the resurrection this conversion is about.
+    auto &bindingManager = Shiboken::BindingManager::instance();
+    if (auto wrapper = bindingManager.acquireWrapper(cppSelf))
+        return reinterpret_cast<PyObject *>(wrapper.release());
+#else
     auto *pyOut = reinterpret_cast<PyObject *>(Shiboken::BindingManager::instance().retrieveWrapper(cppSelf));
     if (pyOut) {
         Py_INCREF(pyOut);
         return pyOut;
     }
+#endif
 
     // Setting the property will trigger an QEvent notification, which may call into
     // code that creates the wrapper so only set the property if it isn't already
@@ -819,16 +858,25 @@ PyObject *getWrapperForQObject(QObject *cppSelf, PyTypeObject *sbk_type)
             std::shared_ptr<any_t> shared_with_del(reinterpret_cast<any_t *>(cppSelf), invalidatePtr);
             cppSelf->setProperty(invalidatePropertyName, QVariant::fromValue(shared_with_del));
         }
+#ifdef Py_GIL_DISABLED
+        if (auto wrapper = bindingManager.acquireWrapper(cppSelf))
+            return reinterpret_cast<PyObject *>(wrapper.release());
+#else
         pyOut = reinterpret_cast<PyObject *>(Shiboken::BindingManager::instance().retrieveWrapper(cppSelf));
         if (pyOut) {
             Py_INCREF(pyOut);
             return pyOut;
         }
+#endif
     }
 
+#ifdef Py_GIL_DISABLED
+    return Shiboken::Object::newObjectWithHeuristics(sbk_type, cppSelf, false, typeName(cppSelf));
+#else
     pyOut = Shiboken::Object::newObjectWithHeuristics(sbk_type, cppSelf, false, typeName(cppSelf));
 
     return pyOut;
+#endif
 }
 
 static const unsigned char qt_resource_name[] = {

@@ -84,6 +84,8 @@ sbkpep.h
 sbkpepbuffer.h
 sbkpython.h
 sbksmartpointer.cpp sbksmartpointer.h
+sbkcallguard.cpp sbkcallguard.h
+sbkstatelock.cpp sbkstatelock.h
 sbkstaticstrings.cpp sbkstaticstrings.h sbkstaticstrings_p.h
 sbkstring.cpp sbkstring.h
 sbktypefactory.cpp sbktypefactory.h
@@ -196,6 +198,8 @@ install(FILES
         sbkmodule_p.h
         sbknumpycheck.h
         sbknumpyview.h
+        sbkcallguard.h
+        sbkstatelock.h
         sbkstring.h
         sbkcppstring.h
         sbksmartpointer.h

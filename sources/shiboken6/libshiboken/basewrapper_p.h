@@ -7,6 +7,10 @@
 
 #include "sbkpython.h"
 #include "basewrapper.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkstatelock.h"
+#  include <atomic>
+#endif
 
 #include <unordered_map>
 #include <set>
@@ -27,6 +31,46 @@ using RefCountMap = std::unordered_multimap<std::string, PyObject *> ;
 
 /// Linked list of SbkBaseWrapper pointers
 using ChildrenList = std::set<SbkObject *>;
+
+#ifdef Py_GIL_DISABLED
+
+/// A boolean that is written from threads which may not hold the state lock.
+///
+/// It exists for the memory model, not for the machine: on every target we
+/// build for a relaxed load and store compile to the same ldrb/strb a plain
+/// bool does, but a plain bool written by two threads is a data race and this
+/// is not.
+///
+/// It gives no ordering and no atomicity beyond the single flag. Making two
+/// flags agree, or a flag agree with cptr, remains the state lock's job.
+class RelaxedFlag
+{
+public:
+    RelaxedFlag() noexcept = default;
+    RelaxedFlag(const RelaxedFlag &) = delete;
+    RelaxedFlag &operator=(const RelaxedFlag &) = delete;
+
+    RelaxedFlag &operator=(bool value) noexcept
+    {
+        m_value.store(value, std::memory_order_relaxed);
+        return *this;
+    }
+
+    operator bool() const noexcept
+    {
+        return m_value.load(std::memory_order_relaxed);
+    }
+
+private:
+    std::atomic<bool> m_value;
+};
+
+static_assert(std::atomic<bool>::is_always_lock_free,
+              "RelaxedFlag must not compile to a mutex");
+static_assert(sizeof(RelaxedFlag) == 1 && alignof(RelaxedFlag) == 1,
+              "RelaxedFlag must cost no more than the bool it replaces");
+
+#endif // Py_GIL_DISABLED
 
 /// Structure used to store information about object parent and children.
 struct ParentInfo
@@ -58,6 +102,31 @@ struct SbkObjectPrivate
 
     /// Pointer to the C++ class.
     void ** cptr;
+#ifdef Py_GIL_DISABLED
+    // One memory location per flag: a run of bit-fields shares a byte, so an
+    // unlocked writer would revert what a lock holder just wrote. See
+    // RelaxedFlag; the meaning of each flag is in the twin below.
+    Shiboken::RelaxedFlag hasOwnership;
+    Shiboken::RelaxedFlag containsCppWrapper;
+    Shiboken::RelaxedFlag validCppObject;
+    Shiboken::RelaxedFlag cppObjectCreated;
+    Shiboken::RelaxedFlag isQAppSingleton;
+    /// Set once Shiboken.delete() has been requested. No new call lease is
+    /// handed out from that point on, so the object is unreachable for new
+    /// calls while in-flight calls finish. Destruction from the C++ side
+    /// cannot defer and clears validCppObject and cptr instead, which refuses
+    /// a lease just the same.
+    /// State lock.
+    ///
+    /// One-way: nothing clears it again. A wrapper marked here is refused for
+    /// good, even where a build with a GIL would let the call through - into
+    /// memory the C++ destructor has freed.
+    Shiboken::RelaxedFlag pendingDestruction;
+    /// Number of C++ calls currently using cptr under a call lease. The C++
+    /// object is not destroyed while this is non-zero; the last lease release
+    /// runs a destruction that was requested meanwhile. State lock.
+    unsigned int activeCalls;
+#else
     /// True when Python is responsible for freeing the used memory.
     unsigned int hasOwnership : 1;
     /// This is true when the C++ class of the wrapped object has a virtual destructor AND was created by Python.
@@ -69,6 +138,7 @@ struct SbkObjectPrivate
     /// PYSIDE-1470: Marked as true if this is the Q*Application singleton.
     /// This bit allows app deletion from shiboken?.delete() .
     unsigned int isQAppSingleton : 1;
+#endif
     /// Information about the object parents and children, may be null.
     Shiboken::ParentInfo *parentInfo;
     /// Manage reference count of objects that are referred to but not owned from.

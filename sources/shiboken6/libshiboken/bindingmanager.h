@@ -43,23 +43,33 @@ public:
     bool hasWrapper(const void *cptr) const;
 
     void registerWrapper(SbkObject *pyObj, void *cptr);
+#ifdef Py_GIL_DISABLED
+    /// Take the object out of the wrapper map, leaving its flags alone.
+    /// Deallocation uses this to make the wrapper unreachable before it runs
+    /// any Python code; releaseWrapper() below is the same plus invalidation.
+    /// Pass cptrs when the caller has already detached the pointer array from
+    /// the object (see extractDestructionLocked()); nullptr means read it
+    /// from sbkObj.
+    void unregisterWrapper(SbkObject *sbkObj, void * const *cptrs = nullptr);
+    void releaseWrapper(SbkObject *sbkObj, void * const *cptrs = nullptr);
+#else
     /// Take the object out of the wrapper map, leaving its flags alone.
     /// Deallocation uses this to make the wrapper unreachable before it runs
     /// any Python code; releaseWrapper() below is the same plus invalidation.
     void unregisterWrapper(SbkObject *sbkObj);
     void releaseWrapper(SbkObject *sbkObj);
+#endif
 
     void runDeletionInMainThread();
     void addToDeletionInMainThread(const DestructorEntry &);
+
 #ifdef Py_GIL_DISABLED
     /// Look up a wrapper and take a reference to it in one step. Empty when
     /// there is no wrapper for cptr, or when it is already being deallocated.
     /// This is what call sites should use; see sbkwrapperref.h.
     [[nodiscard]] WrapperRef acquireWrapper(const void *cptr, PyTypeObject *typeObject) const;
     [[nodiscard]] WrapperRef acquireWrapper(const void *cptr) const;
-#endif
-
-#ifndef Py_GIL_DISABLED
+#else
     /// \deprecated Hands out the borrowed reference the map holds, which the
     /// caller cannot safely increment. Gone under free threading. What is
     /// left are the two Qt callbacks, metaObject() and qt_metacast(), that
@@ -68,6 +78,7 @@ public:
     SbkObject *retrieveWrapper(const void *cptr, PyTypeObject *typeObject) const;
     SbkObject *retrieveWrapper(const void *cptr) const;
 #endif
+
     static PyObject *getOverride(SbkObject *wrapper, PyObject *pyMethodName);
 
     void addClassInheritance(Module::TypeInitStruct *parent, Module::TypeInitStruct *child);
@@ -93,8 +104,6 @@ public:
     /// already being deallocated are left out rather than handed over: the
     /// caller could not tell them apart, and incrementing one afterwards is
     /// the resurrection this class exists to prevent.
-#endif
-#ifdef Py_GIL_DISABLED
     std::vector<WrapperRef> getAllPyObjects();
 #else
     std::set<PyObject *> getAllPyObjects();

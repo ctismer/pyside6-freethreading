@@ -8,6 +8,9 @@
 #include "sbkpython.h"
 #include "shibokenmacros.h"
 #include "sbkdestructorentry.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkwrapperref.h"
+#endif
 
 #include <set>
 #include <utility>
@@ -46,6 +49,18 @@ public:
     void runDeletionInMainThread();
     void addToDeletionInMainThread(const DestructorEntry &);
 
+#ifdef Py_GIL_DISABLED
+    /// Look up a wrapper and take a reference to it in one step. Returns an
+    /// empty WrapperRef when there is no wrapper for cptr, or when the one
+    /// there is has already started to be deallocated. This is what call
+    /// sites should use; see sbkwrapperref.h for why.
+    [[nodiscard]] WrapperRef acquireWrapper(const void *cptr, PyTypeObject *typeObject) const;
+    [[nodiscard]] WrapperRef acquireWrapper(const void *cptr) const;
+
+#endif // Py_GIL_DISABLED
+    /// \deprecated Hands out the borrowed reference the map holds, which the
+    /// caller cannot safely increment. Being replaced by acquireWrapper() one
+    /// call site at a time; this declaration goes away with the last of them.
     SbkObject *retrieveWrapper(const void *cptr, PyTypeObject *typeObject) const;
     SbkObject *retrieveWrapper(const void *cptr) const;
     static PyObject *getOverride(SbkObject *wrapper, PyObject *pyMethodName);

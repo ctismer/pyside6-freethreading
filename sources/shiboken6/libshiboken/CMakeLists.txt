@@ -88,6 +88,7 @@ sbkstaticstrings.cpp sbkstaticstrings.h sbkstaticstrings_p.h
 sbkstring.cpp sbkstring.h
 sbktypefactory.cpp sbktypefactory.h
 sbkwindows.h
+sbkwrapperref.h
 shiboken.h
 shibokenbuffer.cpp shibokenbuffer.h
 shibokenmacros.h
@@ -200,6 +201,7 @@ install(FILES
         sbksmartpointer.h
         sbkstaticstrings.h
         sbktypefactory.h
+        sbkwrapperref.h
         shiboken.h
         shibokenmacros.h
         threadstatesaver.h

@@ -10,6 +10,14 @@
 #include <pysidemacros.h>
 
 #include <QtCore/qtclasshelpermacros.h>
+#include <QtCore/qtversionchecks.h>
+
+// The free-threading work is developed on dev and is not meant for a release
+// branch. A Pick-to that lands it on one should fail here rather than produce
+// a build nobody has tested.
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
+#  error "PySide free-threading is developed on dev; do not pick it to a release branch."
+#endif
 
 QT_FORWARD_DECLARE_CLASS(QDebug)
 QT_FORWARD_DECLARE_CLASS(QString)

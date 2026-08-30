@@ -130,7 +130,7 @@ private:
 };
 
 LIBSHIBOKEN_API bool callInheritedInit(PyObject *self, PyObject *args, PyObject *kwds,
-                                       Module::TypeInitStruct typeStruct);
+                                       const Module::TypeInitStruct &typeStruct);
 
 } // namespace Shiboken
 

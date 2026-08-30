@@ -95,10 +95,9 @@ class Lock(IntFlag):
     A scenario runs twice: once with ALL, once with its own bit cleared.
     """
 
-    COARSE_BINDING = 0x1
-    LAZY_TYPE = 0x2
-    STATE = 0x4
-    ALL = COARSE_BINDING | LAZY_TYPE | STATE
+    LAZY_TYPE = 0x1
+    STATE = 0x2
+    ALL = LAZY_TYPE | STATE
 
 
 MODES = ["unlocked", "locked"]
@@ -121,11 +120,12 @@ SCENARIOS = {
     # cover transitively: not the object being deleted, but everything that
     # deletion takes with it.
     "child_delete_vs_call": Scenario(WORKER, "child_delete_vs_call", Lock.STATE, True),
-    # Signal connect/emit/disconnect: hand-written libpyside code, still
-    # behind the coarse guard. Not marked as a proof - it stays clean in both
-    # columns up to 12 threads and 6000 rounds, so it is a regression guard
-    # over the signal machinery, not evidence for the lock.
-    "signal_race": Scenario(WORKER, "signal_race", Lock.COARSE_BINDING, False),
+    # Signal connect/emit/disconnect in hand-written libpyside code. It was a
+    # regression guard while the coarse lock covered these paths, and became a
+    # proof when that lock went: the signal machinery reaches the wrapper
+    # lookups, the parent/child graph and destruction, and those are the state
+    # lock's. 15 crashes out of 15 without it, clean with it.
+    "signal_race": Scenario(WORKER, "signal_race", Lock.STATE, True),
     # Guards the map lookup against handing out a dying wrapper. Not marked
     # as a proof: what fixed it was acquireWrapper(), not the state lock, so
     # both modes are expected clean. Read its docstring before believing a

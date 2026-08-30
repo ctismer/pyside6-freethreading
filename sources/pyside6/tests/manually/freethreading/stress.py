@@ -87,9 +87,9 @@ def scenario_destroy_race() -> None:
 
 def scenario_shared_delete(_pool=[]) -> None:  # noqa: B006
     """Many threads race to destroy the SAME wrapper objects.
-    This hits shiboken's own guarded paths (Object::destroy / deallocData /
+    This hits shiboken's own locked paths (Object::destroy / deallocData /
     invalidate) on shared wrappers -- NOT libsample's C++ members -- so it is
-    the honest test of the CoarseBindingGuard. Deleting an already-invalidated
+    the honest test of the state lock. Deleting an already-invalidated
     wrapper must be a safe no-op; two threads doing it at once must not
     double-free."""
     POOL = 400

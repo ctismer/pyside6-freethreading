@@ -1,0 +1,8 @@
+$ PYTHON_GIL=0 python lockcost.py
+gil=False calls=400000
+  obj.objectName()                    0.093s     232.0 ns/call
+  with lock: obj.objectName()         0.133s     332.8 ns/call
+  with lock: pass                     0.040s     100.2 ns/call
+
+  lock overhead on top of the call: 100.8 ns (43% of the call)
+  a bare python lock alone costs   : 100.2 ns

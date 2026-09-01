@@ -1,0 +1,60 @@
+logs/ft-gil0: 2374 tests, 52 failed, 7 errors, 126 skipped
+    E ::spyder.plugins.help.tests.test_plugin
+    E ::spyder.plugins.ipythonconsole.tests.test_ipythonconsole
+    E ::spyder.widgets.tests.test_browser
+    E spyder.plugins.help.tests.test_widgets::test_richtext
+    E spyder.plugins.onlinehelp.tests.test_pydocgui::test_get_pydoc[lib0]
+    E spyder.plugins.onlinehelp.tests.test_pydocgui::test_get_pydoc[lib1]
+    E spyder.plugins.onlinehelp.tests.test_pydocgui::test_get_pydoc[lib2]
+    F spyder.api.plugin_registration.tests.test_confpage::test_plugins_confpage
+    F spyder.config.tests.test_base::test_get_conf_path[True]
+    F spyder.config.tests.test_manager::test_secure_options
+    F spyder.plugins.editor.panels.tests.test_scrollflag::test_range_indicator_alt_modifier_response
+    F spyder.plugins.editor.panels.tests.test_scrollflag::test_range_indicator_visible_on_hover_only
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_codeeditor::test_shortcut_for_widget_is_updated[config_dialog0]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_folding::test_delete_folded_line
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_folding::test_delete_selections_with_folded_lines
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params0]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params10]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params11]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params12]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params13]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params14]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params15]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params1]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params2]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params3]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params4]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params5]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params6]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params7]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params8]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri[params9]
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_goto::test_goto_uri_project_root_path
+    F spyder.plugins.editor.widgets.codeeditor.tests.test_hints_and_calltips::test_completion_hints
+    F spyder.plugins.editor.widgets.editorstack.tests.test_editorstack::test_tab_copies_find_to_replace
+    F spyder.plugins.editor.widgets.editorstack.tests.test_editorstack::test_tab_moves_focus_from_search_to_replace
+    F spyder.plugins.editor.widgets.editorstack.tests.test_editorstack_and_outline::test_single_file_sync
+    F spyder.plugins.editor.widgets.editorstack.tests.test_editorstack_and_outline::test_toggle_off_show_all_files
+    F spyder.plugins.editor.widgets.editorstack.tests.test_save::test_save_when_completions_are_visible
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_delete_line_shortcut
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[16777267-KeyboardModifier.ControlModifier-Close file]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[78-KeyboardModifier.ControlModifier-New file]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[79-KeyboardModifier.ControlModifier-Open file]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[83-KeyboardModifier.ControlModifier-Save file]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[83-KeyboardModifier.ControlModifier|AltModifier-Save all]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[83-KeyboardModifier.ShiftModifier|ControlModifier-Save as]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[84-KeyboardModifier.ShiftModifier|ControlModifier-Open last closed]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[87-KeyboardModifier.ControlModifier-Close file]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_file_shortcut[87-KeyboardModifier.ShiftModifier|ControlModifier-Close all]
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_go_to_line_shortcut
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_next_and_previous_word_shortcuts
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_select_all_shortcut
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_shortcuts_for_new_editors
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_transform_to_lowercase_shortcut
+    F spyder.plugins.editor.widgets.editorstack.tests.test_shortcuts::test_transform_to_uppercase_shortcut
+    F spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_remembers_input_with_password
+    F spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_remembers_input_with_ssh_passphrase
+    F spyder.plugins.variableexplorer.widgets.objectexplorer.tests.test_objectexplorer::test_objectexplorer_collection_types[params3]
+    F spyder.plugins.variableexplorer.widgets.objectexplorer.tests.test_objectexplorer::test_objectexplorer_collection_types[params5]
+    F spyder.widgets.github.tests.test_github_backend::test_store_user_credentials

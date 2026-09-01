@@ -1,0 +1,9 @@
+$ PYTHON_GIL=0 python falsesharing.py
+gil=False threads=8 iters=200000 stripes=1024 padded=(default) option_ft=(default)
+  stripes same line : [0, 5, 10, 15, 20, 25, 30, 35]
+  stripes apart     : [0, 65, 130, 195, 260, 320, 385, 450]
+  stripes natural   : [0, 5, 10, 15, 20, 25, 30, 35]
+  natural lines     : [0]
+  same cache line  median  1.880s   range 1.843-1.892
+  different lines  median  1.861s   range 1.845-1.884
+  natural          median  1.903s   range 1.878-1.922

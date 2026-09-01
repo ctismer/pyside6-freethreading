@@ -1,0 +1,7 @@
+logs/ft-gil0     2371 ran, 59 bad
+logs/twin        2347 ran, 60 bad
+
+bad in logs/ft-gil0 only, and green in logs/twin: 0
+bad in logs/twin only, and green in logs/ft-gil0: 1
+    spyder.plugins.editor.widgets.codeeditor.tests.test_completions_hide::test_automatic_completions_widget_visible
+ran in one column only: 24

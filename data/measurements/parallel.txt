@@ -1,0 +1,15 @@
+$ PYTHON_GIL=1 python parallel.py
+gil=True total=24 unit=120000
+  threads= 1    0.41s  speedup  1.00x
+  threads= 2    0.41s  speedup  0.99x
+  threads= 4    0.41s  speedup  0.99x
+  threads= 8    0.41s  speedup  1.00x
+  signals delivered to the GUI thread: 96
+
+$ PYTHON_GIL=0 python parallel.py
+gil=False total=24 unit=120000
+  threads= 1    0.42s  speedup  1.00x
+  threads= 2    0.22s  speedup  1.86x
+  threads= 4    0.13s  speedup  3.15x
+  threads= 8    0.08s  speedup  5.26x
+  signals delivered to the GUI thread: 96

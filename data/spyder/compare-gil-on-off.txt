@@ -1,0 +1,6 @@
+logs/ft-gil1     2371 ran, 59 bad
+logs/ft-gil0     2371 ran, 59 bad
+
+bad in logs/ft-gil1 only, and green in logs/ft-gil0: 0
+bad in logs/ft-gil0 only, and green in logs/ft-gil1: 0
+ran in one column only: 0

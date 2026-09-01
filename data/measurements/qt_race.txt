@@ -1,0 +1,21 @@
+$ RACE_SCENARIO=<each> PYTHON_GIL=0 python qt_race.py
+slot_registration: survived gil=False threads=8 iters=2000 option_ft=(default)
+connect_disconnect: survived gil=False threads=8 iters=2000 option_ft=(default)
+shared_reader: survived gil=False threads=8 iters=2000 option_ft=(default)
+shared_setter: survived gil=False threads=8 iters=2000 option_ft=(default)
+
+shared_setter, 5 runs each, same binary
+
+guard on (PYSIDE6_OPTION_FT unset):
+  run 1: exit=0  shared_setter: survived gil=False threads=8 iters=2000
+  run 2: exit=0  shared_setter: survived gil=False threads=8 iters=2000
+  run 3: exit=0  shared_setter: survived gil=False threads=8 iters=2000
+  run 4: exit=0  shared_setter: survived gil=False threads=8 iters=2000
+  run 5: exit=0  shared_setter: survived gil=False threads=8 iters=2000
+
+guard off (PYSIDE6_OPTION_FT=0b011):
+  run 1: exit=134
+  run 2: exit=134
+  run 3: exit=134
+  run 4: exit=134
+  run 5: exit=134

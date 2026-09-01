@@ -48,8 +48,16 @@ plugin's verdict never reaches you.
 ## The scripts
 
 `RESULTS.md`
-: The output of all of these, produced in one sitting, so the numbers can
-  be read without building anything.
+: Every result on one page, each number linking to the run it came from.
+  Start there.
+
+`data/`
+: The output verbatim - the measurement scripts, and Spyder's suite per
+  test file for all three columns.
+
+`spyder/`
+: What produced the Spyder columns: the environments, the runner, and the
+  two scripts that aggregate and compare them.
 
 `gilcheck_plugin.py`
 : A pytest plugin that reports whether the GIL was disabled for the whole

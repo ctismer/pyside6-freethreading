@@ -1,0 +1,20 @@
+$ KIND=none PYTHON_GIL=0 python toolkits.py
+kind=none gil=False total=24 unit=120000
+  threads= 1    0.41s  speedup  1.00x
+  threads= 2    0.22s  speedup  1.88x
+  threads= 4    0.13s  speedup  3.12x
+  threads= 8    0.08s  speedup  5.20x
+
+$ KIND=tkinter PYTHON_GIL=0 python toolkits.py
+kind=tkinter gil=False total=24 unit=120000
+  threads= 1    0.41s  speedup  1.00x
+  threads= 2    0.22s  speedup  1.90x
+  threads= 4    0.14s  speedup  2.92x
+  threads= 8    0.06s  speedup  7.22x
+
+$ KIND=pyside PYTHON_GIL=0 python toolkits.py
+kind=pyside gil=False total=24 unit=120000
+  threads= 1    0.41s  speedup  1.00x
+  threads= 2    0.24s  speedup  1.74x
+  threads= 4    0.13s  speedup  3.11x
+  threads= 8    0.07s  speedup  5.57x

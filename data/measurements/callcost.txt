@@ -1,0 +1,5 @@
+$ PYTHON_GIL=0 python callcost.py
+objects=1 option_ft=(default) gil=False 300000 calls in 0.093s = 311 ns/call
+
+$ PYSIDE6_OPTION_FT=0b011 PYTHON_GIL=0 python callcost.py
+objects=1 option_ft=0b011 gil=False 300000 calls in 0.091s = 304 ns/call

@@ -1,0 +1,15 @@
+$ PYTHON_GIL=1 python scaling.py
+workload=qobject total=40000 gil=True option_ft=(default)
+  threads=  1     1.76s  speedup  1.00x
+  threads=  2     2.21s  speedup  0.80x
+  threads=  4     3.07s  speedup  0.57x
+  threads=  8     5.51s  speedup  0.32x
+  threads= 16     5.94s  speedup  0.30x
+
+$ PYTHON_GIL=0 python scaling.py
+workload=qobject total=40000 gil=False option_ft=(default)
+  threads=  1     1.70s  speedup  1.00x
+  threads=  2     1.56s  speedup  1.09x
+  threads=  4     1.89s  speedup  0.90x
+  threads=  8     2.93s  speedup  0.58x
+  threads= 16     3.19s  speedup  0.53x

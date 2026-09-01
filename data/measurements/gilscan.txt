@@ -1,0 +1,8 @@
+$ python gilscan.py
+probed 73 top-level packages
+
+bermuda:
+    The global interpreter lock (GIL) has been enabled to load module
+    'bermuda._bermuda', which has not declared that it can run safely
+    without the GIL. To override this behavior and keep the GIL disabled
+    (at your own risk), run with PYTHON_GIL=0 or -Xgil=0.

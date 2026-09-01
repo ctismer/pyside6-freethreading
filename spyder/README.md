@@ -137,8 +137,17 @@ What we do not know is why. A type pointer of `0x1` is a type that is
 half-built or half-gone, and this branch carries a fix for exactly that
 shape - "Hand out a lazily created type only when it is finished" - which
 is `#ifdef Py_GIL_DISABLED` and therefore compiled out of every GIL build.
-That is a plausible connection and nothing more; proving it means building
-the twin with that path enabled and running the twenty again.
+That looked like the answer, so it was measured rather than assumed: the
+readiness flag was compiled into a GIL build as well, generated code
+included, and the twenty runs repeated.
+
+| | crashes |
+|---|---|
+| GIL build, without the flag | 2 of 20 |
+| GIL build, **with** the flag | 3 of 20 |
+
+Same crash class, same rate. **It is not the lazy-type fix.** Why the
+free-threaded column stays clean is open.
 
 Two other classes turned up in the same crash reports: three in
 `Sbk_QPlainTextEditFunc_firstVisibleBlock` with addresses like `0x401` and

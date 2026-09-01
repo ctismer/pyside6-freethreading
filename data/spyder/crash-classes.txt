@@ -1,0 +1,210 @@
+Crash reports written by macOS during the Spyder runs of 2026-09-01/02.
+Top frames of the faulting thread, operating-system crash reports.
+
+python3.14-2026-09-01-190841.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        QThread::~QThread() (.cold.1)
+        QThread::~QThread()
+
+python3.14-2026-09-01-190954.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0004030301010263 -> 0x0000030301010263 (possible pointer authentication failure)
+        Sbk_QPlainTextEditFunc_firstVisibleBlock(_object*)
+        PyObject_Vectorcall
+        _PyEval_EvalFrameDefault
+        _PyEval_Vector
+        method_vectorcall
+        PyObject_Vectorcall
+
+python3.14-2026-09-01-192441.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        qt_assert(char const*, char const*, int)
+        QTest::sendKeyEvent(QTest::KeyAction, QWindow*, Qt::Key, QString const&, QFlags<Qt::Keyboa
+
+python3.14-2026-09-01-192638.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        QThread::~QThread() (.cold.1)
+        QThread::~QThread()
+
+python3.14-2026-09-01-192749.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000401
+        Sbk_QPlainTextEditFunc_firstVisibleBlock(_object*)
+        PyObject_Vectorcall
+        _PyEval_EvalFrameDefault
+        _PyEval_Vector
+        method_vectorcall
+        PyObject_Vectorcall
+
+python3.14-2026-09-01-195502.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        qt_assert(char const*, char const*, int)
+        QTest::sendKeyEvent(QTest::KeyAction, QWindow*, Qt::Key, QString const&, QFlags<Qt::Keyboa
+
+python3.14-2026-09-01-200040.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        QThread::~QThread() (.cold.1)
+        QThread::~QThread()
+
+python3.14-2026-09-01-200150.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x000000000000046b
+        Sbk_QPlainTextEditFunc_firstVisibleBlock(_object*)
+        PyObject_Vectorcall
+        _PyEval_EvalFrameDefault
+        _PyEval_Vector
+        method_vectorcall
+        PyObject_Vectorcall
+
+python3.14-2026-09-01-201603.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-01-201700.ips
+    SIGABRT 
+        abort
+        qAbort()
+        qt_message(QtMsgType, QMessageLogContext const&, char const*, char*)
+        QMessageLogger::fatal(char const*, ...) const
+        qt_assert(char const*, char const*, int)
+        QTest::sendKeyEvent(QTest::KeyAction, QWindow*, Qt::Key, QString const&, QFlags<Qt::Keyboa
+
+python3.14-2026-09-01-231528.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-01-232638.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-01-234002.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-01-234016.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-01-234030.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-000013.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x000000000000001b
+        PyObject_ClearWeakRefs
+        subtype_dealloc
+        _Py_Dealloc
+        frame_dealloc
+        _Py_Dealloc
+        tb_dealloc
+
+python3.14-2026-09-02-000643.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-000719.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-001344.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-001422.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-001436.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-001519.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+
+python3.14-2026-09-02-001932.ips
+    SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000001
+        _PyType_LookupStackRefAndVersion
+        _PyType_LookupStackRefAndVersion
+        _PyObject_LookupSpecial
+        PyObject_Dir
+        builtin_dir
+        cfunction_call
+

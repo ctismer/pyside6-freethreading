@@ -91,8 +91,60 @@ ran in one column only                  : 24
 Nothing fails free-threaded that passes with the GIL. The one that goes
 the other way is `test_automatic_completions_widget_visible`, a completion
 popup that has been flaky throughout. The 24 are all
-`spyder.plugins.projects.tests.test_plugin`, which the twin does not
-survive and we do.
+`spyder.plugins.projects.tests.test_plugin`, which the twin crashed on in
+that run - see below, because that turned out to be worth chasing.
+
+## One crash class only the GIL builds show
+
+`spyder.plugins.projects.tests.test_plugin` crashed on the twin during the
+suite run and not free-threaded. One occurrence is not a finding, so the
+file was run 20 times in each configuration:
+
+| | crashes | class |
+|---|---|---|
+| 3.14.3t, `PYTHON_GIL=0`, our PySide6 | **0** of 20 | - |
+| 3.14.3t, `PYTHON_GIL=1`, our PySide6 | 1 of 20 | `PyObject_ClearWeakRefs`, a different one |
+| 3.14.3 with the GIL, our PySide6 | 2 of 20 | both the class below |
+| 3.14.3 with the GIL, PySide6 6.11.2 from PyPI | 5 of 20 | all five |
+
+Every one of those seven has the same C stack, from the operating system's
+crash reports ([matrix](../data/spyder/crash-matrix.txt),
+[all classes](../data/spyder/crash-classes.txt)):
+
+```
+EXC_BAD_ACCESS  KERN_INVALID_ADDRESS at 0x1
+
+  _PyType_LookupStackRefAndVersion      <- dereferences 0x1
+  _PyType_LookupStackRefAndVersion
+  _PyObject_LookupSpecial
+  PyObject_Dir                          <- dir(obj)
+  builtin_dir
+  ...
+  slot_tp_init                          <- TracebackException.__init__
+```
+
+The Python side reaches it through pytest-qt: an exception escapes inside
+the Qt event loop, pytest-qt's hook formats it, and CPython's "did you mean
+...?" machinery calls `dir()` on the object the AttributeError came from.
+The type lookup then walks a type pointer of `0x1`.
+
+Two things follow. It is **not ours**: PySide6 6.11.2 from PyPI carries
+none of this work and crashes the same way, more often. And it does **not
+happen free-threaded** - 20 clean runs there against 7 crashes across the
+two GIL columns.
+
+What we do not know is why. A type pointer of `0x1` is a type that is
+half-built or half-gone, and this branch carries a fix for exactly that
+shape - "Hand out a lazily created type only when it is finished" - which
+is `#ifdef Py_GIL_DISABLED` and therefore compiled out of every GIL build.
+That is a plausible connection and nothing more; proving it means building
+the twin with that path enabled and running the twenty again.
+
+Two other classes turned up in the same crash reports: three in
+`Sbk_QPlainTextEditFunc_firstVisibleBlock` with addresses like `0x401` and
+`0x46b` - a dead C++ pointer, the `editor.tests` segfault below - and six
+Qt `qFatal` aborts from `ASSERT: "window"` in `qtestkeyboard.h`, which is
+pytest-qt typing into an unfocused window.
 
 ## Three files take the interpreter down, in every column
 

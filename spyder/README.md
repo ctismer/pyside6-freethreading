@@ -50,6 +50,27 @@ GIL on against GIL off is not merely the same count: it is the same set,
 all 59 entries, test for test.
 [diff](../data/spyder/compare-gil-on-off.txt)
 
+### Why the twin ran fewer tests, and why three counts exist
+
+The twin's 2351 against 2374 is one crashed file: the process dies in
+`spyder.plugins.projects.tests.test_plugin` before pytest writes its junit
+file, so those 24 tests appear nowhere in its own tally. The
+remaining one is a test that `flaky` retried once more on the twin.
+
+That is also why the numbers here and in `compare.py` differ slightly:
+
+```
+junit "tests" attribute   2374 / 2351     the table above
+<testcase> elements       2414 / 2388
+distinct test names       2371 / 2347     compare.py
+```
+
+`flaky` reruns a failing test and writes every attempt as its own
+`<testcase>` - twelve names appear more than once,
+`test_save_when_completions_are_visible` five times. The comparison
+therefore counts distinct names; counting elements would let one retried
+test weigh three times.
+
 The third column is the one that carries the argument. Comparing against
 PySide6 from PyPI would mix three differences at once - a Qt version, a
 PySide6 version and a Python version. So PySide6 was built twice from one

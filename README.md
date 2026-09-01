@@ -47,6 +47,10 @@ plugin's verdict never reaches you.
 
 ## The scripts
 
+`RESULTS.md`
+: The output of all of these, produced in one sitting, so the numbers can
+  be read without building anything.
+
 `gilcheck_plugin.py`
 : A pytest plugin that reports whether the GIL was disabled for the whole
   session. Useful far beyond PySide: a run is only free-threaded if
@@ -98,7 +102,11 @@ Found while getting napari to run:
   looks safe, it just does not say so. Cython 3.1 needs one line,
   `freethreading_compatible=True`. `PYTHON_GIL=0` overrides it meanwhile.
 
+- `bermuda._bermuda` — no free-threading declaration either. It came into
+  the environment later than the first scan, which is why an earlier
+  version of this file claimed there were none; see `RESULTS.md` for the
+  scan as it stands.
+
 Everything else in the napari stack was fine: numpy, scipy, pandas,
-scikit-image, aiohttp, rapidfuzz, bermuda, napari-metadata. All 54
-top-level packages were checked individually; none re-enables the GIL on
-import.
+scikit-image, aiohttp, rapidfuzz, napari-metadata. All 73 top-level
+packages are checked individually by `gilscan.py`.

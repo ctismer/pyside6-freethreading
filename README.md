@@ -102,10 +102,13 @@ Found while getting napari to run:
   looks safe, it just does not say so. Cython 3.1 needs one line,
   `freethreading_compatible=True`. `PYTHON_GIL=0` overrides it meanwhile.
 
-- `bermuda._bermuda` — no free-threading declaration either. It came into
-  the environment later than the first scan, which is why an earlier
-  version of this file claimed there were none; see `RESULTS.md` for the
-  scan as it stands.
+- `bermuda._bermuda` — no free-threading declaration either
+  (https://github.com/napari/bermuda). It came into the environment later
+  than the first scan, which is why an earlier version of this file said
+  there were none. This one is Rust, which changes nothing for CPython:
+  the module still has to declare the `Py_mod_gil` slot, and PyO3 spells
+  that `#[pymodule(gil_used = false)]` since 0.23. `RESULTS.md` has the
+  spellings for the other generators.
 
 Everything else in the napari stack was fine: numpy, scipy, pandas,
 scikit-image, aiohttp, rapidfuzz, napari-metadata. All 73 top-level

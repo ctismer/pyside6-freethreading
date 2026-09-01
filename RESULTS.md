@@ -43,8 +43,27 @@ bermuda:
     without the GIL.
 ```
 
-One offender out of 73. Two more are known that this scan cannot see,
-because they are not top-level packages:
+One offender out of 73, and it is Rust rather than C: `nm` on the module
+shows 207 PyO3 symbols, and the package classifies itself as
+`Programming Language :: Rust`. That makes no difference to CPython, which
+sees an ordinary extension with a `PyInit__bermuda`. What decides is a slot
+in the module definition, `Py_mod_gil`. If it is absent the interpreter
+assumes the module needs the GIL and switches it back on for the whole
+process. Every extension generator has its own spelling for it:
+
+| built with | declaration |
+|---|---|
+| plain C | `{Py_mod_gil, Py_MOD_GIL_NOT_USED}` in the slot array |
+| Cython 3.1 | `# cython: freethreading_compatible=True` |
+| PyO3 >= 0.23 | `#[pymodule(gil_used = false)]` |
+
+The declaration is a promise, not a check - the interpreter takes it at its
+word. Rust rules out data races inside the module's own code, which is why
+this looks like a package nobody has got around to declaring rather than
+one that would be unsafe to declare.
+
+Two more are known that this scan cannot see, because they are not
+top-level packages:
 
 - `vispy.visuals.text._sdf_cpu` — no free-threading declaration, and napari
   reaches it as soon as it draws text. A pure numerical routine (an 8SSEDT

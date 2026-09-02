@@ -15,14 +15,28 @@ same binary. No rebuild sits between any two columns.
 
 ## Applications
 
+Re-measured 2026-09-03 against the final series, with wheels built from it
+for both interpreters. Machine: M3, macOS 14.8, 12 cores.
+
 | | with the GIL | without | |
 |---|---|---|---|
-| [napari](napari/), Qt suite, 984 tests | 906 passed, 12 failed | identical | [details](napari/README.md) |
-| [Spyder](spyder/), suite, 2374 tests | 52 failed, 7 errors | identical set, test for test | [details](spyder/README.md) |
+| [napari](napari/), 1381 tests | 12 failed, 1 error | identical set, test for test | [details](napari/README.md) |
+| [Spyder](spyder/), 2374 tests | 52 failed, 8 errors | 52 failed, 7 errors | [details](spyder/README.md) |
 
-Spyder was also run against a **GIL twin**: the same PySide6 source built
-for a GIL interpreter of the same version, against the same Qt. No test
-fails free-threaded that passes there.
+**No test fails free-threaded that passes with the GIL** - in either
+application. napari's twelve are the same twelve either way. Spyder differs
+in one test, and it fails on the *GIL* side: a remote-explorer test that
+needs an ssh client.
+
+Spyder runs against a **GIL twin**: the same PySide6 source built for a GIL
+interpreter of the same version, against the same Qt, so a difference cannot
+be blamed on a Qt, PySide6 or Python version. Both wheel sets were rebuilt
+for this run rather than compared across dates.
+
+The napari count grew from the 984 of the 2026-09-01 run because the runner
+now takes `src/napari/_tests` as well as `src/napari/_qt`, and no longer
+ignores `test_reader_dialog.py`. Same code, wider selection; the twelve
+failures are the same ones.
 
 ## Threads
 

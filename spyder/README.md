@@ -35,11 +35,15 @@ from source.
 
 ## The suite: three columns
 
-| | tests | failed | errors | skipped |
-|---|---|---|---|---|
-| 3.14.3t, `PYTHON_GIL=1` | 2374 | 52 | 7 | 126 |
-| 3.14.3t, `PYTHON_GIL=0` | 2374 | 52 | 7 | 126 |
-| 3.14.3 with the GIL, our own build | 2351 | 52 | 8 | 126 |
+| | tests | failed | errors | skipped | measured |
+|---|---|---|---|---|---|
+| 3.14.3t, `PYTHON_GIL=1` | 2374 | 52 | 7 | 126 | 2026-09-01 |
+| 3.14.3t, `PYTHON_GIL=0` | 2374 | 52 | 7 | 126 | 2026-09-03 |
+| 3.14.3 with the GIL, our own build | 2374 | 52 | 8 | 125 | 2026-09-03 |
+
+The last two were re-measured against the final series, with both wheel sets
+rebuilt from it, so no comparison crosses a build. The first stands from the
+earlier run; the free-threaded column has not moved since.
 
 [gil1](../data/spyder/failures-ft-gil1.txt) ·
 [gil0](../data/spyder/failures-ft-gil0.txt) ·
@@ -79,20 +83,26 @@ CPython 3.14.3 with the GIL. The only difference left is the GIL.
 
 ```
 free-threaded   2371 ran, 59 bad
-GIL twin        2347 ran, 60 bad
+GIL twin        2371 ran, 60 bad
 
 bad free-threaded and green on the twin : 0
 bad on the twin and green free-threaded : 1
-ran in one column only                  : 24
+ran in one column only                  : 0
 ```
 
 [compare](../data/spyder/compare-ft-vs-twin.txt)
 
-Nothing fails free-threaded that passes with the GIL. The one that goes
-the other way is `test_automatic_completions_widget_visible`, a completion
-popup that has been flaky throughout. The 24 are all
-`spyder.plugins.projects.tests.test_plugin`, which the twin crashed on in
-that run - see below, because that turned out to be worth chasing.
+Nothing fails free-threaded that passes with the GIL. The one that goes the
+other way is `test_remote_explorer::test_setup[ssh_client_id]`, which wants
+an ssh client. In the run of 2026-09-01 it was
+`test_automatic_completions_widget_visible` instead, a completion popup that
+has been flaky throughout - different test, same shape, and both on the GIL
+side.
+
+Both columns ran the same 2371 tests this time. In the earlier run 24 were
+missing from the twin, all of `spyder.plugins.projects.tests.test_plugin`,
+which the twin crashed on - see below, because that turned out to be worth
+chasing. It did not crash in this run.
 
 ## One crash class only the GIL builds show
 

@@ -4,18 +4,36 @@ napari from git, CPython 3.14.3t, our PySide6 6.12.0a1 cp314t wheels.
 
 ## The suite says the same in both columns
 
-| | tests | passed | failed | errors | skipped |
+Measured 2026-09-03, wheels built from the final series.
+
+| | tests | failed | errors | skipped | time |
 |---|---|---|---|---|---|
-| `PYTHON_GIL=1` | 984 | 906 | 12 | 2 | 64 |
-| `PYTHON_GIL=0` | 984 | 906 | 12 | 2 | 64 |
+| `PYTHON_GIL=1` | 1381 | 12 | 1 | 105 | 281.3 s |
+| `PYTHON_GIL=0` | 1381 | 12 | 1 | 105 | 275.6 s |
 
 [gil1](../data/napari/suite-gil1.xml) ·
 [gil0](../data/napari/suite-gil0.xml)
 
-The point is not that it passes. It is that both columns agree: the same
-twelve fail either way, so they belong to the environment. Eight are
-`DID NOT WARN` under pytest 9 where napari asks for >= 8.3.5; the rest are
-a screenshot test on a zero-size window and its neighbours.
+The point is not that it passes. It is that both columns agree - not only in
+count but test for test:
+
+    bad with the GIL only:    none
+    bad without the GIL only: none
+    bad in both:              12
+
+So the twelve belong to the environment. Eight are `DID NOT WARN` under
+pytest 9 where napari asks for >= 8.3.5; the rest are a screenshot test on a
+zero-size window and its neighbours.
+
+The earlier run of 2026-09-01 reported 984 tests. Same napari commit
+(`0a19453`): the runner now takes `src/napari/_tests` as well as
+`src/napari/_qt`, and no longer ignores `test_reader_dialog.py`. Wider
+selection, same twelve failures.
+
+`--maxfail=0` is not optional. napari's `pyproject.toml` carries
+`--maxfail=5` in its addopts; without the override the run stops after the
+fifth failure and reports 229 of 1381 tests - a number that looks like a
+result and is one sixth of one.
 
 ```
 cd napari

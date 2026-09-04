@@ -35,6 +35,16 @@ need more, and each says so on its own page: [napari](napari/README.md),
 : The output verbatim: the measurement scripts, napari's junit files, and
   Spyder's suite per test file for all three columns.
 
+`sanitizers/`
+: What ThreadSanitizer and AddressSanitizer say about the free-threaded
+  build, one page per tool, plus the kill-switch matrix that shows which
+  lock a scenario actually needs. Includes the runs that found nothing.
+
+`ft-apps/`
+: The scripts behind those runs - building the instrumented interpreters
+  and trees, the thirteen scenarios, the kill-switch runner - and the log
+  of every run on both machines, under `ft-apps/sanitizer-runs/`.
+
 `gilcheck_plugin.py`
 : A pytest plugin that reports whether the GIL was disabled for the whole
   session. Useful far beyond PySide: a run is only free-threaded if

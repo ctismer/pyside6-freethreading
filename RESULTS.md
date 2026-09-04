@@ -55,6 +55,29 @@ failures are the same ones.
 | `falsesharing.py`, same cache line / apart | 1.880 / 1.861 s, ranges overlap | [txt](data/measurements/falsesharing.txt) |
 | `qt_race.py`, `shared_setter`, guard on / off | 5 of 5 clean / 5 of 5 SIGABRT | [txt](data/measurements/qt_race.txt) |
 
+## Sanitizers
+
+Full detail in [sanitizers/](sanitizers/); the logs of every run are under
+`ft-apps/sanitizer-runs/`.
+
+| | reports | |
+|---|---|---|
+| ThreadSanitizer, 13 scenarios, both machines | findings 1-3 only | [details](sanitizers/tsan.md) |
+| ThreadSanitizer, the whole pyside6 suite, 543 tests | **0** | [details](sanitizers/tsan.md) |
+| AddressSanitizer, 13 scenarios, both machines | finding 5 only | [details](sanitizers/asan.md) |
+| AddressSanitizer, the whole suite, both machines | 5 = one finding, twice | [details](sanitizers/asan.md) |
+
+What is left after both tools is `feature_select.cpp` /
+`sbkfeature_base.cpp` and two static caches in the generated wrappers.
+The state lock, the call leases, the binding manager and destruction are
+blank under both. Findings 5 and 6 fail with the GIL as well and on a
+released wheel, so they are release bugs rather than free-threading ones.
+
+Taking a lock away is what shows it is needed: `move_to_thread` crashes
+5 of 5 without the state lock and 0 of 5 with it, `container_convert` the
+same against the lazy type lock - the
+[kill-switch matrix](sanitizers/stress.md#what-the-kill-switch-measured).
+
 ## Packages that re-enable the GIL
 
 One import without a free-threading declaration turns the GIL back on for

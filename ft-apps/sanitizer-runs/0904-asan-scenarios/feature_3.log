@@ -1,0 +1,66 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+AddressSanitizer:DEADLYSIGNAL
+==15962==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0001464c70e8 bp 0x000172879f50 sp 0x000172879e00 T5)
+==15962==The signal is caused by a READ memory access.
+==15962==Hint: address points to the zero page.
+AddressSanitizer:DEADLYSIGNAL
+AddressSanitizer:DEADLYSIGNAL
+    #0 0x1464c70e8 in PySide::Feature::createNewFeatureSet(_typeobject*, int) feature_select.cpp:255
+    #1 0x1464c6874 in PySide::Feature::SelectFeatureSetSubtype(_typeobject*, int) feature_select.cpp:291
+    #2 0x14648f814 in PySide::Feature::SelectFeatureSet(_typeobject*) feature_select.cpp:364
+    #3 0x14648f440 in PySide::Feature::Select(_object*) feature_select.cpp:376
+    #4 0x14952b6f0 in Sbk_QObject_getattro(_object*, _object*) qobject_wrapper.cpp:3305
+    #5 0x10457348c in PyObject_GetOptionalAttr+0x94 (libpython3.15td.dylib:arm64+0x11f48c)
+    #6 0x10466eb48 in builtin_hasattr+0x40 (libpython3.15td.dylib:arm64+0x21ab48)
+    #7 0x1044eacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #8 0x104675844 in _Py_VectorCallInstrumentation_StackRefSteal+0x128 (libpython3.15td.dylib:arm64+0x221844)
+    #9 0x10467b30c in _PyEval_EvalFrameDefault+0x4790 (libpython3.15td.dylib:arm64+0x22730c)
+    #10 0x10467510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #11 0x1044eacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #12 0x1044ecd6c in _PyObject_VectorcallPrepend+0x100 (libpython3.15td.dylib:arm64+0x98d6c)
+    #13 0x1046be1cc in context_run+0xa0 (libpython3.15td.dylib:arm64+0x26a1cc)
+    #14 0x1044eacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #15 0x104675844 in _Py_VectorCallInstrumentation_StackRefSteal+0x128 (libpython3.15td.dylib:arm64+0x221844)
+    #16 0x10467b30c in _PyEval_EvalFrameDefault+0x4790 (libpython3.15td.dylib:arm64+0x22730c)
+    #17 0x10467510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #18 0x1044eacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #19 0x1044ecd6c in _PyObject_VectorcallPrepend+0x100 (libpython3.15td.dylib:arm64+0x98d6c)
+    #20 0x1048039d8 in thread_run+0x80 (libpython3.15td.dylib:arm64+0x3af9d8)
+    #21 0x104764b44 in pythread_wrapper+0x18 (libpython3.15td.dylib:arm64+0x310b44)
+    #22 0x102f89858 in asan_thread_start(void*)+0x40 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x51858)
+    #23 0x18620af38 in _pthread_start+0x84 (libsystem_pthread.dylib:arm64e+0x6f38)
+    #24 0x186205d20 in thread_start+0x4 (libsystem_pthread.dylib:arm64e+0x1d20)
+
+==15962==Register values:
+ x[0] = 0x0000000000000001   x[1] = 0x0000000000000004   x[2] = 0x000000011a170490   x[3] = 0x000000014657e7e0  
+ x[4] = 0x0000000000000208   x[5] = 0xb64d337aaf683751   x[6] = 0xaaaaaaaaaaaaaaaa   x[7] = 0x0000000000000000  
+ x[8] = 0x0000000000000000   x[9] = 0x0000000000000000  x[10] = 0x0000000172879ca0  x[11] = 0x000000702e52f398  
+x[12] = 0x000000000000000c  x[13] = 0x0000000000000010  x[14] = 0x0000000000000010  x[15] = 0x00000001084ce0c0  
+x[16] = 0x0000000000000018  x[17] = 0x0000604000016010  x[18] = 0x0000000000000000  x[19] = 0x0000000172879e60  
+x[20] = 0x0000000109625510  x[21] = 0x000000011a162770  x[22] = 0x000000017287a508  x[23] = 0x8000000000000002  
+x[24] = 0x0000000000000002  x[25] = 0x0000000104abfda8  x[26] = 0x0000000000000000  x[27] = 0x0000000106254010  
+x[28] = 0x000000017287a508     fp = 0x0000000172879f50     lr = 0x00000001464c7024     sp = 0x0000000172879e00  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV feature_select.cpp:255 in PySide::Feature::createNewFeatureSet(_typeobject*, int)
+Thread T5 created by T0 here:
+    #0 0x102f841c8 in pthread_create+0x5c (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x4c1c8)
+    #1 0x10476410c in do_start_joinable_thread+0x108 (libpython3.15td.dylib:arm64+0x31010c)
+    #2 0x104763fd8 in PyThread_start_joinable_thread+0x20 (libpython3.15td.dylib:arm64+0x30ffd8)
+    #3 0x104803710 in do_start_new_thread+0x310 (libpython3.15td.dylib:arm64+0x3af710)
+    #4 0x1048024ec in thread_PyThread_start_joinable_thread+0x1b4 (libpython3.15td.dylib:arm64+0x3ae4ec)
+    #5 0x10456aa80 in cfunction_call+0x114 (libpython3.15td.dylib:arm64+0x116a80)
+    #6 0x1044eb120 in _PyObject_MakeTpCall+0x178 (libpython3.15td.dylib:arm64+0x97120)
+    #7 0x10467530c in _Py_VectorCall_StackRefSteal+0x110 (libpython3.15td.dylib:arm64+0x22130c)
+    #8 0x10467ee68 in _PyEval_EvalFrameDefault+0x82ec (libpython3.15td.dylib:arm64+0x22ae68)
+    #9 0x10467510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #10 0x104674bd0 in PyEval_EvalCode+0x90 (libpython3.15td.dylib:arm64+0x220bd0)
+    #11 0x104748308 in run_mod+0x608 (libpython3.15td.dylib:arm64+0x2f4308)
+    #12 0x10474429c in _PyRun_SimpleFileObject+0x350 (libpython3.15td.dylib:arm64+0x2f029c)
+    #13 0x104743b98 in _PyRun_AnyFileObject+0x88 (libpython3.15td.dylib:arm64+0x2efb98)
+    #14 0x104777054 in Py_RunMain+0xf4c (libpython3.15td.dylib:arm64+0x323054)
+    #15 0x104777474 in pymain_main+0xf4 (libpython3.15td.dylib:arm64+0x323474)
+    #16 0x1047774bc in Py_BytesMain+0x24 (libpython3.15td.dylib:arm64+0x3234bc)
+    #17 0x185e7f150  (<unknown module>)
+
+==15962==ABORTING

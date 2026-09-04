@@ -1,0 +1,1 @@
+[stress] child_delete_vs_call gil=off PYSIDE6_OPTION_FT=0b111 threads=8 iters=6000

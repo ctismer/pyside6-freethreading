@@ -1,0 +1,25 @@
+tool        asan
+host        Darwin arm64, b219ad46-1a22-4e95-b312-04bad7e32fd2
+build       /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b3t-debug/bin/python3
+runtime     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
+options     halt_on_error=0 abort_on_error=0 detect_leaks=0
+locks       PYSIDE6_OPTION_FT=0b111
+threads     8, iters 6000
+started     2026-09-04 01:33:26
+
+shared_delete          rc 0    reports 0      1s  
+call_vs_delete         rc 0    reports 0      1s  
+child_delete_vs_call   rc 0    reports 0      1s  
+signal_race            rc 0    reports 0      0s  
+lookup_vs_last_decref  rc 0    reports 0      1s  
+destroy_race           rc 0    reports 0      2s  
+lazy_converter         rc 0    reports 0      0s  
+shared_setter          rc 0    reports 0      1s  
+queued_signal          rc 0    reports 0      0s  
+move_to_thread         rc 0    reports 0      0s  
+container_convert      rc 0    reports 0      2s  
+dynamic_property       rc 1    reports 1      2s  
+virtual_override       rc 0    reports 0      0s  
+
+finished    2026-09-04 01:33:38

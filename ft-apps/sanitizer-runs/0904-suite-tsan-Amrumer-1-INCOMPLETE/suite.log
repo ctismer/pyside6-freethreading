@@ -1,0 +1,1728 @@
+System:
+  Platform=darwin
+  Executable=/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/bin/python3
+  Version=3.15.0b4 free-threading build (main, Sep  4 2026, 00:56:53) [Clang 16.0.0 (clang-1600.0.26.6)]
+  API version=1013
+
+Environment:
+  DYLD_LIBRARY_PATH=/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/install/lib:/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/install/shiboken6:/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/libpyside:/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/shiboken6/libshiboken
+  HOME=/Users/tismer
+  LANG=en_US.UTF-8
+  LC_ALL=en_US.UTF-8
+  LC_CTYPE=UTF-8
+  LOGNAME=tismer
+  OLDPWD=/Users/tismer/src/QtC/pyside-setup
+  PATH=/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  PWD=/Users/tismer/src/QtC/pyside-setup
+  PYSIDE6_OPTION_FT=0b111
+  PYTHON_GIL=0
+  SHELL=/bin/bash
+  SHLVL=2
+  SSH_CLIENT=fe80::1c60:40b5:a027:6a27%en0 56903 22
+  SSH_CONNECTION=fe80::1c60:40b5:a027:6a27%en0 56903 fe80::1c60:65dc:901d:5137%en0 22
+  TMPDIR=/var/folders/q9/ykjqx2gn42x9c79h3zf4qhh40000gn/T/
+  TSAN_OPTIONS=halt_on_error=0 abort_on_error=0 exitcode=0 history_size=4
+  USER=tismer
+  _=/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/bin/python3
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x2
+
+
+********* Start testing of shiboken6_generator *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+running ('/opt/homebrew/Cellar/cmake/4.4.3/bin/ctest', '--output-log', '/Users/tismer/src/QtC/pyside-setup/build_history/2026-09-04_013257/shiboken6_generator.1.log')
+     in /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/shiboken6_generator
+
+RUN 1: Test project /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/shiboken6_generator
+RUN 1:       Start  1: testabstractmetaclass
+RUN 1:  1/37 Test  #1: testabstractmetaclass ............   Passed    8.51 sec
+RUN 1:       Start  2: testabstractmetatype
+RUN 1:  2/37 Test  #2: testabstractmetatype .............   Passed    3.73 sec
+RUN 1:       Start  3: testaddfunction
+RUN 1:  3/37 Test  #3: testaddfunction ..................   Passed    4.88 sec
+RUN 1:       Start  4: testarrayargument
+RUN 1:  4/37 Test  #4: testarrayargument ................   Passed    3.27 sec
+RUN 1:       Start  5: testclangparser
+RUN 1:  5/37 Test  #5: testclangparser ..................   Passed    2.74 sec
+RUN 1:       Start  6: testcodeinjection
+RUN 1:  6/37 Test  #6: testcodeinjection ................   Passed    3.28 sec
+RUN 1:       Start  7: testcontainer
+RUN 1:  7/37 Test  #7: testcontainer ....................   Passed    2.95 sec
+RUN 1:       Start  8: testconversionoperator
+RUN 1:  8/37 Test  #8: testconversionoperator ...........   Passed    3.40 sec
+RUN 1:       Start  9: testconversionruletag
+RUN 1:  9/37 Test  #9: testconversionruletag ............   Passed    3.29 sec
+RUN 1:       Start 10: testctorinformation
+RUN 1: 10/37 Test #10: testctorinformation ..............   Passed    2.95 sec
+RUN 1:       Start 11: testdroptypeentries
+RUN 1: 11/37 Test #11: testdroptypeentries ..............   Passed    3.27 sec
+RUN 1:       Start 12: testdtorinformation
+RUN 1: 12/37 Test #12: testdtorinformation ..............   Passed    3.40 sec
+RUN 1:       Start 13: testenum
+RUN 1: 13/37 Test #13: testenum .........................   Passed    4.09 sec
+RUN 1:       Start 14: testextrainclude
+RUN 1: 14/37 Test #14: testextrainclude .................   Passed    2.92 sec
+RUN 1:       Start 15: testfunctiontag
+RUN 1: 15/37 Test #15: testfunctiontag ..................   Passed    3.08 sec
+RUN 1:       Start 16: testimplicitconversions
+RUN 1: 16/37 Test #16: testimplicitconversions ..........   Passed    3.24 sec
+RUN 1:       Start 17: testinserttemplate
+RUN 1: 17/37 Test #17: testinserttemplate ...............   Passed    2.93 sec
+RUN 1:       Start 18: testmodifyfunction
+RUN 1: 18/37 Test #18: testmodifyfunction ...............   Passed    4.89 sec
+RUN 1:       Start 19: testmultipleinheritance
+RUN 1: 19/37 Test #19: testmultipleinheritance ..........   Passed    2.76 sec
+RUN 1:       Start 20: testnamespace
+RUN 1: 20/37 Test #20: testnamespace ....................   Passed    2.93 sec
+RUN 1:       Start 21: testnestedtypes
+RUN 1: 21/37 Test #21: testnestedtypes ..................   Passed    2.93 sec
+RUN 1:       Start 22: testnumericaltypedef
+RUN 1: 22/37 Test #22: testnumericaltypedef .............   Passed    2.91 sec
+RUN 1:       Start 23: testprimitivetypetag
+RUN 1: 23/37 Test #23: testprimitivetypetag .............   Passed    2.76 sec
+RUN 1:       Start 24: testrefcounttag
+RUN 1: 24/37 Test #24: testrefcounttag ..................   Passed    2.94 sec
+RUN 1:       Start 25: testreferencetopointer
+RUN 1: 25/37 Test #25: testreferencetopointer ...........   Passed    2.77 sec
+RUN 1:       Start 26: testremovefield
+RUN 1: 26/37 Test #26: testremovefield ..................   Passed    2.91 sec
+RUN 1:       Start 27: testremoveimplconv
+RUN 1: 27/37 Test #27: testremoveimplconv ...............   Passed    3.01 sec
+RUN 1:       Start 28: testremoveoperatormethod
+RUN 1: 28/37 Test #28: testremoveoperatormethod .........   Passed    2.76 sec
+RUN 1:       Start 29: testresolvetype
+RUN 1: 29/37 Test #29: testresolvetype ..................   Passed    3.50 sec
+RUN 1:       Start 30: testreverseoperators
+RUN 1: 30/37 Test #30: testreverseoperators .............   Passed    3.08 sec
+RUN 1:       Start 31: testtemplates
+RUN 1: 31/37 Test #31: testtemplates ....................   Passed    5.27 sec
+RUN 1:       Start 32: testtoposort
+RUN 1: 32/37 Test #32: testtoposort .....................   Passed    2.51 sec
+RUN 1:       Start 33: testvaluetypedefaultctortag
+RUN 1: 33/37 Test #33: testvaluetypedefaultctortag ......   Passed    2.76 sec
+RUN 1:       Start 34: testvoidarg
+RUN 1: 34/37 Test #34: testvoidarg ......................   Passed    3.09 sec
+RUN 1:       Start 35: testtyperevision
+RUN 1: 35/37 Test #35: testtyperevision .................   Passed    3.37 sec
+RUN 1:       Start 36: testmodifydocumentation
+RUN 1: 36/37 Test #36: testmodifydocumentation ..........   Passed    2.93 sec
+RUN 1:       Start 37: qtxmltosphinx
+RUN 1: 37/37 Test #37: qtxmltosphinx ....................   Passed    2.50 sec
+RUN 1: 
+RUN 1: 100% tests passed out of 37
+RUN 1: 
+RUN 1: Total Test time (real) = 124.55 sec
+End of the test run
+
+
+RES 1: Test   #1: PASS   testabstractmetaclass()
+RES 1: Test   #2: PASS   testabstractmetatype()
+RES 1: Test   #3: PASS   testaddfunction()
+RES 1: Test   #4: PASS   testarrayargument()
+RES 1: Test   #5: PASS   testclangparser()
+RES 1: Test   #6: PASS   testcodeinjection()
+RES 1: Test   #7: PASS   testcontainer()
+RES 1: Test   #8: PASS   testconversionoperator()
+RES 1: Test   #9: PASS   testconversionruletag()
+RES 1: Test  #10: PASS   testctorinformation()
+RES 1: Test  #11: PASS   testdroptypeentries()
+RES 1: Test  #12: PASS   testdtorinformation()
+RES 1: Test  #13: PASS   testenum()
+RES 1: Test  #14: PASS   testextrainclude()
+RES 1: Test  #15: PASS   testfunctiontag()
+RES 1: Test  #16: PASS   testimplicitconversions()
+RES 1: Test  #17: PASS   testinserttemplate()
+RES 1: Test  #18: PASS   testmodifyfunction()
+RES 1: Test  #19: PASS   testmultipleinheritance()
+RES 1: Test  #20: PASS   testnamespace()
+RES 1: Test  #21: PASS   testnestedtypes()
+RES 1: Test  #22: PASS   testnumericaltypedef()
+RES 1: Test  #23: PASS   testprimitivetypetag()
+RES 1: Test  #24: PASS   testrefcounttag()
+RES 1: Test  #25: PASS   testreferencetopointer()
+RES 1: Test  #26: PASS   testremovefield()
+RES 1: Test  #27: PASS   testremoveimplconv()
+RES 1: Test  #28: PASS   testremoveoperatormethod()
+RES 1: Test  #29: PASS   testresolvetype()
+RES 1: Test  #30: PASS   testreverseoperators()
+RES 1: Test  #31: PASS   testtemplates()
+RES 1: Test  #32: PASS   testtoposort()
+RES 1: Test  #33: PASS   testvaluetypedefaultctortag()
+RES 1: Test  #34: PASS   testvoidarg()
+RES 1: Test  #35: PASS   testtyperevision()
+RES 1: Test  #36: PASS   testmodifydocumentation()
+RES 1: Test  #37: PASS   qtxmltosphinx()
+
+  #### Top 20 slow tests:
+    testabstractmetaclass                                8.51s
+    testtemplates                                        5.27s
+    testmodifyfunction                                   4.89s
+    testaddfunction                                      4.88s
+    testenum                                             4.09s
+    testabstractmetatype                                 3.73s
+    testresolvetype                                       3.5s
+    testconversionoperator                                3.4s
+    testdtorinformation                                   3.4s
+    testtyperevision                                     3.37s
+    testconversionruletag                                3.29s
+    testcodeinjection                                    3.28s
+    testarrayargument                                    3.27s
+    testdroptypeentries                                  3.27s
+    testimplicitconversions                              3.24s
+    testvoidarg                                          3.09s
+    testfunctiontag                                      3.08s
+    testreverseoperators                                 3.08s
+    testremoveimplconv                                   3.01s
+    testcontainer                                        2.95s
+
+Totals: 37 tests. 37 passed, 0 failed, 0 skipped, 0 blacklisted, 0 bpassed.
+
+********* Finished testing of shiboken6_generator *********
+
+
+********* Start testing of shiboken6_generator *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+--- no re-runs found, stopping before test 2 ---
+
+********* Start testing of shiboken6 *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+running ('/opt/homebrew/Cellar/cmake/4.4.3/bin/ctest', '--output-log', '/Users/tismer/src/QtC/pyside-setup/build_history/2026-09-04_013257/shiboken6.1.log')
+     in /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/shiboken6
+
+RUN 1: Test project /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/shiboken6
+RUN 1:         Start   1: minimal_brace_pattern
+RUN 1:   1/158 Test   #1: minimal_brace_pattern ..............................................   Passed    3.31 sec
+RUN 1:         Start   2: minimal_containeruser
+RUN 1:   2/158 Test   #2: minimal_containeruser ..............................................   Passed    2.03 sec
+RUN 1:         Start   3: minimal_listuser
+RUN 1:   3/158 Test   #3: minimal_listuser ...................................................   Passed   56.63 sec
+RUN 1:         Start   4: minimal_minbool
+RUN 1:   4/158 Test   #4: minimal_minbool ....................................................   Passed    1.67 sec
+RUN 1:         Start   5: minimal_obj
+RUN 1:   5/158 Test   #5: minimal_obj ........................................................   Passed    1.67 sec
+RUN 1:         Start   6: minimal_spanuser
+RUN 1:   6/158 Test   #6: minimal_spanuser ...................................................   Passed    1.66 sec
+RUN 1:         Start   7: minimal_typedef
+RUN 1:   7/158 Test   #7: minimal_typedef ....................................................   Passed    1.43 sec
+RUN 1:         Start   8: minimal_val
+RUN 1:   8/158 Test   #8: minimal_val ........................................................   Passed    1.67 sec
+RUN 1:         Start   9: other_collector_external_operator
+RUN 1:   9/158 Test   #9: other_collector_external_operator ..................................   Passed    2.49 sec
+RUN 1:         Start  10: other_conversion_operator_for_class_without_implicit_conversions
+RUN 1:  10/158 Test  #10: other_conversion_operator_for_class_without_implicit_conversions ...   Passed    1.77 sec
+RUN 1:         Start  11: other_extended_multiply_operator
+RUN 1:  11/158 Test  #11: other_extended_multiply_operator ...................................   Passed    1.70 sec
+RUN 1:         Start  12: other_module_reload
+RUN 1:  12/158 Test  #12: other_module_reload ................................................   Passed    1.72 sec
+RUN 1:         Start  13: other_new_ctor_operator
+RUN 1:  13/158 Test  #13: other_new_ctor_operator ............................................   Passed    1.70 sec
+RUN 1:         Start  14: other_objtypehashes
+RUN 1:  14/158 Test  #14: other_objtypehashes ................................................   Passed    1.69 sec
+RUN 1:         Start  15: other_otherderived
+RUN 1:  15/158 Test  #15: other_otherderived .................................................   Passed    1.72 sec
+RUN 1:         Start  16: other_othertypesystypedef
+RUN 1:  16/158 Test  #16: other_othertypesystypedef ..........................................   Passed    1.70 sec
+RUN 1:         Start  17: other_signature
+RUN 1:  17/158 Test  #17: other_signature ....................................................   Passed    1.73 sec
+RUN 1:         Start  18: other_smartptr
+RUN 1:  18/158 Test  #18: other_smartptr .....................................................   Passed    1.70 sec
+RUN 1:         Start  19: other_star_import
+RUN 1:  19/158 Test  #19: other_star_import ..................................................   Passed    1.72 sec
+RUN 1:         Start  20: other_typediscovery
+RUN 1:  20/158 Test  #20: other_typediscovery ................................................   Passed    1.70 sec
+RUN 1:         Start  21: other_usersprimitivefromothermodule
+RUN 1:  21/158 Test  #21: other_usersprimitivefromothermodule ................................   Passed    1.70 sec
+RUN 1:         Start  22: other_wrongctor
+RUN 1:  22/158 Test  #22: other_wrongctor ....................................................   Passed    1.70 sec
+RUN 1:         Start  23: sample___del__
+RUN 1:  23/158 Test  #23: sample___del__ .....................................................   Passed    1.71 sec
+RUN 1:         Start  24: sample_abstract
+RUN 1:  24/158 Test  #24: sample_abstract ....................................................   Passed    1.70 sec
+RUN 1:         Start  25: sample_addedfunction
+RUN 1:  25/158 Test  #25: sample_addedfunction ...............................................   Passed    1.69 sec
+RUN 1:         Start  26: sample_addedfunction_with_container_args
+RUN 1:  26/158 Test  #26: sample_addedfunction_with_container_args ...........................   Passed    1.71 sec
+RUN 1:         Start  27: sample_argumentmodifications
+RUN 1:  27/158 Test  #27: sample_argumentmodifications .......................................   Passed    1.82 sec
+RUN 1:         Start  28: sample_array_numpy
+RUN 1:  28/158 Test  #28: sample_array_numpy .................................................   Passed    1.45 sec
+RUN 1:         Start  29: sample_array_sequence
+RUN 1:  29/158 Test  #29: sample_array_sequence ..............................................   Passed    1.71 sec
+RUN 1:         Start  30: sample_bug_554
+RUN 1:  30/158 Test  #30: sample_bug_554 .....................................................   Passed    1.43 sec
+RUN 1:         Start  31: sample_bug_704
+RUN 1:  31/158 Test  #31: sample_bug_704 .....................................................   Passed    1.69 sec
+RUN 1:         Start  32: sample_bytearray
+RUN 1:  32/158 Test  #32: sample_bytearray ...................................................   Passed    1.72 sec
+RUN 1:         Start  33: sample_child_return
+RUN 1:  33/158 Test  #33: sample_child_return ................................................   Passed    1.74 sec
+RUN 1:         Start  34: sample_class_fields
+RUN 1:  34/158 Test  #34: sample_class_fields ................................................   Passed    1.71 sec
+RUN 1:         Start  35: sample_collector
+RUN 1:  35/158 Test  #35: sample_collector ...................................................   Passed    1.73 sec
+RUN 1:         Start  36: sample_complex
+RUN 1:  36/158 Test  #36: sample_complex .....................................................   Passed    1.79 sec
+RUN 1:         Start  37: sample_conversion_operator
+RUN 1:  37/158 Test  #37: sample_conversion_operator .........................................   Passed    1.72 sec
+RUN 1:         Start  38: sample_copy
+RUN 1:  38/158 Test  #38: sample_copy ........................................................   Passed    1.77 sec
+RUN 1:         Start  39: sample_ctorconvrule
+RUN 1:  39/158 Test  #39: sample_ctorconvrule ................................................   Passed    1.72 sec
+RUN 1:         Start  40: sample_cyclic
+RUN 1:  40/158 Test  #40: sample_cyclic ......................................................   Passed    2.17 sec
+RUN 1:         Start  41: sample_date
+RUN 1:  41/158 Test  #41: sample_date ........................................................   Passed    1.73 sec
+RUN 1:         Start  42: sample_dealloc_resurrect
+RUN 1:  42/158 Test  #42: sample_dealloc_resurrect ...........................................   Passed    1.70 sec
+RUN 1:         Start  43: sample_decisor
+RUN 1:  43/158 Test  #43: sample_decisor .....................................................   Passed    1.76 sec
+RUN 1:         Start  44: sample_delete
+RUN 1:  44/158 Test  #44: sample_delete ......................................................   Passed    1.71 sec
+RUN 1:         Start  45: sample_deprecated
+RUN 1:  45/158 Test  #45: sample_deprecated ..................................................   Passed    1.73 sec
+RUN 1:         Start  46: sample_derived
+RUN 1:  46/158 Test  #46: sample_derived .....................................................   Passed    1.77 sec
+RUN 1:         Start  47: sample_duck_punching
+RUN 1:  47/158 Test  #47: sample_duck_punching ...............................................   Passed    1.75 sec
+RUN 1:         Start  48: sample_echo
+RUN 1:  48/158 Test  #48: sample_echo ........................................................   Passed    1.72 sec
+RUN 1:         Start  49: sample_enum
+RUN 1:  49/158 Test  #49: sample_enum ........................................................   Passed    1.81 sec
+RUN 1:         Start  50: sample_enumfromremovednamespace
+RUN 1:  50/158 Test  #50: sample_enumfromremovednamespace ....................................   Passed    1.74 sec
+RUN 1:         Start  51: sample_event_loop_call_virtual
+RUN 1:  51/158 Test  #51: sample_event_loop_call_virtual .....................................   Passed    1.74 sec
+RUN 1:         Start  52: sample_event_loop_thread
+RUN 1:  52/158 Test  #52: sample_event_loop_thread ...........................................   Passed    1.98 sec
+RUN 1:         Start  53: sample_exception
+RUN 1:  53/158 Test  #53: sample_exception ...................................................   Passed    1.74 sec
+RUN 1:         Start  54: sample_filter
+RUN 1:  54/158 Test  #54: sample_filter ......................................................   Passed    1.70 sec
+RUN 1:         Start  55: sample_free_threading_stress
+RUN 1:  55/158 Test  #55: sample_free_threading_stress .......................................   Passed    3.66 sec
+RUN 1:         Start  56: sample_handleholder
+RUN 1:  56/158 Test  #56: sample_handleholder ................................................   Passed    1.74 sec
+RUN 1:         Start  57: sample_hashabletype
+RUN 1:  57/158 Test  #57: sample_hashabletype ................................................   Passed    1.69 sec
+RUN 1:         Start  58: sample_ignorederefop
+RUN 1:  58/158 Test  #58: sample_ignorederefop ...............................................   Passed    1.69 sec
+RUN 1:         Start  59: sample_implicitconv_numerical
+RUN 1:  59/158 Test  #59: sample_implicitconv_numerical ......................................   Passed    1.72 sec
+RUN 1:         Start  60: sample_implicitconv
+RUN 1:  60/158 Test  #60: sample_implicitconv ................................................   Passed    1.70 sec
+RUN 1:         Start  61: sample_inheritanceandscope
+RUN 1:  61/158 Test  #61: sample_inheritanceandscope .........................................   Passed    1.69 sec
+RUN 1:         Start  62: sample_injectcode
+RUN 1:  62/158 Test  #62: sample_injectcode ..................................................   Passed    1.71 sec
+RUN 1:         Start  63: sample_innerclass
+RUN 1:  63/158 Test  #63: sample_innerclass ..................................................   Passed    1.74 sec
+RUN 1:         Start  64: sample_intlist
+RUN 1:  64/158 Test  #64: sample_intlist .....................................................   Passed    1.70 sec
+RUN 1:         Start  65: sample_intwrapper
+RUN 1:  65/158 Test  #65: sample_intwrapper ..................................................   Passed    1.74 sec
+RUN 1:         Start  66: sample_invalid_virtual_return
+RUN 1:  66/158 Test  #66: sample_invalid_virtual_return ......................................   Passed    1.74 sec
+RUN 1:         Start  67: sample_keep_reference
+RUN 1:  67/158 Test  #67: sample_keep_reference ..............................................   Passed    1.75 sec
+RUN 1:         Start  68: sample_list
+RUN 1:  68/158 Test  #68: sample_list ........................................................   Passed    1.81 sec
+RUN 1:         Start  69: sample_lock
+RUN 1:  69/158 Test  #69: sample_lock ........................................................   Passed    1.99 sec
+RUN 1:         Start  70: sample_map
+RUN 1:  70/158 Test  #70: sample_map .........................................................   Passed    1.76 sec
+RUN 1:         Start  71: sample_metaclass
+RUN 1:  71/158 Test  #71: sample_metaclass ...................................................   Passed    1.46 sec
+RUN 1:         Start  72: sample_mi_virtual_methods
+RUN 1:  72/158 Test  #72: sample_mi_virtual_methods ..........................................   Passed    1.70 sec
+RUN 1:         Start  73: sample_mixed_mi
+RUN 1:  73/158 Test  #73: sample_mixed_mi ....................................................   Passed    1.69 sec
+RUN 1:         Start  74: sample_modelindex
+RUN 1:  74/158 Test  #74: sample_modelindex ..................................................   Passed    1.70 sec
+RUN 1:         Start  75: sample_modelview
+RUN 1:  75/158 Test  #75: sample_modelview ...................................................   Passed    1.70 sec
+RUN 1:         Start  76: sample_modifications
+RUN 1:  76/158 Test  #76: sample_modifications ...............................................   Passed    2.01 sec
+RUN 1:         Start  77: sample_modified_constructor
+RUN 1:  77/158 Test  #77: sample_modified_constructor ........................................   Passed    1.69 sec
+RUN 1:         Start  78: sample_modifiedvirtualmethods
+RUN 1:  78/158 Test  #78: sample_modifiedvirtualmethods ......................................   Passed    1.91 sec
+RUN 1:         Start  79: sample_multi_cpp_inheritance
+RUN 1:  79/158 Test  #79: sample_multi_cpp_inheritance .......................................   Passed    1.71 sec
+RUN 1:         Start  80: sample_multiple_derived
+RUN 1:  80/158 Test  #80: sample_multiple_derived ............................................   Passed    1.72 sec
+RUN 1:         Start  81: sample_namespace
+RUN 1:  81/158 Test  #81: sample_namespace ...................................................   Passed    1.74 sec
+RUN 1:         Start  82: sample_newdivision
+RUN 1:  82/158 Test  #82: sample_newdivision .................................................   Passed    1.69 sec
+RUN 1:         Start  83: sample_nondefaultctor
+RUN 1:  83/158 Test  #83: sample_nondefaultctor ..............................................   Passed    1.70 sec
+RUN 1:         Start  84: sample_nontypetemplate
+RUN 1:  84/158 Test  #84: sample_nontypetemplate .............................................   Passed    1.70 sec
+RUN 1:         Start  85: sample_nonzero
+RUN 1:  85/158 Test  #85: sample_nonzero .....................................................   Passed    1.70 sec
+RUN 1:         Start  86: sample_numericaltypedef
+RUN 1:  86/158 Test  #86: sample_numericaltypedef ............................................   Passed    1.69 sec
+RUN 1:         Start  87: sample_numpy
+RUN 1:  87/158 Test  #87: sample_numpy .......................................................   Passed    0.42 sec
+RUN 1:         Start  88: sample_objecttype
+RUN 1:  88/158 Test  #88: sample_objecttype ..................................................   Passed    1.76 sec
+RUN 1:         Start  89: sample_objecttype_with_named_args
+RUN 1:  89/158 Test  #89: sample_objecttype_with_named_args ..................................   Passed    1.70 sec
+RUN 1:         Start  90: sample_objecttypebyvalue
+RUN 1:  90/158 Test  #90: sample_objecttypebyvalue ...........................................   Passed    1.69 sec
+RUN 1:         Start  91: sample_objecttypelayout
+RUN 1:  91/158 Test  #91: sample_objecttypelayout ............................................   Passed    1.91 sec
+RUN 1:         Start  92: sample_objecttypeoperators
+RUN 1:  92/158 Test  #92: sample_objecttypeoperators .........................................   Passed    1.69 sec
+RUN 1:         Start  93: sample_objecttypereferenceasvirtualmethodargument
+RUN 1:  93/158 Test  #93: sample_objecttypereferenceasvirtualmethodargument ..................   Passed    1.70 sec
+RUN 1:         Start  94: sample_oddbool
+RUN 1:  94/158 Test  #94: sample_oddbool .....................................................   Passed    1.71 sec
+RUN 1:         Start  95: sample_onlycopyclass
+RUN 1:  95/158 Test  #95: sample_onlycopyclass ...............................................   Passed    1.70 sec
+RUN 1:         Start  96: sample_overflow
+RUN 1:  96/158 Test  #96: sample_overflow ....................................................   Passed    1.71 sec
+RUN 1:         Start  97: sample_overload_sorting
+RUN 1:  97/158 Test  #97: sample_overload_sorting ............................................   Passed    1.72 sec
+RUN 1:         Start  98: sample_overload
+RUN 1:  98/158 Test  #98: sample_overload ....................................................   Passed    1.83 sec
+RUN 1:         Start  99: sample_overloadwithdefault
+RUN 1:  99/158 Test  #99: sample_overloadwithdefault .........................................   Passed    1.71 sec
+RUN 1:         Start 100: sample_ownership_argument_invalidation
+RUN 1: 100/158 Test #100: sample_ownership_argument_invalidation .............................   Passed    1.77 sec
+RUN 1:         Start 101: sample_ownership_delete_child_in_cpp
+RUN 1: 101/158 Test #101: sample_ownership_delete_child_in_cpp ...............................   Passed    1.69 sec
+RUN 1:         Start 102: sample_ownership_delete_child_in_python
+RUN 1: 102/158 Test #102: sample_ownership_delete_child_in_python ............................   Passed    1.75 sec
+RUN 1:         Start 103: sample_ownership_delete_parent
+RUN 1: 103/158 Test #103: sample_ownership_delete_parent .....................................   Passed    1.82 sec
+RUN 1:         Start 104: sample_ownership_invalidate_after_use
+RUN 1: 104/158 Test #104: sample_ownership_invalidate_after_use ..............................   Passed    1.79 sec
+RUN 1:         Start 105: sample_ownership_invalidate_child
+RUN 1: 105/158 Test #105: sample_ownership_invalidate_child ..................................   Passed    1.72 sec
+RUN 1:         Start 106: sample_ownership_invalidate_nonpolymorphic
+RUN 1: 106/158 Test #106: sample_ownership_invalidate_nonpolymorphic .........................   Passed    1.69 sec
+RUN 1:         Start 107: sample_ownership_invalidate_parent
+RUN 1: 107/158 Test #107: sample_ownership_invalidate_parent .................................   Passed    1.69 sec
+RUN 1:         Start 108: sample_ownership_invalidate_referred
+RUN 1: 108/158 Test #108: sample_ownership_invalidate_referred ...............................   Passed    1.78 sec
+RUN 1:         Start 109: sample_ownership_reparenting
+RUN 1: 109/158 Test #109: sample_ownership_reparenting .......................................   Passed    1.79 sec
+RUN 1:         Start 110: sample_ownership_transference
+RUN 1: 110/158 Test #110: sample_ownership_transference ......................................   Passed    1.80 sec
+RUN 1:         Start 111: sample_pair
+RUN 1: 111/158 Test #111: sample_pair ........................................................   Passed    1.70 sec
+RUN 1:         Start 112: sample_pen
+RUN 1: 112/158 Test #112: sample_pen .........................................................   Passed    1.78 sec
+RUN 1:         Start 113: sample_point
+RUN 1: 113/158 Test #113: sample_point .......................................................   Passed    1.71 sec
+RUN 1:         Start 114: sample_pointerholder
+RUN 1: 114/158 Test #114: sample_pointerholder ...............................................   Passed    1.69 sec
+RUN 1:         Start 115: sample_pointerprimitivetype
+RUN 1: 115/158 Test #115: sample_pointerprimitivetype ........................................   Passed    1.77 sec
+RUN 1:         Start 116: sample_pointf
+RUN 1: 116/158 Test #116: sample_pointf ......................................................   Passed    1.77 sec
+RUN 1:         Start 117: sample_primitivereferenceargument
+RUN 1: 117/158 Test #117: sample_primitivereferenceargument ..................................   Passed    1.69 sec
+RUN 1:         Start 118: sample_privatector
+RUN 1: 118/158 Test #118: sample_privatector .................................................   Passed    1.77 sec
+RUN 1:         Start 119: sample_privatedtor
+RUN 1: 119/158 Test #119: sample_privatedtor .................................................   Passed    1.83 sec
+RUN 1:         Start 120: sample_protected
+RUN 1: 120/158 Test #120: sample_protected ...................................................   Passed    2.45 sec
+RUN 1:         Start 121: sample_pstrlist
+RUN 1: 121/158 Test #121: sample_pstrlist ....................................................   Passed    1.77 sec
+RUN 1:         Start 122: sample_pystr
+RUN 1: 122/158 Test #122: sample_pystr .......................................................   Passed    1.70 sec
+RUN 1:         Start 123: sample_python_thread
+RUN 1: 123/158 Test #123: sample_python_thread ...............................................   Passed    2.00 sec
+RUN 1:         Start 124: sample_receive_null_cstring
+RUN 1: 124/158 Test #124: sample_receive_null_cstring ........................................   Passed    1.77 sec
+RUN 1:         Start 125: sample_reference
+RUN 1: 125/158 Test #125: sample_reference ...................................................   Passed    1.71 sec
+RUN 1:         Start 126: sample_referencetopointer
+RUN 1: 126/158 Test #126: sample_referencetopointer ..........................................   Passed    1.71 sec
+RUN 1:         Start 127: sample_renaming
+RUN 1: 127/158 Test #127: sample_renaming ....................................................   Passed    1.74 sec
+RUN 1:         Start 128: sample_return_null
+RUN 1: 128/158 Test #128: sample_return_null .................................................   Passed    1.78 sec
+RUN 1:         Start 129: sample_richcompare
+RUN 1: 129/158 Test #129: sample_richcompare .................................................   Passed    1.78 sec
+RUN 1:         Start 130: sample_sample
+RUN 1: 130/158 Test #130: sample_sample ......................................................   Passed    1.93 sec
+RUN 1:         Start 131: sample_simplefile
+RUN 1: 131/158 Test #131: sample_simplefile ..................................................   Passed    1.70 sec
+RUN 1:         Start 132: sample_size
+RUN 1: 132/158 Test #132: sample_size ........................................................   Passed    1.72 sec
+RUN 1:         Start 133: sample_snakecase
+RUN 1: 133/158 Test #133: sample_snakecase ...................................................   Passed    1.71 sec
+RUN 1:         Start 134: sample_spaceship
+RUN 1: 134/158 Test #134: sample_spaceship ...................................................   Passed    1.79 sec
+RUN 1:         Start 135: sample_static_nonstatic_methods
+RUN 1: 135/158 Test #135: sample_static_nonstatic_methods ....................................   Passed    1.71 sec
+RUN 1:         Start 136: sample_stdcomplex
+RUN 1: 136/158 Test #136: sample_stdcomplex ..................................................   Passed    1.72 sec
+RUN 1:         Start 137: sample_str
+RUN 1: 137/158 Test #137: sample_str .........................................................   Passed    1.71 sec
+RUN 1:         Start 138: sample_strlist
+RUN 1: 138/158 Test #138: sample_strlist .....................................................   Passed    1.80 sec
+RUN 1:         Start 139: sample_templateinheritingclass
+RUN 1: 139/158 Test #139: sample_templateinheritingclass .....................................   Passed    1.74 sec
+RUN 1:         Start 140: sample_time
+RUN 1: 140/158 Test #140: sample_time ........................................................   Passed    1.72 sec
+RUN 1:         Start 141: sample_transform
+RUN 1: 141/158 Test #141: sample_transform ...................................................   Passed    1.70 sec
+RUN 1:         Start 142: sample_typeconverters
+RUN 1: 142/158 Test #142: sample_typeconverters ..............................................   Passed    1.73 sec
+RUN 1:         Start 143: sample_typedealloc
+RUN 1: 143/158 Test #143: sample_typedealloc .................................................   Passed    1.75 sec
+RUN 1:         Start 144: sample_typedtordoublefree
+RUN 1: 144/158 Test #144: sample_typedtordoublefree ..........................................   Passed    1.70 sec
+RUN 1:         Start 145: sample_typesystypedef
+RUN 1: 145/158 Test #145: sample_typesystypedef ..............................................   Passed    1.70 sec
+RUN 1:         Start 146: sample_unsafe_parent
+RUN 1: 146/158 Test #146: sample_unsafe_parent ...............................................   Passed    1.70 sec
+RUN 1:         Start 147: sample_useraddedctor
+RUN 1: 147/158 Test #147: sample_useraddedctor ...............................................   Passed    1.70 sec
+RUN 1:         Start 148: sample_virtualdtor
+RUN 1: 148/158 Test #148: sample_virtualdtor .................................................   Passed    2.00 sec
+RUN 1:         Start 149: sample_virtualmethods
+RUN 1: 149/158 Test #149: sample_virtualmethods ..............................................   Passed    1.78 sec
+RUN 1:         Start 150: sample_visibilitychange
+RUN 1: 150/158 Test #150: sample_visibilitychange ............................................   Passed    1.70 sec
+RUN 1:         Start 151: sample_voidholder
+RUN 1: 151/158 Test #151: sample_voidholder ..................................................   Passed    1.70 sec
+RUN 1:         Start 152: sample_weakref
+RUN 1: 152/158 Test #152: sample_weakref .....................................................   Passed    1.72 sec
+RUN 1:         Start 153: sample_writableclassdict
+RUN 1: 153/158 Test #153: sample_writableclassdict ...........................................   Passed    1.70 sec
+RUN 1:         Start 154: shiboken_module
+RUN 1: 154/158 Test #154: shiboken_module ....................................................   Passed    1.71 sec
+RUN 1:         Start 155: smart_smart_pointer
+RUN 1: 155/158 Test #155: smart_smart_pointer ................................................   Passed    1.88 sec
+RUN 1:         Start 156: smart_std_optional
+RUN 1: 156/158 Test #156: smart_std_optional .................................................   Passed    1.68 sec
+RUN 1:         Start 157: smart_std_shared_ptr
+RUN 1: 157/158 Test #157: smart_std_shared_ptr ...............................................   Passed    1.68 sec
+RUN 1:         Start 158: smart_std_unique_ptr
+RUN 1: 158/158 Test #158: smart_std_unique_ptr ...............................................   Passed    1.69 sec
+RUN 1: 
+RUN 1: 100% tests passed out of 158
+RUN 1: 
+RUN 1: Total Test time (real) = 332.96 sec
+End of the test run
+
+
+RES 1: Test   #1: PASS   minimal::brace_pattern()
+RES 1: Test   #2: PASS   minimal::containeruser()
+RES 1: Test   #3: PASS   minimal::listuser()
+RES 1: Test   #4: PASS   minimal::minbool()
+RES 1: Test   #5: PASS   minimal::obj()
+RES 1: Test   #6: PASS   minimal::spanuser()
+RES 1: Test   #7: PASS   minimal::typedef()
+RES 1: Test   #8: PASS   minimal::val()
+RES 1: Test   #9: PASS   other::collector_external_operator()
+RES 1: Test  #10: PASS   other::conversion_operator_for_class_without_implicit_conversions()
+RES 1: Test  #11: PASS   other::extended_multiply_operator()
+RES 1: Test  #12: PASS   other::module_reload()
+RES 1: Test  #13: PASS   other::new_ctor_operator()
+RES 1: Test  #14: PASS   other::objtypehashes()
+RES 1: Test  #15: PASS   other::otherderived()
+RES 1: Test  #16: PASS   other::othertypesystypedef()
+RES 1: Test  #17: PASS   other::signature()
+RES 1: Test  #18: PASS   other::smartptr()
+RES 1: Test  #19: PASS   other::star_import()
+RES 1: Test  #20: PASS   other::typediscovery()
+RES 1: Test  #21: PASS   other::usersprimitivefromothermodule()
+RES 1: Test  #22: PASS   other::wrongctor()
+RES 1: Test  #23: PASS   sample::__del__()
+RES 1: Test  #24: PASS   sample::abstract()
+RES 1: Test  #25: PASS   sample::addedfunction()
+RES 1: Test  #26: PASS   sample::addedfunction_with_container_args()
+RES 1: Test  #27: PASS   sample::argumentmodifications()
+RES 1: Test  #28: PASS   sample::array_numpy()
+RES 1: Test  #29: PASS   sample::array_sequence()
+RES 1: Test  #30: PASS   sample::bug_554()
+RES 1: Test  #31: PASS   sample::bug_704()
+RES 1: Test  #32: PASS   sample::bytearray()
+RES 1: Test  #33: PASS   sample::child_return()
+RES 1: Test  #34: PASS   sample::class_fields()
+RES 1: Test  #35: PASS   sample::collector()
+RES 1: Test  #36: PASS   sample::complex()
+RES 1: Test  #37: PASS   sample::conversion_operator()
+RES 1: Test  #38: PASS   sample::copy()
+RES 1: Test  #39: PASS   sample::ctorconvrule()
+RES 1: Test  #40: PASS   sample::cyclic()
+RES 1: Test  #41: PASS   sample::date()
+RES 1: Test  #42: PASS   sample::dealloc_resurrect()
+RES 1: Test  #43: PASS   sample::decisor()
+RES 1: Test  #44: PASS   sample::delete()
+RES 1: Test  #45: PASS   sample::deprecated()
+RES 1: Test  #46: PASS   sample::derived()
+RES 1: Test  #47: PASS   sample::duck_punching()
+RES 1: Test  #48: PASS   sample::echo()
+RES 1: Test  #49: PASS   sample::enum()
+RES 1: Test  #50: PASS   sample::enumfromremovednamespace()
+RES 1: Test  #51: PASS   sample::event_loop_call_virtual()
+RES 1: Test  #52: PASS   sample::event_loop_thread()
+RES 1: Test  #53: PASS   sample::exception()
+RES 1: Test  #54: PASS   sample::filter()
+RES 1: Test  #55: PASS   sample::free_threading_stress()
+RES 1: Test  #56: PASS   sample::handleholder()
+RES 1: Test  #57: PASS   sample::hashabletype()
+RES 1: Test  #58: PASS   sample::ignorederefop()
+RES 1: Test  #59: PASS   sample::implicitconv_numerical()
+RES 1: Test  #60: PASS   sample::implicitconv()
+RES 1: Test  #61: PASS   sample::inheritanceandscope()
+RES 1: Test  #62: PASS   sample::injectcode()
+RES 1: Test  #63: PASS   sample::innerclass()
+RES 1: Test  #64: PASS   sample::intlist()
+RES 1: Test  #65: PASS   sample::intwrapper()
+RES 1: Test  #66: PASS   sample::invalid_virtual_return()
+RES 1: Test  #67: PASS   sample::keep_reference()
+RES 1: Test  #68: PASS   sample::list()
+RES 1: Test  #69: PASS   sample::lock()
+RES 1: Test  #70: PASS   sample::map()
+RES 1: Test  #71: PASS   sample::metaclass()
+RES 1: Test  #72: PASS   sample::mi_virtual_methods()
+RES 1: Test  #73: PASS   sample::mixed_mi()
+RES 1: Test  #74: PASS   sample::modelindex()
+RES 1: Test  #75: PASS   sample::modelview()
+RES 1: Test  #76: PASS   sample::modifications()
+RES 1: Test  #77: PASS   sample::modified_constructor()
+RES 1: Test  #78: PASS   sample::modifiedvirtualmethods()
+RES 1: Test  #79: PASS   sample::multi_cpp_inheritance()
+RES 1: Test  #80: PASS   sample::multiple_derived()
+RES 1: Test  #81: PASS   sample::namespace()
+RES 1: Test  #82: PASS   sample::newdivision()
+RES 1: Test  #83: PASS   sample::nondefaultctor()
+RES 1: Test  #84: PASS   sample::nontypetemplate()
+RES 1: Test  #85: PASS   sample::nonzero()
+RES 1: Test  #86: PASS   sample::numericaltypedef()
+RES 1: Test  #87: PASS   sample::numpy()
+RES 1: Test  #88: PASS   sample::objecttype()
+RES 1: Test  #89: PASS   sample::objecttype_with_named_args()
+RES 1: Test  #90: PASS   sample::objecttypebyvalue()
+RES 1: Test  #91: PASS   sample::objecttypelayout()
+RES 1: Test  #92: PASS   sample::objecttypeoperators()
+RES 1: Test  #93: PASS   sample::objecttypereferenceasvirtualmethodargument()
+RES 1: Test  #94: PASS   sample::oddbool()
+RES 1: Test  #95: PASS   sample::onlycopyclass()
+RES 1: Test  #96: PASS   sample::overflow()
+RES 1: Test  #97: PASS   sample::overload_sorting()
+RES 1: Test  #98: PASS   sample::overload()
+RES 1: Test  #99: PASS   sample::overloadwithdefault()
+RES 1: Test #100: PASS   sample::ownership_argument_invalidation()
+RES 1: Test #101: PASS   sample::ownership_delete_child_in_cpp()
+RES 1: Test #102: PASS   sample::ownership_delete_child_in_python()
+RES 1: Test #103: PASS   sample::ownership_delete_parent()
+RES 1: Test #104: PASS   sample::ownership_invalidate_after_use()
+RES 1: Test #105: PASS   sample::ownership_invalidate_child()
+RES 1: Test #106: PASS   sample::ownership_invalidate_nonpolymorphic()
+RES 1: Test #107: PASS   sample::ownership_invalidate_parent()
+RES 1: Test #108: PASS   sample::ownership_invalidate_referred()
+RES 1: Test #109: PASS   sample::ownership_reparenting()
+RES 1: Test #110: PASS   sample::ownership_transference()
+RES 1: Test #111: PASS   sample::pair()
+RES 1: Test #112: PASS   sample::pen()
+RES 1: Test #113: PASS   sample::point()
+RES 1: Test #114: PASS   sample::pointerholder()
+RES 1: Test #115: PASS   sample::pointerprimitivetype()
+RES 1: Test #116: PASS   sample::pointf()
+RES 1: Test #117: PASS   sample::primitivereferenceargument()
+RES 1: Test #118: PASS   sample::privatector()
+RES 1: Test #119: PASS   sample::privatedtor()
+RES 1: Test #120: PASS   sample::protected()
+RES 1: Test #121: PASS   sample::pstrlist()
+RES 1: Test #122: PASS   sample::pystr()
+RES 1: Test #123: PASS   sample::python_thread()
+RES 1: Test #124: PASS   sample::receive_null_cstring()
+RES 1: Test #125: PASS   sample::reference()
+RES 1: Test #126: PASS   sample::referencetopointer()
+RES 1: Test #127: PASS   sample::renaming()
+RES 1: Test #128: PASS   sample::return_null()
+RES 1: Test #129: PASS   sample::richcompare()
+RES 1: Test #130: PASS   sample::sample()
+RES 1: Test #131: PASS   sample::simplefile()
+RES 1: Test #132: PASS   sample::size()
+RES 1: Test #133: PASS   sample::snakecase()
+RES 1: Test #134: PASS   sample::spaceship()
+RES 1: Test #135: PASS   sample::static_nonstatic_methods()
+RES 1: Test #136: PASS   sample::stdcomplex()
+RES 1: Test #137: PASS   sample::str()
+RES 1: Test #138: PASS   sample::strlist()
+RES 1: Test #139: PASS   sample::templateinheritingclass()
+RES 1: Test #140: PASS   sample::time()
+RES 1: Test #141: PASS   sample::transform()
+RES 1: Test #142: PASS   sample::typeconverters()
+RES 1: Test #143: PASS   sample::typedealloc()
+RES 1: Test #144: PASS   sample::typedtordoublefree()
+RES 1: Test #145: PASS   sample::typesystypedef()
+RES 1: Test #146: PASS   sample::unsafe_parent()
+RES 1: Test #147: PASS   sample::useraddedctor()
+RES 1: Test #148: PASS   sample::virtualdtor()
+RES 1: Test #149: PASS   sample::virtualmethods()
+RES 1: Test #150: PASS   sample::visibilitychange()
+RES 1: Test #151: PASS   sample::voidholder()
+RES 1: Test #152: PASS   sample::weakref()
+RES 1: Test #153: PASS   sample::writableclassdict()
+RES 1: Test #154: PASS   shiboken::module()
+RES 1: Test #155: PASS   smart::smart_pointer()
+RES 1: Test #156: PASS   smart::std_optional()
+RES 1: Test #157: PASS   smart::std_shared_ptr()
+RES 1: Test #158: PASS   smart::std_unique_ptr()
+
+  #### Top 20 slow tests:
+    minimal_listuser                                    56.63s
+    sample_free_threading_stress                         3.66s
+    minimal_brace_pattern                                3.31s
+    other_collector_external_operator                    2.49s
+    sample_protected                                     2.45s
+    sample_cyclic                                        2.17s
+    minimal_containeruser                                2.03s
+    sample_modifications                                 2.01s
+    sample_python_thread                                  2.0s
+    sample_virtualdtor                                    2.0s
+    sample_lock                                          1.99s
+    sample_event_loop_thread                             1.98s
+    sample_sample                                        1.93s
+    sample_modifiedvirtualmethods                        1.91s
+    sample_objecttypelayout                              1.91s
+    smart_smart_pointer                                  1.88s
+    sample_overload                                      1.83s
+    sample_privatedtor                                   1.83s
+    sample_argumentmodifications                         1.82s
+    sample_ownership_delete_parent                       1.82s
+
+Totals: 158 tests. 158 passed, 0 failed, 0 skipped, 0 blacklisted, 0 bpassed.
+
+********* Finished testing of shiboken6 *********
+
+
+********* Start testing of shiboken6 *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+--- no re-runs found, stopping before test 2 ---
+
+********* Start testing of pyside6 *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+running ('/opt/homebrew/Cellar/cmake/4.4.3/bin/ctest', '--output-log', '/Users/tismer/src/QtC/pyside-setup/build_history/2026-09-04_013257/pyside6.1.log')
+     in /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6
+
+RUN 1: Test project /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6
+RUN 1:         Start   1: pysidetest_mypy_correctness_test
+RUN 1:   1/543 Test   #1: pysidetest_mypy_correctness_test .....................   Passed    1.84 sec
+RUN 1:         Start   2: pysidetest_constructor_properties_test
+RUN 1:   2/543 Test   #2: pysidetest_constructor_properties_test ...............   Passed    7.45 sec
+RUN 1:         Start   3: pysidetest_container_test
+RUN 1:   3/543 Test   #3: pysidetest_container_test ............................   Passed    4.74 sec
+RUN 1:         Start   4: pysidetest_decoratedslot_test
+RUN 1:   4/543 Test   #4: pysidetest_decoratedslot_test ........................   Passed    4.28 sec
+RUN 1:         Start   5: pysidetest_delegatecreateseditor_test
+RUN 1:   5/543 Test   #5: pysidetest_delegatecreateseditor_test ................   Passed    4.94 sec
+RUN 1:         Start   6: pysidetest_disable_gil_threadpool_test
+RUN 1:   6/543 Test   #6: pysidetest_disable_gil_threadpool_test ...............   Passed    4.77 sec
+RUN 1:         Start   7: pysidetest_all_modules_load_test
+RUN 1:   7/543 Test   #7: pysidetest_all_modules_load_test .....................   Passed   19.89 sec
+RUN 1:         Start   8: pysidetest_bug_1016
+RUN 1:   8/543 Test   #8: pysidetest_bug_1016 ..................................   Passed    4.75 sec
+RUN 1:         Start   9: pysidetest_enum_test
+RUN 1:   9/543 Test   #9: pysidetest_enum_test .................................   Passed    4.56 sec
+RUN 1:         Start  10: pysidetest_homonymoussignalandmethod_test
+RUN 1:  10/543 Test  #10: pysidetest_homonymoussignalandmethod_test ............   Passed    4.27 sec
+RUN 1:         Start  11: pysidetest_iterable_test
+RUN 1:  11/543 Test  #11: pysidetest_iterable_test .............................   Passed    4.69 sec
+RUN 1:         Start  12: pysidetest_lazy_type_race_test
+RUN 1:  12/543 Test  #12: pysidetest_lazy_type_race_test .......................   Passed    5.09 sec
+RUN 1:         Start  13: pysidetest_list_signal_test
+RUN 1:  13/543 Test  #13: pysidetest_list_signal_test ..........................   Passed    4.22 sec
+RUN 1:         Start  14: pysidetest_mixin_signal_slots_test
+RUN 1:  14/543 Test  #14: pysidetest_mixin_signal_slots_test ...................   Passed    4.12 sec
+RUN 1:         Start  15: pysidetest_modelview_test
+RUN 1:  15/543 Test  #15: pysidetest_modelview_test ............................   Passed    4.25 sec
+RUN 1:         Start  16: pysidetest_multiple_inheritance_test
+RUN 1:  16/543 Test  #16: pysidetest_multiple_inheritance_test .................   Passed    4.50 sec
+RUN 1:         Start  17: pysidetest_new_inherited_functions_test
+RUN 1:  17/543 Test  #17: pysidetest_new_inherited_functions_test ..............   Passed    6.83 sec
+RUN 1:         Start  18: pysidetest_notify_id
+RUN 1:  18/543 Test  #18: pysidetest_notify_id .................................   Passed    4.12 sec
+RUN 1:         Start  19: pysidetest_properties_test
+RUN 1:  19/543 Test  #19: pysidetest_properties_test ...........................   Passed    4.16 sec
+RUN 1:         Start  20: pysidetest_property_python_test
+RUN 1:  20/543 Test  #20: pysidetest_property_python_test ......................   Passed    4.18 sec
+RUN 1:         Start  21: pysidetest_snake_case_test
+RUN 1:  21/543 Test  #21: pysidetest_snake_case_test ...........................   Passed    4.56 sec
+RUN 1:         Start  22: pysidetest_true_property_test
+RUN 1:  22/543 Test  #22: pysidetest_true_property_test ........................   Passed    6.61 sec
+RUN 1:         Start  23: pysidetest_qapp_like_a_macro_test
+RUN 1:  23/543 Test  #23: pysidetest_qapp_like_a_macro_test ....................   Passed    4.37 sec
+RUN 1:         Start  24: pysidetest_qvariant_test
+RUN 1:  24/543 Test  #24: pysidetest_qvariant_test .............................   Passed    4.75 sec
+RUN 1:         Start  25: pysidetest_repr_test
+RUN 1:  25/543 Test  #25: pysidetest_repr_test .................................   Passed    4.21 sec
+RUN 1:         Start  26: pysidetest_shared_pointer_test
+RUN 1:  26/543 Test  #26: pysidetest_shared_pointer_test .......................   Passed    4.73 sec
+RUN 1:         Start  27: pysidetest_signal_tp_descr_get_test
+RUN 1:  27/543 Test  #27: pysidetest_signal_tp_descr_get_test ..................   Passed    4.08 sec
+RUN 1:         Start  28: pysidetest_signal_slot_lock_inversion_test
+RUN 1:  28/543 Test  #28: pysidetest_signal_slot_lock_inversion_test ...........   Passed    5.05 sec
+RUN 1:         Start  29: pysidetest_signal_slot_warning
+RUN 1:  29/543 Test  #29: pysidetest_signal_slot_warning .......................   Passed   46.10 sec
+RUN 1:         Start  30: pysidetest_signalandnamespace_test
+RUN 1:  30/543 Test  #30: pysidetest_signalandnamespace_test ...................   Passed    4.15 sec
+RUN 1:         Start  31: pysidetest_signalemissionfrompython_test
+RUN 1:  31/543 Test  #31: pysidetest_signalemissionfrompython_test .............   Passed    4.25 sec
+RUN 1:         Start  32: pysidetest_signalinstance_equality_test
+RUN 1:  32/543 Test  #32: pysidetest_signalinstance_equality_test ..............   Passed    4.40 sec
+RUN 1:         Start  33: pysidetest_signalwithdefaultvalue_test
+RUN 1:  33/543 Test  #33: pysidetest_signalwithdefaultvalue_test ...............   Passed    4.51 sec
+RUN 1:         Start  34: pysidetest_typedef_signal_test
+RUN 1:  34/543 Test  #34: pysidetest_typedef_signal_test .......................   Passed    4.20 sec
+RUN 1:         Start  35: pysidetest_version_test
+RUN 1:  35/543 Test  #35: pysidetest_version_test ..............................   Passed    1.69 sec
+RUN 1:         Start  36: pysidetest_mock_as_slot_test
+RUN 1:  36/543 Test  #36: pysidetest_mock_as_slot_test .........................   Passed    4.83 sec
+RUN 1:         Start  37: pysidetest_pyenum_relax_options_and_lazy_star_test
+RUN 1:  37/543 Test  #37: pysidetest_pyenum_relax_options_and_lazy_star_test ...   Passed   57.32 sec
+RUN 1:         Start  38: QtAsyncio_bug_2790
+RUN 1:  38/543 Test  #38: QtAsyncio_bug_2790 ...................................***Failed    4.59 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   default_policy = asyncio.get_event_loop_policy()
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseBug2790.task' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_timeout (__main__.QAsyncioTestCaseBug2790.test_timeout)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/bug_2790.py", line 49, in test_timeout
+RUN 1:     QtAsyncio.run(self.task(outputs_real), keep_running=False)
+RUN 1:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+RUN 1:     ret = asyncio.run(coro, debug=debug)
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.077s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  39: QtAsyncio_bug_2799
+RUN 1:  39/543 Test  #39: QtAsyncio_bug_2799 ...................................***Failed    4.45 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   default_policy = asyncio.get_event_loop_policy()
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/traceback.py:312: RuntimeWarning: coroutine 'QAsyncioTestCaseBug2799.main' was never awaited
+RUN 1:   tb.tb_frame.clear()
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: E
+RUN 1: ======================================================================
+RUN 1: ERROR: test_exception_group (__main__.QAsyncioTestCaseBug2799.test_exception_group)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/bug_2799.py", line 32, in test_exception_group
+RUN 1:     QtAsyncio.run(self.main(), keep_running=False)
+RUN 1:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+RUN 1:     ret = asyncio.run(coro, debug=debug)
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.073s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  40: QtAsyncio_qasyncio_test
+RUN 1:  40/543 Test  #40: QtAsyncio_qasyncio_test ..............................***Failed    5.00 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:48: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:48: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:52: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCase.gather' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:34: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:34: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:38: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCase.sleep' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_gather (__main__.QAsyncioTestCase.test_gather)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py", line 53, in test_gather
+RUN 1:     asyncio.run(self.gather(outputs_real))
+RUN 1:     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_sleep (__main__.QAsyncioTestCase.test_sleep)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py", line 39, in test_sleep
+RUN 1:     asyncio.run(self.sleep(outputs_real))
+RUN 1:     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 2 tests in 0.582s
+RUN 1: 
+RUN 1: FAILED (errors=2)
+RUN 1: 
+RUN 1:         Start  41: QtAsyncio_qasyncio_test_cancel_task
+RUN 1:  41/543 Test  #41: QtAsyncio_qasyncio_test_cancel_task ..................***Failed    4.58 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   default_policy = asyncio.get_event_loop_policy()
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseCancelTask.main' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_await_tasks (__main__.QAsyncioTestCaseCancelTask.test_await_tasks)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_cancel_task.py", line 48, in test_await_tasks
+RUN 1:     QtAsyncio.run(self.main(output_real), keep_running=False)
+RUN 1:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+RUN 1:     ret = asyncio.run(coro, debug=debug)
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.193s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  42: QtAsyncio_qasyncio_test_cancel_taskgroup
+RUN 1:  42/543 Test  #42: QtAsyncio_qasyncio_test_cancel_taskgroup .............***Failed    4.48 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   default_policy = asyncio.get_event_loop_policy()
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseCancelTaskGroup.main' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_cancel_taskgroup (__main__.QAsyncioTestCaseCancelTaskGroup.test_cancel_taskgroup)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_cancel_taskgroup.py", line 68, in test_cancel_taskgroup
+RUN 1:     QtAsyncio.run(self.main(coro), keep_running=False)
+RUN 1:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+RUN 1:     ret = asyncio.run(coro, debug=debug)
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.074s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  43: QtAsyncio_qasyncio_test_chain
+RUN 1:  43/543 Test  #43: QtAsyncio_qasyncio_test_chain ........................***Failed    5.22 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:48: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:48: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:55: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseChain.gather' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_chain (__main__.QAsyncioTestCaseChain.test_chain)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py", line 57, in test_chain
+RUN 1:     asyncio.run(self.gather(outputs_real, *args))
+RUN 1:     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.831s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  44: QtAsyncio_qasyncio_test_executor
+RUN 1:  44/543 Test  #44: QtAsyncio_qasyncio_test_executor .....................   Passed    4.44 sec
+RUN 1:         Start  45: QtAsyncio_qasyncio_test_queues
+RUN 1:  45/543 Test  #45: QtAsyncio_qasyncio_test_queues .......................***Failed    5.59 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:61: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:68: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseQueues.main' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_queues (__main__.QAsyncioTestCaseQueues.test_queues)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py", line 69, in test_queues
+RUN 1:     asyncio.run(self.main(outputs_real1, outputs_real2, *arg))
+RUN 1:     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 1.207s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  46: QtAsyncio_qasyncio_test_threadsafe
+RUN 1:  46/543 Test  #46: QtAsyncio_qasyncio_test_threadsafe ...................   Passed    4.38 sec
+RUN 1:         Start  47: QtAsyncio_qasyncio_test_time
+RUN 1:  47/543 Test  #47: QtAsyncio_qasyncio_test_time .........................***Failed    4.46 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_time.py:41: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_time (__main__.QAsyncioTestCaseTime.test_time)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_time.py", line 42, in test_time
+RUN 1:     loop = asyncio.new_event_loop()
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 0.063s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  48: QtAsyncio_qasyncio_test_uncancel
+RUN 1:  48/543 Test  #48: QtAsyncio_qasyncio_test_uncancel .....................***Failed    7.04 sec
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   default_policy = asyncio.get_event_loop_policy()
+RUN 1: /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+RUN 1:   asyncio.set_event_loop_policy(
+RUN 1: E/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+RUN 1:   _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+RUN 1: ResourceWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseUncancel.main' was never awaited
+RUN 1:   with outcome.testPartExecutor(self):
+RUN 1: RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: ERROR: test_uncancel (__main__.QAsyncioTestCaseUncancel.test_uncancel)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_uncancel.py", line 62, in test_uncancel
+RUN 1:     QtAsyncio.run(self.main(outputs_expected), keep_running=False)
+RUN 1:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+RUN 1:     ret = asyncio.run(coro, debug=debug)
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 204, in run
+RUN 1:     with Runner(debug=debug, loop_factory=loop_factory) as runner:
+RUN 1:          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+RUN 1:     self._lazy_init()
+RUN 1:     ~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+RUN 1:     self._loop = events.new_event_loop()
+RUN 1:                  ~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+RUN 1:     return _get_event_loop_policy().new_event_loop()
+RUN 1:            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+RUN 1:     return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+RUN 1:     self._default_executor = concurrent.futures.ThreadPoolExecutor()
+RUN 1:                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RUN 1: TypeError: 'lazy_import' object is not callable
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 1 test in 2.639s
+RUN 1: 
+RUN 1: FAILED (errors=1)
+RUN 1: 
+RUN 1:         Start  49: QtQmlFeatures_test_auto_properties
+RUN 1:  49/543 Test  #49: QtQmlFeatures_test_auto_properties ...................   Passed    4.66 sec
+RUN 1:         Start  50: QtQmlFeatures_test_computed
+RUN 1:  50/543 Test  #50: QtQmlFeatures_test_computed ..........................   Passed    4.16 sec
+RUN 1:         Start  51: QtQmlFeatures_test_effect
+RUN 1:  51/543 Test  #51: QtQmlFeatures_test_effect ............................   Passed    4.18 sec
+RUN 1:         Start  52: QtQmlFeatures_test_qml_component
+RUN 1:  52/543 Test  #52: QtQmlFeatures_test_qml_component .....................   Passed    5.00 sec
+RUN 1:         Start  53: QtQmlFeatures_test_watch
+RUN 1:  53/543 Test  #53: QtQmlFeatures_test_watch .............................   Passed    4.17 sec
+RUN 1:         Start  54: registry_existence_test
+RUN 1:  54/543 Test  #54: registry_existence_test ..............................***Timeout  60.09 sec
+RUN 1: ssType conversion already registered from type QFuture<QString> to type QFuture<void>
+RUN 1: .
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 3 tests in 43.891s
+RUN 1: 
+RUN 1: OK (skipped=2)
+RUN 1: *** not found: sources/pyside6/tests/registry/exists_darwin_6_12_0.py
+RUN 1: 
+RUN 1:         Start  55: signals_anonymous_slot_leak_test
+RUN 1:  55/543 Test  #55: signals_anonymous_slot_leak_test .....................   Passed    4.11 sec
+RUN 1:         Start  56: signals_args_dont_match_test
+RUN 1:  56/543 Test  #56: signals_args_dont_match_test .........................   Passed   18.09 sec
+RUN 1:         Start  57: signals_bug_79
+RUN 1:  57/543 Test  #57: signals_bug_79 .......................................   Passed    4.46 sec
+RUN 1:         Start  58: signals_bug_189
+RUN 1:  58/543 Test  #58: signals_bug_189 ......................................   Passed    4.42 sec
+RUN 1:         Start  59: signals_bug_311
+RUN 1:  59/543 Test  #59: signals_bug_311 ......................................   Passed    4.13 sec
+RUN 1:         Start  60: signals_bug_312
+RUN 1:  60/543 Test  #60: signals_bug_312 ......................................   Passed    4.32 sec
+RUN 1:         Start  61: signals_bug_319
+RUN 1:  61/543 Test  #61: signals_bug_319 ......................................   Passed    4.14 sec
+RUN 1:         Start  62: signals_decorators_test
+RUN 1:  62/543 Test  #62: signals_decorators_test ..............................   Passed    4.03 sec
+RUN 1:         Start  63: signals_disconnect_test
+RUN 1:  63/543 Test  #63: signals_disconnect_test ..............................   Passed    4.27 sec
+RUN 1:         Start  64: signals_invalid_callback_test
+RUN 1:  64/543 Test  #64: signals_invalid_callback_test ........................   Passed    4.05 sec
+RUN 1:         Start  65: signals_lambda_gui_test
+RUN 1:  65/543 Test  #65: signals_lambda_gui_test ..............................   Passed    4.47 sec
+RUN 1:         Start  66: signals_lambda_test
+RUN 1:  66/543 Test  #66: signals_lambda_test ..................................   Passed    4.67 sec
+RUN 1:         Start  67: signals_leaking_signal_test
+RUN 1:  67/543 Test  #67: signals_leaking_signal_test ..........................   Passed    4.09 sec
+RUN 1:         Start  68: signals_multiple_connections_gui_test
+RUN 1:  68/543 Test  #68: signals_multiple_connections_gui_test ................   Passed    4.48 sec
+RUN 1:         Start  69: signals_multiple_connections_test
+RUN 1:  69/543 Test  #69: signals_multiple_connections_test ....................   Passed    5.10 sec
+RUN 1:         Start  70: signals_private_mangle_test
+RUN 1:  70/543 Test  #70: signals_private_mangle_test ..........................   Passed    4.17 sec
+RUN 1:         Start  71: signals_pysignal_test
+RUN 1:  71/543 Test  #71: signals_pysignal_test ................................   Passed    5.03 sec
+RUN 1:         Start  72: signals_qobject_callable_connect_test
+RUN 1:  72/543 Test  #72: signals_qobject_callable_connect_test ................   Passed    4.11 sec
+RUN 1:         Start  73: signals_qobject_destroyed_test
+RUN 1:  73/543 Test  #73: signals_qobject_destroyed_test .......................   Passed    4.05 sec
+RUN 1:         Start  74: signals_qobject_receivers_test
+RUN 1:  74/543 Test  #74: signals_qobject_receivers_test .......................   Passed    4.13 sec
+RUN 1:         Start  75: signals_qobject_sender_test
+RUN 1:  75/543 Test  #75: signals_qobject_sender_test ..........................   Passed    4.31 sec
+RUN 1:         Start  76: signals_nonqobject_receivers_test
+RUN 1:  76/543 Test  #76: signals_nonqobject_receivers_test ....................   Passed    4.34 sec
+RUN 1:         Start  77: signals_ref01_test
+RUN 1:  77/543 Test  #77: signals_ref01_test ...................................   Passed    4.09 sec
+RUN 1:         Start  78: signals_ref02_test
+RUN 1:  78/543 Test  #78: signals_ref02_test ...................................   Passed    4.35 sec
+RUN 1:         Start  79: signals_ref03_test
+RUN 1:  79/543 Test  #79: signals_ref03_test ...................................   Passed    4.11 sec
+RUN 1:         Start  80: signals_ref04_test
+RUN 1:  80/543 Test  #80: signals_ref04_test ...................................   Passed    4.11 sec
+RUN 1:         Start  81: signals_ref05_test
+RUN 1:  81/543 Test  #81: signals_ref05_test ...................................   Passed    4.25 sec
+RUN 1:         Start  82: signals_ref06_test
+RUN 1:  82/543 Test  #82: signals_ref06_test ...................................   Passed    4.25 sec
+RUN 1:         Start  83: signals_segfault_proxyparent_test
+RUN 1:  83/543 Test  #83: signals_segfault_proxyparent_test ....................   Passed    4.14 sec
+RUN 1:         Start  84: signals_self_connect_test
+RUN 1:  84/543 Test  #84: signals_self_connect_test ............................   Passed    4.51 sec
+RUN 1:         Start  85: signals_short_circuit_test
+RUN 1:  85/543 Test  #85: signals_short_circuit_test ...........................   Passed    4.14 sec
+RUN 1:         Start  86: signals_signal2signal_connect_test
+RUN 1:  86/543 Test  #86: signals_signal2signal_connect_test ...................   Passed    4.29 sec
+RUN 1:         Start  87: signals_signal_across_threads
+RUN 1:  87/543 Test  #87: signals_signal_across_threads ........................   Passed    4.20 sec
+RUN 1:         Start  88: signals_signal_autoconnect_test
+RUN 1:  88/543 Test  #88: signals_signal_autoconnect_test ......................   Passed    4.36 sec
+RUN 1:         Start  89: signals_signal_connectiontype_support_test
+RUN 1:  89/543 Test  #89: signals_signal_connectiontype_support_test ...........   Passed    4.39 sec
+RUN 1:         Start  90: signals_signal_emission_gui_test
+RUN 1:  90/543 Test  #90: signals_signal_emission_gui_test .....................   Passed    4.56 sec
+RUN 1:         Start  91: signals_signal_emission_test
+RUN 1:  91/543 Test  #91: signals_signal_emission_test .........................   Passed    4.76 sec
+RUN 1:         Start  92: signals_signal_enum_test
+RUN 1:  92/543 Test  #92: signals_signal_enum_test .............................   Passed    4.09 sec
+RUN 1:         Start  93: signals_signal_func_test
+RUN 1:  93/543 Test  #93: signals_signal_func_test .............................   Passed    4.00 sec
+RUN 1:         Start  94: signals_signal_manager_refcount_test
+RUN 1:  94/543 Test  #94: signals_signal_manager_refcount_test .................   Passed    4.02 sec
+RUN 1:         Start  95: signals_signal_newenum_test
+RUN 1:  95/543 Test  #95: signals_signal_newenum_test ..........................   Passed    4.40 sec
+RUN 1:         Start  96: signals_signal_number_limit_test
+RUN 1:  96/543 Test  #96: signals_signal_number_limit_test .....................   Passed    3.99 sec
+RUN 1:         Start  97: signals_signal_object_test
+RUN 1:  97/543 Test  #97: signals_signal_object_test ...........................   Passed    4.74 sec
+RUN 1:         Start  98: signals_signal_signature_test
+RUN 1:  98/543 Test  #98: signals_signal_signature_test ........................   Passed    4.27 sec
+RUN 1:         Start  99: signals_signal_with_primitive_type_test
+RUN 1:  99/543 Test  #99: signals_signal_with_primitive_type_test ..............   Passed    4.16 sec
+RUN 1:         Start 100: signals_slot_reference_count_test
+RUN 1: 100/543 Test #100: signals_slot_reference_count_test ....................   Passed    4.09 sec
+RUN 1:         Start 101: signals_static_metaobject_test
+RUN 1: 101/543 Test #101: signals_static_metaobject_test .......................   Passed    4.16 sec
+RUN 1:         Start 102: support_voidptr_test
+RUN 1: 102/543 Test #102: support_voidptr_test .................................   Passed    4.07 sec
+RUN 1:         Start 103: metaobjectdump_test_metaobjectdump
+RUN 1: 103/543 Test #103: metaobjectdump_test_metaobjectdump ...................   Passed    6.64 sec
+RUN 1:         Start 104: pyside6-deploy_test_pyside6_deploy
+RUN 1: 104/543 Test #104: pyside6-deploy_test_pyside6_deploy ...................***Failed   32.25 sec
+RUN 1: ..s/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtCore not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtCore.framework/Versions/A/QtCore.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQml not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtQml.framework/Versions/A/QtQml.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtGui not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtGui.framework/Versions/A/QtGui.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQuick not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtQuick.framework/Versions/A/QtQuick.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: .F.s.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtWidgets not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtWidgets.framework/Versions/A/QtWidgets.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: /Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtNetwork not found in /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtNetwork.framework/Versions/A/QtNetwork.Skipping finding its dependencies.
+RUN 1:   warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+RUN 1: .WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: .WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: .WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: .WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: .WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+RUN 1: No project file found in the current directory.
+RUN 1: .
+RUN 1: ======================================================================
+RUN 1: FAIL: testQmlConfigFile (__main__.TestPySide6DeployQml.testQmlConfigFile)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+RUN 1:     return func(*newargs, **newkeywargs)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 416, in testQmlConfigFile
+RUN 1:     self.assertEqual(obtained_modules, expected_modules)
+RUN 1:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1: AssertionError: Items in the second set but not the first:
+RUN 1: 'DBus'
+RUN 1: 'QmlModels'
+RUN 1: 'OpenGL'
+RUN 1: 'Network'
+RUN 1: 'QmlMeta'
+RUN 1: 'QmlWorkerScript'
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: FAIL: testExtraIgnoreDirs (__main__.TestPySide6DeployWidgets.testExtraIgnoreDirs)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+RUN 1:     return func(*newargs, **newkeywargs)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 271, in testExtraIgnoreDirs
+RUN 1:     self.assertEqual(obtained_modules, expected_modules)
+RUN 1:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1: AssertionError: Items in the second set but not the first:
+RUN 1: 'DBus'
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: FAIL: testExtraModules (__main__.TestPySide6DeployWidgets.testExtraModules)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+RUN 1:     return func(*newargs, **newkeywargs)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 244, in testExtraModules
+RUN 1:     self.assertEqual(obtained_modules, expected_modules)
+RUN 1:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1: AssertionError: Items in the second set but not the first:
+RUN 1: 'DBus'
+RUN 1: 
+RUN 1: ======================================================================
+RUN 1: FAIL: testWidgetConfigFile (__main__.TestPySide6DeployWidgets.testWidgetConfigFile)
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Traceback (most recent call last):
+RUN 1:   File "/Users/tismer/.pyenv/versions/3.15.0b4t-tsan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+RUN 1:     return func(*newargs, **newkeywargs)
+RUN 1:   File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 206, in testWidgetConfigFile
+RUN 1:     self.assertEqual(obtained_modules, expected_modules)
+RUN 1:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RUN 1: AssertionError: Items in the first set but not the second:
+RUN 1: 'Network'
+RUN 1: Items in the second set but not the first:
+RUN 1: 'DBus'
+RUN 1: 
+RUN 1: ----------------------------------------------------------------------
+RUN 1: Ran 17 tests in 30.089s
+RUN 1: 
+RUN 1: FAILED (failures=4, skipped=2)
+RUN 1: 
+RUN 1:         Start 105: pyside6-qml_test_pyside6_qml
+RUN 1: 105/543 Test #105: pyside6-qml_test_pyside6_qml .........................   Passed    9.50 sec
+RUN 1:         Start 106: QtCore_attr_cache_py3k
+RUN 1: 106/543 Test #106: QtCore_attr_cache_py3k ...............................   Passed    3.77 sec
+RUN 1:         Start 107: QtCore_bug_278_test
+RUN 1: 107/543 Test #107: QtCore_bug_278_test ..................................   Passed    4.13 sec
+RUN 1:         Start 108: QtCore_bug_300_test
+RUN 1: 108/543 Test #108: QtCore_bug_300_test ..................................   Passed    4.09 sec
+RUN 1:         Start 109: QtCore_bug_324
+RUN 1: 109/543 Test #109: QtCore_bug_324 .......................................   Passed    4.10 sec
+RUN 1:         Start 110: QtCore_bug_332
+RUN 1: 110/543 Test #110: QtCore_bug_332 .......................................   Passed    4.01 sec
+RUN 1:         Start 111: QtCore_bug_408
+RUN 1: 111/543 Test #111: QtCore_bug_408 .......................................   Passed    4.12 sec
+RUN 1:         Start 112: QtCore_bug_428
+RUN 1: 112/543 Test #112: QtCore_bug_428 .......................................   Passed    4.03 sec
+RUN 1:         Start 113: QtCore_bug_462
+RUN 1: 113/543 Test #113: QtCore_bug_462 .......................................   Passed    4.12 sec
+RUN 1:         Start 114: QtCore_bug_505
+RUN 1: 114/543 Test #114: QtCore_bug_505 .......................................   Passed    4.06 sec
+RUN 1:         Start 115: QtCore_bug_515
+RUN 1: 115/543 Test #115: QtCore_bug_515 .......................................   Passed    3.78 sec
+RUN 1:         Start 116: QtCore_bug_606
+RUN 1: 116/543 Test #116: QtCore_bug_606 .......................................   Passed    4.12 sec
+RUN 1:         Start 117: QtCore_bug_656
+RUN 1: 117/543 Test #117: QtCore_bug_656 .......................................   Passed    3.76 sec
+RUN 1:         Start 118: QtCore_bug_686
+RUN 1: 118/543 Test #118: QtCore_bug_686 .......................................   Passed    4.52 sec
+RUN 1:         Start 119: QtCore_bug_699
+RUN 1: 119/543 Test #119: QtCore_bug_699 .......................................   Passed    4.08 sec
+RUN 1:         Start 120: QtCore_bug_706
+RUN 1: 120/543 Test #120: QtCore_bug_706 .......................................   Passed    4.10 sec
+RUN 1:         Start 121: QtCore_bug_820
+RUN 1: 121/543 Test #121: QtCore_bug_820 .......................................   Passed    4.05 sec
+RUN 1:         Start 122: QtCore_bug_826
+RUN 1: 122/543 Test #122: QtCore_bug_826 .......................................   Passed    4.10 sec
+RUN 1:         Start 123: QtCore_bug_829
+RUN 1: 123/543 Test #123: QtCore_bug_829 .......................................   Passed    8.18 sec
+RUN 1:         Start 124: QtCore_bug_835
+RUN 1: 124/543 Test #124: QtCore_bug_835 .......................................   Passed    4.08 sec
+RUN 1:         Start 125: QtCore_bug_920
+RUN 1: 125/543 Test #125: QtCore_bug_920 .......................................   Passed    4.08 sec
+RUN 1:         Start 126: QtCore_bug_927
+RUN 1: 126/543 Test #126: QtCore_bug_927 .......................................   Passed    4.35 sec
+RUN 1:         Start 127: QtCore_bug_931
+RUN 1: 127/543 Test #127: QtCore_bug_931 .......................................   Passed    4.09 sec
+RUN 1:         Start 128: QtCore_bug_938
+RUN 1: 128/543 Test #128: QtCore_bug_938 .......................................   Passed    4.08 sec
+RUN 1:         Start 129: QtCore_bug_953
+RUN 1: 129/543 Test #129: QtCore_bug_953 .......................................   Passed    3.80 sec
+RUN 1:         Start 130: QtCore_bug_987
+RUN 1: 130/543 Test #130: QtCore_bug_987 .......................................   Passed    4.07 sec
+RUN 1:         Start 131: QtCore_bug_994
+RUN 1: 131/543 Test #131: QtCore_bug_994 .......................................   Passed    4.10 sec
+RUN 1:         Start 132: QtCore_bug_1019
+RUN 1: 132/543 Test #132: QtCore_bug_1019 ......................................   Passed    4.10 sec
+RUN 1:         Start 133: QtCore_bug_1063
+RUN 1: 133/543 Test #133: QtCore_bug_1063 ......................................   Passed    4.10 sec
+RUN 1:         Start 134: QtCore_bug_1069
+RUN 1: 134/543 Test #134: QtCore_bug_1069 ......................................   Passed    4.10 sec
+RUN 1:         Start 135: QtCore_bug_1313
+RUN 1: 135/543 Test #135: QtCore_bug_1313 ......................................   Passed    4.09 sec
+RUN 1:         Start 136: QtCore_bug_PYSIDE-41
+RUN 1: 136/543 Test #136: QtCore_bug_PYSIDE-41 .................................   Passed    4.09 sec
+RUN 1:         Start 137: QtCore_bug_PYSIDE-42
+RUN 1: 137/543 Test #137: QtCore_bug_PYSIDE-42 .................................   Passed    4.09 sec
+RUN 1:         Start 138: QtCore_bug_PYSIDE-164
+RUN 1: 138/543 Test #138: QtCore_bug_PYSIDE-164 ................................   Passed    4.39 sec
+RUN 1:         Start 139: QtCore_bug_PYSIDE-2745
+RUN 1: 139/543 Test #139: QtCore_bug_PYSIDE-2745 ...............................   Passed    4.12 sec
+RUN 1:         Start 140: QtCore_blocking_signals_test
+RUN 1: 140/543 Test #140: QtCore_blocking_signals_test .........................   Passed    4.17 sec
+RUN 1:         Start 141: QtCore_callback_exceptions
+RUN 1: 141/543 Test #141: QtCore_callback_exceptions ...........................   Passed    4.17 sec
+RUN 1:         Start 142: QtCore_classinfo_test
+RUN 1: 142/543 Test #142: QtCore_classinfo_test ................................   Passed    4.09 sec
+RUN 1:         Start 143: QtCore_child_event_test
+RUN 1: 143/543 Test #143: QtCore_child_event_test ..............................   Passed    4.17 sec
+RUN 1:         Start 144: QtCore_deepcopy_test
+RUN 1: 144/543 Test #144: QtCore_deepcopy_test .................................   Passed    4.44 sec
+RUN 1:         Start 145: QtCore_deletelater_test
+RUN 1: 145/543 Test #145: QtCore_deletelater_test ..............................   Passed    4.22 sec
+RUN 1:         Start 146: QtCore_destroysignal_test
+RUN 1: 146/543 Test #146: QtCore_destroysignal_test ............................   Passed    9.92 sec
+RUN 1:         Start 147: QtCore_duck_punching_test
+RUN 1: 147/543 Test #147: QtCore_duck_punching_test ............................   Passed    4.20 sec
+RUN 1:         Start 148: QtCore_emoji_string_test
+RUN 1: 148/543 Test #148: QtCore_emoji_string_test .............................   Passed    3.77 sec
+RUN 1:         Start 149: QtCore_errormessages_with_features_test
+RUN 1: 149/543 Test #149: QtCore_errormessages_with_features_test ..............   Passed    6.05 sec
+RUN 1:         Start 150: QtCore_feature_with_uic_test
+RUN 1: 150/543 Test #150: QtCore_feature_with_uic_test .........................   Passed    5.13 sec
+RUN 1:         Start 151: QtCore_hash_test
+RUN 1: 151/543 Test #151: QtCore_hash_test .....................................   Passed    4.11 sec
+RUN 1:         Start 152: QtCore_inherits_test
+RUN 1: 152/543 Test #152: QtCore_inherits_test .................................   Passed    4.08 sec
+RUN 1:         Start 153: QtCore_max_signals
+RUN 1: 153/543 Test #153: QtCore_max_signals ...................................   Passed    4.12 sec
+RUN 1:         Start 154: QtCore_missing_symbols_test
+RUN 1: 154/543 Test #154: QtCore_missing_symbols_test ..........................   Passed    4.10 sec
+RUN 1:         Start 155: QtCore_mockclass_test
+RUN 1: 155/543 Test #155: QtCore_mockclass_test ................................   Passed    4.08 sec
+RUN 1:         Start 156: QtCore_multiple_feature_test
+RUN 1: 156/543 Test #156: QtCore_multiple_feature_test .........................   Passed    5.30 sec
+RUN 1:         Start 157: QtCore_python_conversion
+RUN 1: 157/543 Test #157: QtCore_python_conversion .............................   Passed    4.17 sec
+RUN 1:         Start 158: QtCore_qabs_test
+RUN 1: 158/543 Test #158: QtCore_qabs_test .....................................   Passed    4.07 sec
+RUN 1:         Start 159: QtCore_qabstractitemmodel_test
+RUN 1: 159/543 Test #159: QtCore_qabstractitemmodel_test .......................   Passed    4.39 sec
+RUN 1:         Start 160: QtCore_qanimationgroup_test
+RUN 1: 160/543 Test #160: QtCore_qanimationgroup_test ..........................   Passed    4.21 sec
+RUN 1:         Start 161: QtCore_qbitarray_test
+RUN 1: 161/543 Test #161: QtCore_qbitarray_test ................................   Passed    4.17 sec
+RUN 1:         Start 162: QtCore_qbytearray_concatenation_operator_test
+RUN 1: 162/543 Test #162: QtCore_qbytearray_concatenation_operator_test ........   Passed    4.10 sec
+RUN 1:         Start 163: QtCore_qbytearray_operator_iadd_test
+RUN 1: 163/543 Test #163: QtCore_qbytearray_operator_iadd_test .................   Passed    4.10 sec
+RUN 1:         Start 164: QtCore_qbytearray_operator_test
+RUN 1: 164/543 Test #164: QtCore_qbytearray_operator_test ......................   Passed    4.11 sec
+RUN 1:         Start 165: QtCore_qbytearray_test
+RUN 1: 165/543 Test #165: QtCore_qbytearray_test ...............................   Passed    4.69 sec
+RUN 1:         Start 166: QtCore_qcalendar_test
+RUN 1: 166/543 Test #166: QtCore_qcalendar_test ................................   Passed    4.08 sec
+RUN 1:         Start 167: QtCore_qcbor_test
+RUN 1: 167/543 Test #167: QtCore_qcbor_test ....................................   Passed   33.06 sec
+RUN 1:         Start 168: QtCore_qcollator_test
+RUN 1: 168/543 Test #168: QtCore_qcollator_test ................................   Passed    4.27 sec
+RUN 1:         Start 169: QtCore_qcommandlineparser_test
+RUN 1: 169/543 Test #169: QtCore_qcommandlineparser_test .......................   Passed    4.11 sec
+RUN 1:         Start 170: QtCore_qcoreapplication_argv_test
+RUN 1: 170/543 Test #170: QtCore_qcoreapplication_argv_test ....................   Passed    4.12 sec
+RUN 1:         Start 171: QtCore_qcoreapplication_instance_test
+RUN 1: 171/543 Test #171: QtCore_qcoreapplication_instance_test ................   Passed    4.11 sec
+RUN 1:         Start 172: QtCore_qcoreapplication_test
+RUN 1: 172/543 Test #172: QtCore_qcoreapplication_test .........................   Passed    4.10 sec
+RUN 1:         Start 173: QtCore_qdatastream_test
+RUN 1: 173/543 Test #173: QtCore_qdatastream_test ..............................   Passed    4.69 sec
+RUN 1:         Start 174: QtCore_qdatetime_test
+RUN 1: 174/543 Test #174: QtCore_qdatetime_test ................................   Passed    4.10 sec
+RUN 1:         Start 175: QtCore_qdate_test
+RUN 1: 175/543 Test #175: QtCore_qdate_test ....................................   Passed    4.10 sec
+RUN 1:         Start 176: QtCore_qdir_test
+RUN 1: 176/543 Test #176: QtCore_qdir_test .....................................   Passed    4.13 sec
+RUN 1:         Start 177: QtCore_qeasingcurve_test
+RUN 1: 177/543 Test #177: QtCore_qeasingcurve_test .............................   Passed    5.29 sec
+RUN 1:         Start 178: QtCore_qenum_test
+RUN 1: 178/543 Test #178: QtCore_qenum_test ....................................   Passed    4.44 sec
+RUN 1:         Start 179: QtCore_qenum_designer_test
+RUN 1: 179/543 Test #179: QtCore_qenum_designer_test ...........................   Passed    4.42 sec
+RUN 1:         Start 180: QtCore_qevent_test
+RUN 1: 180/543 Test #180: QtCore_qevent_test ...................................   Passed    4.12 sec
+RUN 1:         Start 181: QtCore_qfileinfo_test
+RUN 1: 181/543 Test #181: QtCore_qfileinfo_test ................................   Passed    4.12 sec
+RUN 1:         Start 182: QtCore_qfile_test
+RUN 1: 182/543 Test #182: QtCore_qfile_test ....................................   Passed    4.14 sec
+RUN 1:         Start 183: QtCore_qfileread_test
+RUN 1: 183/543 Test #183: QtCore_qfileread_test ................................   Passed    4.13 sec
+RUN 1:         Start 184: QtCore_qflags_test
+RUN 1: 184/543 Test #184: QtCore_qflags_test ...................................   Passed    4.42 sec
+RUN 1:         Start 185: QtCore_qrangemodel_test
+RUN 1: 185/543 Test #185: QtCore_qrangemodel_test ..............................   Passed    4.25 sec
+RUN 1:         Start 186: QtCore_qinstallmsghandler_test
+RUN 1: 186/543 Test #186: QtCore_qinstallmsghandler_test .......................   Passed    4.11 sec
+RUN 1:         Start 187: QtCore_qiodevice_buffered_read_test
+RUN 1: 187/543 Test #187: QtCore_qiodevice_buffered_read_test ..................   Passed    4.12 sec
+RUN 1:         Start 188: QtCore_qiopipe_test
+RUN 1: 188/543 Test #188: QtCore_qiopipe_test ..................................   Passed    4.13 sec
+RUN 1:         Start 189: QtCore_qjsondocument_test
+RUN 1: 189/543 Test #189: QtCore_qjsondocument_test ............................   Passed    4.10 sec
+RUN 1:         Start 190: QtCore_qlinef_test
+RUN 1: 190/543 Test #190: QtCore_qlinef_test ...................................   Passed    4.10 sec
+RUN 1:         Start 191: QtCore_qlocale_test
+RUN 1: 191/543 Test #191: QtCore_qlocale_test ..................................   Passed    4.12 sec
+RUN 1:         Start 192: QtCore_qlockfile_test
+RUN 1: 192/543 Test #192: QtCore_qlockfile_test ................................   Passed    4.12 sec
+RUN 1:         Start 193: QtCore_qmessageauthenticationcode_test
+RUN 1: 193/543 Test #193: QtCore_qmessageauthenticationcode_test ...............   Passed    4.10 sec
+RUN 1:         Start 194: QtCore_qmetaobject_test
+RUN 1: 194/543 Test #194: QtCore_qmetaobject_test ..............................   Passed    4.44 sec
+RUN 1:         Start 195: QtCore_qmetatype_test
+RUN 1: 195/543 Test #195: QtCore_qmetatype_test ................................   Passed    4.09 sec
+RUN 1:         Start 196: QtCore_qmimedatabase_test
+RUN 1: 196/543 Test #196: QtCore_qmimedatabase_test ............................   Passed    4.13 sec
+RUN 1:         Start 197: QtCore_qmodelindex_internalpointer_test
+RUN 1: 197/543 Test #197: QtCore_qmodelindex_internalpointer_test ..............   Passed    4.14 sec
+RUN 1:         Start 198: QtCore_qobject_children_segfault_test
+RUN 1: 198/543 Test #198: QtCore_qobject_children_segfault_test ................   Passed    4.12 sec
+RUN 1:         Start 199: QtCore_qobject_connect_notify_test
+RUN 1: 199/543 Test #199: QtCore_qobject_connect_notify_test ...................   Passed    4.21 sec
+RUN 1:         Start 200: QtCore_qobject_destructor
+RUN 1: 200/543 Test #200: QtCore_qobject_destructor ............................   Passed    4.10 sec
+RUN 1:         Start 201: QtCore_qobject_event_filter_test
+RUN 1: 201/543 Test #201: QtCore_qobject_event_filter_test .....................   Passed   12.05 sec
+RUN 1:         Start 202: QtCore_qobject_inherits_test
+RUN 1: 202/543 Test #202: QtCore_qobject_inherits_test .........................   Passed    4.54 sec
+RUN 1:         Start 203: QtCore_qobject_objectproperty_test
+RUN 1: 203/543 Test #203: QtCore_qobject_objectproperty_test ...................   Passed    4.03 sec
+RUN 1:         Start 204: QtCore_qobject_parent_test
+RUN 1: 204/543 Test #204: QtCore_qobject_parent_test ...........................   Passed    4.52 sec
+RUN 1:         Start 205: QtCore_qobject_property_test
+RUN 1: 205/543 Test #205: QtCore_qobject_property_test .........................   Passed    4.13 sec
+RUN 1:         Start 206: QtCore_qobject_protected_methods_test
+RUN 1: 206/543 Test #206: QtCore_qobject_protected_methods_test ................   Passed    4.12 sec
+RUN 1:         Start 207: QtCore_qobject_test
+RUN 1: 207/543 Test #207: QtCore_qobject_test ..................................   Passed    4.41 sec
+RUN 1:         Start 208: QtCore_qobject_timer_event_test
+RUN 1: 208/543 Test #208: QtCore_qobject_timer_event_test ......................   Passed    5.51 sec
+RUN 1:         Start 209: QtCore_qobject_tr_as_instance_test
+RUN 1: 209/543 Test #209: QtCore_qobject_tr_as_instance_test ...................   Passed    4.08 sec
+RUN 1:         Start 210: QtCore_qoperatingsystemversion_test
+RUN 1: 210/543 Test #210: QtCore_qoperatingsystemversion_test ..................   Passed    4.08 sec
+RUN 1:         Start 211: QtCore_qpermission_test
+RUN 1: 211/543 Test #211: QtCore_qpermission_test ..............................   Passed    4.45 sec
+RUN 1:         Start 212: QtCore_qpoint_test
+RUN 1: 212/543 Test #212: QtCore_qpoint_test ...................................   Passed    4.10 sec
+RUN 1:         Start 213: QtCore_qprocess_test
+RUN 1: 213/543 Test #213: QtCore_qprocess_test .................................***Timeout  60.13 sec
+RUN 1: 
+RUN 1:         Start 214: QtCore_qproperty_decorator
+RUN 1: 214/543 Test #214: QtCore_qproperty_decorator ...........................   Passed    4.10 sec
+RUN 1:         Start 215: QtCore_qrandomgenerator_test
+RUN 1: 215/543 Test #215: QtCore_qrandomgenerator_test .........................   Passed    4.02 sec
+RUN 1:         Start 216: QtCore_qrect_test
+RUN 1: 216/543 Test #216: QtCore_qrect_test ....................................   Passed    4.09 sec
+RUN 1:         Start 217: QtCore_qregularexpression_test
+RUN 1: 217/543 Test #217: QtCore_qregularexpression_test .......................   Passed    4.08 sec
+RUN 1:         Start 218: QtCore_qresource_test
+RUN 1: 218/543 Test #218: QtCore_qresource_test ................................   Passed    4.14 sec
+RUN 1:         Start 219: QtCore_qsettings_test
+RUN 1: 219/543 Test #219: QtCore_qsettings_test ................................   Passed    4.14 sec
+RUN 1:         Start 220: QtCore_qsharedmemory_test
+RUN 1: 220/543 Test #220: QtCore_qsharedmemory_test ............................   Passed    8.06 sec
+RUN 1:         Start 221: QtCore_qsize_test
+RUN 1: 221/543 Test #221: QtCore_qsize_test ....................................   Passed    4.08 sec
+RUN 1:         Start 222: QtCore_qslot_object_test
+RUN 1: 222/543 Test #222: QtCore_qslot_object_test .............................   Passed    4.21 sec
+RUN 1:         Start 223: QtCore_qsocketnotifier_test
+RUN 1: 223/543 Test #223: QtCore_qsocketnotifier_test ..........................   Passed    4.08 sec
+RUN 1:         Start 224: QtCore_qsrand_test
+RUN 1: 224/543 Test #224: QtCore_qsrand_test ...................................   Passed    4.11 sec
+RUN 1:         Start 225: QtCore_qstandardpaths_test
+RUN 1: 225/543 Test #225: QtCore_qstandardpaths_test ...........................   Passed    4.08 sec
+RUN 1:         Start 226: QtCore_qstorageinfo_test
+RUN 1: 226/543 Test #226: QtCore_qstorageinfo_test .............................   Passed    4.10 sec
+RUN 1:         Start 227: QtCore_qstring_test
+RUN 1: 227/543 Test #227: QtCore_qstring_test ..................................   Passed    4.07 sec
+RUN 1:         Start 228: QtCore_qsysinfo_test
+RUN 1: 228/543 Test #228: QtCore_qsysinfo_test .................................   Passed    3.97 sec
+RUN 1:         Start 229: QtCore_qtextstream_test
+RUN 1: 229/543 Test #229: QtCore_qtextstream_test ..............................   Passed    4.13 sec
+RUN 1:         Start 230: QtCore_qthread_prod_cons_test
+
+aborted, partial result
+End of the test run
+
+
+
+  #### Top 20 slow tests:
+
+Totals: 0 tests. 0 passed, 0 failed, 0 skipped, 0 blacklisted, 0 bpassed.
+
+********* Finished testing of pyside6 *********
+
+
+********* Start testing of pyside6 *********
+Config: Using darwin qt6 py3.15 qt6.12.0 64bit debug  py3 qt6.12 arm
+
+--- no re-runs found, stopping before test 2 ---
+All above projects: 195 tests. 195 passed, 0 failed, 0 skipped, 0 blacklisted, 0 bpassed.
+
+*******************************************************************************
+**
+*   Summary Of All Tests
+*
+*   (empty)
+*
+**
+*******************************************************************************
+
+Total flaky tests: errors but not always = 0
+
+No test met the error criterion 'FAIL! >= 3'
+
+Total time of whole Python script = 1604.32 sec
+

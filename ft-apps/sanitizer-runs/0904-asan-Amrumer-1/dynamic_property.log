@@ -1,0 +1,66 @@
+[stress] dynamic_property gil=off PYSIDE6_OPTION_FT=0b111 threads=8 iters=6000
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==43201==ERROR: AddressSanitizer: BUS on unknown address (pc 0x2d1e03c57fd7 bp 0x00016dd75a70 sp 0x00016dd75a10 T2)
+==43201==The signal is caused by a READ memory access.
+==43201==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+    #0 0x2d1e03c57fd7  (<unknown module>)
+    #1 0x1487e8214 in PySide::getWrapperForQObject(QObject*, _typeobject*) pyside.cpp:866
+    #2 0x14b8da424 in QObject_PTR_CppToPython_QObject(void const*) qobject_wrapper.cpp:3463
+    #3 0x10799f14c in Shiboken::Conversions::pointerToPython(SbkConverter const*, void const*) sbkconverter.cpp:302
+    #4 0x1079abbe8 in Shiboken::Conversions::SpecificConverter::toPython(void const*) const sbkconverter.cpp:968
+    #5 0x14b18a304 in QVariant_CppToPython_QVariant(void const*) qtcore_module_wrapper.cpp:2875
+    #6 0x10799f884 in Shiboken::Conversions::CopyCppToPython(SbkConverter const*, void const*) sbkconverter.cpp:340
+    #7 0x10799f99c in Shiboken::Conversions::copyToPython(SbkConverter const*, void const*) sbkconverter.cpp:354
+    #8 0x14b922088 in Sbk_QObjectFunc_property(_object*, _object*) qobject_wrapper.cpp:2686
+    #9 0x105fcacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #10 0x106155844 in _Py_VectorCallInstrumentation_StackRefSteal+0x128 (libpython3.15td.dylib:arm64+0x221844)
+    #11 0x10615b30c in _PyEval_EvalFrameDefault+0x4790 (libpython3.15td.dylib:arm64+0x22730c)
+    #12 0x10615510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #13 0x105fcacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #14 0x105fccd6c in _PyObject_VectorcallPrepend+0x100 (libpython3.15td.dylib:arm64+0x98d6c)
+    #15 0x10619e1cc in context_run+0xa0 (libpython3.15td.dylib:arm64+0x26a1cc)
+    #16 0x105fcacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #17 0x106155844 in _Py_VectorCallInstrumentation_StackRefSteal+0x128 (libpython3.15td.dylib:arm64+0x221844)
+    #18 0x10615b30c in _PyEval_EvalFrameDefault+0x4790 (libpython3.15td.dylib:arm64+0x22730c)
+    #19 0x10615510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #20 0x105fcacf4 in _PyObject_VectorcallTstate+0x70 (libpython3.15td.dylib:arm64+0x96cf4)
+    #21 0x105fccd6c in _PyObject_VectorcallPrepend+0x100 (libpython3.15td.dylib:arm64+0x98d6c)
+    #22 0x1062e39d8 in thread_run+0x80 (libpython3.15td.dylib:arm64+0x3af9d8)
+    #23 0x106244b44 in pythread_wrapper+0x18 (libpython3.15td.dylib:arm64+0x310b44)
+    #24 0x104a69858 in asan_thread_start(void*)+0x40 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x51858)
+    #25 0x18620af38 in _pthread_start+0x84 (libsystem_pthread.dylib:arm64e+0x6f38)
+    #26 0x186205d20 in thread_start+0x4 (libsystem_pthread.dylib:arm64e+0x1d20)
+
+==43201==Register values:
+ x[0] = 0x0000607000023800   x[1] = 0x0000000148956060   x[2] = 0x0000000000000000   x[3] = 0x000000016dd75ae0  
+ x[4] = 0x0000000000000000   x[5] = 0x00000000305f3170   x[6] = 0xaaaaaaaaaaaaaaaa   x[7] = 0x0000000108245010  
+ x[8] = 0x00002d1e03c57fd7   x[9] = 0x0000000000000000  x[10] = 0x0000000000000000  x[11] = 0x000000702dbceb5b  
+x[12] = 0x0000000000000003  x[13] = 0x0000000000000000  x[14] = 0xf2f2f2f200000000  x[15] = 0x0000100000000000  
+x[16] = 0x00000001495c0cf4  x[17] = 0x0000000104ac05d0  x[18] = 0x0000000000000000  x[19] = 0x000000016dd75ac0  
+x[20] = 0x0000000148956060  x[21] = 0x0000607000023800  x[22] = 0x000000016dd76508  x[23] = 0x000060c000016000  
+x[24] = 0x0000000000000001  x[25] = 0x000000010659fda8  x[26] = 0x0000000000000000  x[27] = 0x0000000108245010  
+x[28] = 0x000000016dd76508     fp = 0x000000016dd75a70     lr = 0x00000001495c0d34     sp = 0x000000016dd75a10  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: BUS (<unknown module>) 
+Thread T2 created by T0 here:
+    #0 0x104a641c8 in pthread_create+0x5c (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x4c1c8)
+    #1 0x10624410c in do_start_joinable_thread+0x108 (libpython3.15td.dylib:arm64+0x31010c)
+    #2 0x106243fd8 in PyThread_start_joinable_thread+0x20 (libpython3.15td.dylib:arm64+0x30ffd8)
+    #3 0x1062e3710 in do_start_new_thread+0x310 (libpython3.15td.dylib:arm64+0x3af710)
+    #4 0x1062e24ec in thread_PyThread_start_joinable_thread+0x1b4 (libpython3.15td.dylib:arm64+0x3ae4ec)
+    #5 0x10604aa80 in cfunction_call+0x114 (libpython3.15td.dylib:arm64+0x116a80)
+    #6 0x105fcb120 in _PyObject_MakeTpCall+0x178 (libpython3.15td.dylib:arm64+0x97120)
+    #7 0x10615530c in _Py_VectorCall_StackRefSteal+0x110 (libpython3.15td.dylib:arm64+0x22130c)
+    #8 0x10615ee68 in _PyEval_EvalFrameDefault+0x82ec (libpython3.15td.dylib:arm64+0x22ae68)
+    #9 0x10615510c in _PyEval_Vector+0x33c (libpython3.15td.dylib:arm64+0x22110c)
+    #10 0x106154bd0 in PyEval_EvalCode+0x90 (libpython3.15td.dylib:arm64+0x220bd0)
+    #11 0x106228308 in run_mod+0x608 (libpython3.15td.dylib:arm64+0x2f4308)
+    #12 0x10622429c in _PyRun_SimpleFileObject+0x350 (libpython3.15td.dylib:arm64+0x2f029c)
+    #13 0x106223b98 in _PyRun_AnyFileObject+0x88 (libpython3.15td.dylib:arm64+0x2efb98)
+    #14 0x106257054 in Py_RunMain+0xf4c (libpython3.15td.dylib:arm64+0x323054)
+    #15 0x106257474 in pymain_main+0xf4 (libpython3.15td.dylib:arm64+0x323474)
+    #16 0x1062574bc in Py_BytesMain+0x24 (libpython3.15td.dylib:arm64+0x3234bc)
+    #17 0x185e7f150  (<unknown module>)
+
+==43201==ABORTING

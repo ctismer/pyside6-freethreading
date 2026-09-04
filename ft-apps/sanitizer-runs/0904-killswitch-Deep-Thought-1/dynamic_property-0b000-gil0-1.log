@@ -1,0 +1,2 @@
+<frozen importlib._bootstrap>:549: RuntimeWarning: Clearing the StateLock bit of PYSIDE6_OPTION_FT disables the lock that makes the bindings safe without the GIL. This is meant for stress testing only; data races are expected.
+[stress] dynamic_property gil=off PYSIDE6_OPTION_FT=0b000 threads=8 iters=6000

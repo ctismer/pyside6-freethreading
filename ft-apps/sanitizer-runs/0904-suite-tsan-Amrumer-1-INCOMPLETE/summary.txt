@@ -1,0 +1,16 @@
+tool        tsan (suite)
+host        Darwin arm64, Amrumer
+build       /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/bin/python3
+options     halt_on_error=0 abort_on_error=0 exitcode=0 history_size=4
+locks       PYSIDE6_OPTION_FT=0b111
+started     2026-09-04 01:55:38
+
+testrunner rc 0
+reports       0
+
+where:
+
+tests that did not pass:
+
+finished    2026-09-04 02:25:09

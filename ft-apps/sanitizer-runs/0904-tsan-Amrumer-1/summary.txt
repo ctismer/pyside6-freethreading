@@ -1,0 +1,25 @@
+tool        tsan
+host        Darwin arm64, Amrumer
+build       /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/bin/python3
+runtime     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.tsan_osx_dynamic.dylib
+options     halt_on_error=0 abort_on_error=0 exitcode=0 history_size=4
+locks       PYSIDE6_OPTION_FT=0b111
+threads     8, iters 6000
+started     2026-09-04 01:37:45
+
+shared_delete          rc 0    reports 0      2s  
+call_vs_delete         rc 0    reports 1      3s  sbkfeature_base.cpp:443 
+child_delete_vs_call   rc 0    reports 1      4s  sbkfeature_base.cpp:72 sbkmodule.cpp:317 
+signal_race            rc 0    reports 6      6s  basewrapper.cpp:1001 basewrapper.cpp:937 qobject_wrapper.cpp:147 qobject_wrapper.cpp:228 
+lookup_vs_last_decref  rc 0    reports 1      2s  sbkfeature_base.cpp:384 
+destroy_race           rc 0    reports 0      6s  
+lazy_converter         rc 0    reports 1      2s  sbkfeature_base.cpp:72 sbkmodule.cpp:317 
+shared_setter          rc 0    reports 0      5s  
+queued_signal          rc 0    reports 0      5s  
+move_to_thread         rc 0    reports 1      4s  basewrapper.cpp:922 basewrapper.cpp:988 
+container_convert      rc 0    reports 0    111s  
+dynamic_property       rc 0    reports 0      1s  
+virtual_override       rc 0    reports 7      6s  basewrapper.cpp:777 basewrapper.cpp:783 sbkfeature_base.cpp:443 sbkfeature_base.cpp:72 
+
+finished    2026-09-04 01:40:27

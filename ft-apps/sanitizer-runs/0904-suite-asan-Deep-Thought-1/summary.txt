@@ -1,0 +1,18 @@
+tool        asan (suite)
+host        Darwin arm64, Deep-Thought
+build       /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b4t-asan/bin/python3
+options     halt_on_error=0 abort_on_error=0 detect_leaks=0
+locks       PYSIDE6_OPTION_FT=0b111
+started     2026-09-04 02:11:25
+
+testrunner rc 1
+reports       5
+
+where:
+   5 qtxmltosphinx.cpp:467
+   5 qtxmltosphinx.cpp:1436
+
+tests that did not pass:
+
+finished    2026-09-04 02:20:35

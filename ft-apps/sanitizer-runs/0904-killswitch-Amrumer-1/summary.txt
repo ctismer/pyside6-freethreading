@@ -1,0 +1,13 @@
+build       /Users/tismer/src/QtC/pyside-setup/build/qfpdp-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b3t-debug/bin/python3
+rounds      5 each
+started     2026-09-04 01:51:36
+
+scenario               locks on       locks OFF      GIL on
+queued_signal          0/5            1/5            0/5           
+move_to_thread         0/5            5/5            0/5           
+container_convert      0/5            5/5            0/5           
+dynamic_property       5/5            5/5            5/5           
+virtual_override       0/5            0/5            0/5           
+
+finished    2026-09-04 01:52:06

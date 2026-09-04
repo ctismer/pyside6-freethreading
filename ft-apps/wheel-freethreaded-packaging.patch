@@ -1,0 +1,47 @@
+diff --git a/build_scripts/wheel_override.py b/build_scripts/wheel_override.py
+index 389f7f8c9..516f7c537 100644
+--- a/build_scripts/wheel_override.py
++++ b/build_scripts/wheel_override.py
+@@ -5,6 +5,7 @@ from __future__ import annotations
+ 
+ import platform
+ import sys
++import sysconfig
+ from pathlib import Path
+ from email.generator import Generator
+ 
+@@ -62,7 +63,8 @@ class PysideBuildWheel(_bdist_wheel, CommandMixin):
+         # the initial cpython version we support. This must match the
+         # Py_LIMITED_API level the sources are compiled against, which is
+         # 0x030a0000, and PySide6's own requires-python floor.
+-        limited_api_enabled = OPTION["LIMITED_API"] == 'yes'
++        limited_api_enabled = (OPTION["LIMITED_API"] == 'yes'
++                               and not sysconfig.get_config_var("Py_GIL_DISABLED"))
+         if limited_api_enabled:
+             self.py_limited_api = "cp310"
+ 
+diff --git a/wheel_artifacts/pyproject.toml.base b/wheel_artifacts/pyproject.toml.base
+index d3e00e13b..afce95915 100644
+--- a/wheel_artifacts/pyproject.toml.base
++++ b/wheel_artifacts/pyproject.toml.base
+@@ -55,7 +55,6 @@ Tracker = "https://qt-project.atlassian.net/browse/PYSIDE"
+ # PROJECT_SCRIPTS
+ 
+ [tool.distutils.bdist_wheel]
+-py_limited_api = "cp310"
+ plat_name = "PROJECT_TAG"
+ 
+ [tool.setuptools.dynamic]
+diff --git a/wheel_artifacts/setup.py.base b/wheel_artifacts/setup.py.base
+index e1ec4f779..a6e3e47b2 100644
+--- a/wheel_artifacts/setup.py.base
++++ b/wheel_artifacts/setup.py.base
+@@ -20,7 +20,7 @@ class build_ext(Command):
+ setup_args = dict(
+     include_package_data=True,
+     packages = ["{name}"],
+-    ext_modules = [Extension("{fake_ext}", [], py_limited_api=True)],
++    ext_modules = [Extension("{fake_ext}", [])],
+     cmdclass=dict([("build_ext", build_ext)]),
+     # setuptools implicitly globs and bundles every '*.pyi' file found in a
+     # package directory (see setuptools.command.build_py._IMPLICIT_DATA_FILES),

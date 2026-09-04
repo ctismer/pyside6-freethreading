@@ -1,0 +1,53 @@
+[stress] dynamic_property gil=off PYSIDE6_OPTION_FT=0b111 threads=8 iters=6000
+ThreadSanitizer:DEADLYSIGNAL
+==57931==ERROR: ThreadSanitizer: SEGV on unknown address 0x000000000097 (pc 0x00015682aa4c bp 0x000173699940 sp 0x0001736998f0 T45909120)
+==57931==The signal is caused by a READ memory access.
+==57931==Hint: address points to the zero page.
+    #0 QCoreApplication::sendEvent(QObject*, QEvent*) <null>:141560896 (QtCore:arm64+0x2cea4c)
+    #1 QObject::doSetProperty(char const*, QVariant const&, QVariant*) <null>:141560896 (QtCore:arm64+0x34cb54)
+    #2 QObject::setProperty(char const*, QVariant&&) qobject.h:428 (libpyside6.cpython-315t-darwin.6.12.dylib:arm64+0xef0c)
+    #3 PySide::getWrapperForQObject(QObject*, _typeobject*) pyside.cpp:870 (libpyside6.cpython-315t-darwin.6.12.dylib:arm64+0xeaf0)
+    #4 QObject_PTR_CppToPython_QObject(void const*) qobject_wrapper.cpp:3463 (QtCore.cpython-315t-darwin.so:arm64+0x39c0cc)
+    #5 Shiboken::Conversions::pointerToPython(SbkConverter const*, void const*) sbkconverter.cpp:302 (libshiboken6.cpython-315t-darwin.6.12.dylib:arm64+0x66d48)
+    #6 Shiboken::Conversions::SpecificConverter::toPython(void const*) const sbkconverter.cpp:968 (libshiboken6.cpython-315t-darwin.6.12.dylib:arm64+0x6c5d8)
+    #7 QVariant_CppToPython_QVariant(void const*) qtcore_module_wrapper.cpp:2875 (QtCore.cpython-315t-darwin.so:arm64+0x6234c)
+    #8 Shiboken::Conversions::CopyCppToPython(SbkConverter const*, void const*) sbkconverter.cpp:340 (libshiboken6.cpython-315t-darwin.6.12.dylib:arm64+0x671c4)
+    #9 Shiboken::Conversions::copyToPython(SbkConverter const*, void const*) sbkconverter.cpp:354 (libshiboken6.cpython-315t-darwin.6.12.dylib:arm64+0x672b8)
+    #10 Sbk_QObjectFunc_property(_object*, _object*) qobject_wrapper.cpp:2686 (QtCore.cpython-315t-darwin.so:arm64+0x3bef58)
+    #11 cfunction_vectorcall_O <null>:138421872 (libpython3.15t.dylib:arm64+0x1372b8)
+    #12 PyObject_Vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x96550)
+    #13 _Py_VectorCallInstrumentation_StackRefSteal <null>:138421872 (libpython3.15t.dylib:arm64+0x2823dc)
+    #14 _PyEval_EvalFrameDefault <null>:138421872 (libpython3.15t.dylib:arm64+0x28db34)
+    #15 _PyEval_Vector <null>:138421872 (libpython3.15t.dylib:arm64+0x281bf4)
+    #16 _PyFunction_Vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x96a04)
+    #17 _PyObject_VectorcallPrepend <null>:138421872 (libpython3.15t.dylib:arm64+0x97d64)
+    #18 method_vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x9ae5c)
+    #19 context_run <null>:138421872 (libpython3.15t.dylib:arm64+0x2cf8c0)
+    #20 method_vectorcall_FASTCALL_KEYWORDS <null>:138421872 (libpython3.15t.dylib:arm64+0xad00c)
+    #21 PyObject_Vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x96550)
+    #22 _Py_VectorCallInstrumentation_StackRefSteal <null>:138421872 (libpython3.15t.dylib:arm64+0x2823dc)
+    #23 _PyEval_EvalFrameDefault <null>:138421872 (libpython3.15t.dylib:arm64+0x28db34)
+    #24 _PyEval_Vector <null>:138421872 (libpython3.15t.dylib:arm64+0x281bf4)
+    #25 _PyFunction_Vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x96a04)
+    #26 _PyObject_VectorcallPrepend <null>:138421872 (libpython3.15t.dylib:arm64+0x97d64)
+    #27 method_vectorcall <null>:138421872 (libpython3.15t.dylib:arm64+0x9ae5c)
+    #28 _PyObject_Call <null>:138421872 (libpython3.15t.dylib:arm64+0x96738)
+    #29 PyObject_Call <null>:138421872 (libpython3.15t.dylib:arm64+0x967c4)
+    #30 thread_run <null>:138421872 (libpython3.15t.dylib:arm64+0x44144c)
+    #31 pythread_wrapper <null>:138421872 (libpython3.15t.dylib:arm64+0x37bfb0)
+    #32 __tsan_thread_start_func <null>:143664672 (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x30958)
+    #33 _pthread_start <null>:132149952 (libsystem_pthread.dylib:arm64e+0x6f90)
+    #34 thread_start <null>:132149952 (libsystem_pthread.dylib:arm64e+0x1d30)
+
+==57931==Register values:
+ x[0] = 0x000000010a40d570   x[1] = 0x0000000173699970   x[2] = 0x0000000000000000   x[3] = 0x0000000109a0f354  
+ x[4] = 0x0000000000000026   x[5] = 0x0000000156a60cbf   x[6] = 0x0000000000000072   x[7] = 0x0000000000000000  
+ x[8] = 0x0000000109e09ad8   x[9] = 0x00000000ffffffff  x[10] = 0x0000000000000002  x[11] = 0x0000007ffffff000  
+x[12] = 0x0000000160b40100  x[13] = 0x506921c090d3bcb1  x[14] = 0x0000000000000000  x[15] = 0x00000000000000ff  
+x[16] = 0x000000019921e1a0  x[17] = 0x00000001051cc8e0  x[18] = 0x0000000000000000  x[19] = 0x0000000173699970  
+x[20] = 0x000000010a40d570  x[21] = 0x0000000000000000  x[22] = 0x0000000173699b08  x[23] = 0x0000000109e09a80  
+x[24] = 0xffffffffffffffff  x[25] = 0x0000000109e09a80  x[26] = 0x000000014f468238  x[27] = 0x000000010c21c000  
+x[28] = 0x000000017369a1b8     fp = 0x0000000173699940     lr = 0x00000001568a8b58     sp = 0x00000001736998f0  
+ThreadSanitizer can not provide additional info.
+SUMMARY: ThreadSanitizer: SEGV (QtCore:arm64+0x2cea4c) in QCoreApplication::sendEvent(QObject*, QEvent*)+0x3c
+==57931==ABORTING

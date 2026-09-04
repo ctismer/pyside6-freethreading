@@ -1,0 +1,30 @@
+tool        asan (suite)
+host        Darwin arm64, Amrumer
+build       /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b4t-asan/bin/python3
+options     halt_on_error=0 abort_on_error=0 detect_leaks=0
+locks       PYSIDE6_OPTION_FT=0b111
+started     2026-09-04 02:34:54
+
+testrunner rc 1
+reports       5
+
+where:
+   5 qtxmltosphinx.cpp:467
+   5 qtxmltosphinx.cpp:1436
+
+tests that did not pass:
+QtAsyncio_bug_2790
+QtAsyncio_bug_2799
+QtAsyncio_qasyncio_test
+QtAsyncio_qasyncio_test_cancel_task
+QtAsyncio_qasyncio_test_cancel_taskgroup
+QtAsyncio_qasyncio_test_chain
+QtAsyncio_qasyncio_test_queues
+QtAsyncio_qasyncio_test_time
+QtAsyncio_qasyncio_test_uncancel
+QtQml_registertype
+pyside6-deploy_test_pyside6_deploy
+qtxmltosphinx
+
+finished    2026-09-04 02:42:37

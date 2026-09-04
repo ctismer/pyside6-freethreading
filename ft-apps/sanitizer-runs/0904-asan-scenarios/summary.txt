@@ -1,0 +1,15 @@
+== smoke
+   rc 0  import ok, gil: False
+== scenarios
+   shared_delete  rc 0  asan 0
+   call_vs_delete  rc 0  asan 0
+   child_delete_vs_call  rc 0  asan 0
+   signal_race  rc 0  asan 0
+   lookup_vs_last_decref  rc 0  asan 0
+   destroy_race  rc 0  asan 0
+   lazy_converter  rc 0  asan 0
+   shared_setter  rc 0  asan 0
+== feature reproducer
+   run 1  rc 2  asan 0
+   run 2  rc 2  asan 0
+   run 3  rc 2  asan 0

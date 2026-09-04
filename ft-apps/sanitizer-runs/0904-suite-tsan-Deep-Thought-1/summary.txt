@@ -1,0 +1,31 @@
+tool        tsan (suite)
+host        Darwin arm64, Deep-Thought
+build       /Users/tismer/src/QtC/pyside-setup/build-tsan/qfpd-py3.15-qt6.12.0-64bit-debug
+interpreter /Users/tismer/.pyenv/versions/3.15.0b4t-tsan/bin/python3
+options     halt_on_error=0 abort_on_error=0 exitcode=0 history_size=4
+locks       PYSIDE6_OPTION_FT=0b111
+started     2026-09-04 02:27:45
+
+testrunner rc 1
+reports       0
+
+where:
+
+tests that did not pass:
+QtAsyncio_bug_2790
+QtAsyncio_bug_2799
+QtAsyncio_qasyncio_test
+QtAsyncio_qasyncio_test_cancel_task
+QtAsyncio_qasyncio_test_cancel_taskgroup
+QtAsyncio_qasyncio_test_chain
+QtAsyncio_qasyncio_test_queues
+QtAsyncio_qasyncio_test_time
+QtAsyncio_qasyncio_test_uncancel
+QtCore_qprocess_test
+QtUiTools_loadUiType_test
+cpp_interop_cpp_interop_test
+pyside6-deploy_test_pyside6_deploy
+pysidetest_pyenum_relax_options_and_lazy_star_test
+registry_existence_test
+
+finished    2026-09-04 03:45:58

@@ -1,0 +1,2 @@
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build
+py3.15-qt6.12.0-64bit-debug

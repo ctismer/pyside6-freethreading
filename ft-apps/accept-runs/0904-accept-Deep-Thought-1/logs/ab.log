@@ -1,0 +1,22 @@
+python : /Users/tismer/.pyenv/versions/3.15.0b3t-debug/bin/python3
+build  : /Users/tismer/src/QtC/pyside-setup/build/qfpdp-py3.15-qt6.12.0-64bit-debug/build
+repeats: 15  timeout: 120s  threads: 8  iters: 6000
+
+scenario              unlocked    locked      kind
+--------------------------------------------------
+shared_delete         15CRASH/15  ok/15       proof
+call_vs_delete        15CRASH/15  ok/15       proof
+child_delete_vs_call  15CRASH/15  ok/15       proof
+signal_race           15CRASH/15  ok/15       proof
+lookup_vs_last_decref ok/15       ok/15       regression
+destroy_race          ok/15       ok/15       regression
+lazy_converter        12CRASH/15  ok/15       proof
+lazy_types            5CRASH/15   ok/15       proof
+shared_setter         15CRASH/15  ok/15       proof
+queued_signal         2CRASH/15   ok/15       regression
+move_to_thread        15CRASH/15  ok/15       proof
+container_convert     15CRASH/15  ok/15       proof
+dynamic_property      15CRASH/15  15CRASH/15  regression
+virtual_override      ok/15       ok/15       regression
+
+FAILED: not clean with the lock -> dynamic_property

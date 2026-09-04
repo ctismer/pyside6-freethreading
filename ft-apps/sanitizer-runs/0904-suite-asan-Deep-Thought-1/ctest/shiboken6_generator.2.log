@@ -1,0 +1,137 @@
+[HANDLER_OUTPUT] 
+Test project /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/shiboken6_generator
+
+    Start 37: qtxmltosphinx
+1/1 Test #37: qtxmltosphinx ....................***Failed    0.44 sec
+********* Start testing of QtXmlToSphinxTest *********
+Config: Using QtTest library 6.12.0, Qt 6.12.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 16.0.0 (clang-1600.0.26.6)), macos 14.7.0
+PASS   : QtXmlToSphinxTest::initTestCase()
+PASS   : QtXmlToSphinxTest::testTable(emptyString)
+PASS   : QtXmlToSphinxTest::testTable(testSimpleTable)
+=================================================================
+==83344==ERROR: AddressSanitizer: heap-use-after-free on address 0x60400000d0e2 at pc 0x0001005e51f8 bp 0x00016f838630 sp 0x00016f838628
+WRITE of size 2 at 0x60400000d0e2 thread T0
+    #0 0x1005e51f4 in QtXmlToSphinx::Table::normalize() qtxmltosphinx.cpp:1436
+    #1 0x1005e45f8 in QtXmlToSphinx::formatCurrentTable() qtxmltosphinx.cpp:467
+    #2 0x1005dba54 in QtXmlToSphinx::handleTableTag(QXmlStreamReader&) qtxmltosphinx.cpp:984
+    #3 0x1005d7674 in QtXmlToSphinx::callHandler(WebXmlTag, QXmlStreamReader&) qtxmltosphinx.cpp:347
+    #4 0x1005d6920 in QtXmlToSphinx::transform(QXmlStreamReader&) qtxmltosphinx.cpp:539
+    #5 0x1005d5448 in QtXmlToSphinx::transform(QString const&) qtxmltosphinx.cpp:510
+    #6 0x1005d585c in QtXmlToSphinx::QtXmlToSphinx(QtXmlToSphinxDocGeneratorInterface const*, QtXmlToSphinxParameters const&, QString const&, QString const&) qtxmltosphinx.cpp:296
+    #7 0x10060f39c in QtXmlToSphinxTest::transformXml(QString const&) const qtxmltosphinxtest.cpp:48
+    #8 0x1005cb824 in QtXmlToSphinxTest::testTable() qtxmltosphinxtest.cpp:385
+    #9 0x1005c9d18 in QtXmlToSphinxTest::qt_static_metacall(QObject*, QMetaObject::Call, int, void**) moc_qtxmltosphinxtest.cpp:94
+    #10 0x10161c5ec in QMetaMethodInvoker::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x410 (QtCore:arm64+0x20c5ec)
+    #11 0x1016215c0 in QMetaMethod::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x48 (QtCore:arm64+0x2115c0)
+    #12 0x100c3642c in QTest::TestMethods::invokeTestOnData(int) const+0x1fc (QtTest:arm64+0x1642c)
+    #13 0x100c37bd8 in QTest::TestMethods::invokeTest(int, QLatin1String, std::__1::optional<QTest::WatchDog>&) const+0x60c (QtTest:arm64+0x17bd8)
+    #14 0x100c39154 in QTest::TestMethods::invokeTests(QObject*) const+0x3c0 (QtTest:arm64+0x19154)
+    #15 0x100c3a250 in QTest::qRun()+0x5fc (QtTest:arm64+0x1a250)
+    #16 0x100c39a20 in QTest::qExec(QObject*, int, char**)+0x10 (QtTest:arm64+0x19a20)
+    #17 0x1006109c8 in main qtxmltosphinxtest.cpp:519
+    #18 0x198e63150 in start+0x9a8 (dyld:arm64e+0xfffffffffff4d150)
+
+0x60400000d0e2 is located 18 bytes inside of 48-byte region [0x60400000d0d0,0x60400000d100)
+freed by thread T0 here:
+    #0 0x101bd4d40 in free+0x98 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x54d40)
+    #1 0x100636770 in QTypedArrayData<QtXmlToSphinx::TableCell>::deallocate(QArrayData*) qarraydata.h:177
+    #2 0x100636208 in QArrayDataPointer<QtXmlToSphinx::TableCell>::~QArrayDataPointer() qarraydatapointer.h:102
+    #3 0x100636004 in QArrayDataPointer<QtXmlToSphinx::TableCell>::~QArrayDataPointer() qarraydatapointer.h:99
+    #4 0x10066fb9c in QArrayDataPointer<QtXmlToSphinx::TableCell>::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<QtXmlToSphinx::TableCell>*) qarraydatapointer.h:242
+    #5 0x10066eb44 in QArrayDataPointer<QtXmlToSphinx::TableCell>::detachAndGrow(QArrayData::GrowthPosition, long long, QtXmlToSphinx::TableCell const**, QArrayDataPointer<QtXmlToSphinx::TableCell>*) qarraydatapointer.h:201
+    #6 0x10066e0cc in void QtPrivate::QGenericArrayOps<QtXmlToSphinx::TableCell>::emplace<QtXmlToSphinx::TableCell const&>(long long, QtXmlToSphinx::TableCell const&) qarraydataops.h:568
+    #7 0x100689748 in QList<QtXmlToSphinx::TableCell>::iterator QList<QtXmlToSphinx::TableCell>::emplace<QtXmlToSphinx::TableCell const&>(long long, QtXmlToSphinx::TableCell const&) qlist.h:967
+    #8 0x100601414 in QList<QtXmlToSphinx::TableCell>::insert(long long, QtXmlToSphinx::TableCell const&) qlist.h:555
+    #9 0x1005e5120 in QtXmlToSphinx::Table::normalize() qtxmltosphinx.cpp:1435
+    #10 0x1005e45f8 in QtXmlToSphinx::formatCurrentTable() qtxmltosphinx.cpp:467
+    #11 0x1005dba54 in QtXmlToSphinx::handleTableTag(QXmlStreamReader&) qtxmltosphinx.cpp:984
+    #12 0x1005d7674 in QtXmlToSphinx::callHandler(WebXmlTag, QXmlStreamReader&) qtxmltosphinx.cpp:347
+    #13 0x1005d6920 in QtXmlToSphinx::transform(QXmlStreamReader&) qtxmltosphinx.cpp:539
+    #14 0x1005d5448 in QtXmlToSphinx::transform(QString const&) qtxmltosphinx.cpp:510
+    #15 0x1005d585c in QtXmlToSphinx::QtXmlToSphinx(QtXmlToSphinxDocGeneratorInterface const*, QtXmlToSphinxParameters const&, QString const&, QString const&) qtxmltosphinx.cpp:296
+    #16 0x10060f39c in QtXmlToSphinxTest::transformXml(QString const&) const qtxmltosphinxtest.cpp:48
+    #17 0x1005cb824 in QtXmlToSphinxTest::testTable() qtxmltosphinxtest.cpp:385
+    #18 0x1005c9d18 in QtXmlToSphinxTest::qt_static_metacall(QObject*, QMetaObject::Call, int, void**) moc_qtxmltosphinxtest.cpp:94
+    #19 0x10161c5ec in QMetaMethodInvoker::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x410 (QtCore:arm64+0x20c5ec)
+    #20 0x1016215c0 in QMetaMethod::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x48 (QtCore:arm64+0x2115c0)
+    #21 0x100c3642c in QTest::TestMethods::invokeTestOnData(int) const+0x1fc (QtTest:arm64+0x1642c)
+    #22 0x100c37bd8 in QTest::TestMethods::invokeTest(int, QLatin1String, std::__1::optional<QTest::WatchDog>&) const+0x60c (QtTest:arm64+0x17bd8)
+    #23 0x100c39154 in QTest::TestMethods::invokeTests(QObject*) const+0x3c0 (QtTest:arm64+0x19154)
+    #24 0x100c3a250 in QTest::qRun()+0x5fc (QtTest:arm64+0x1a250)
+    #25 0x100c39a20 in QTest::qExec(QObject*, int, char**)+0x10 (QtTest:arm64+0x19a20)
+    #26 0x1006109c8 in main qtxmltosphinxtest.cpp:519
+    #27 0x198e63150 in start+0x9a8 (dyld:arm64e+0xfffffffffff4d150)
+
+previously allocated by thread T0 here:
+    #0 0x101bd4c04 in malloc+0x94 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x54c04)
+    #1 0x10160e59c in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption)+0xdc (QtCore:arm64+0x1fe59c)
+    #2 0x10066d088 in QTypedArrayData<QtXmlToSphinx::TableCell>::allocate(long long, QArrayData::AllocationOption) qarraydata.h:156
+    #3 0x100674694 in QArrayDataPointer<QtXmlToSphinx::TableCell>::allocateGrow(QArrayDataPointer<QtXmlToSphinx::TableCell> const&, long long, QArrayData::GrowthPosition) qarraydatapointer.h:392
+    #4 0x10066f770 in QArrayDataPointer<QtXmlToSphinx::TableCell>::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<QtXmlToSphinx::TableCell>*) qarraydatapointer.h:220
+    #5 0x10066eb44 in QArrayDataPointer<QtXmlToSphinx::TableCell>::detachAndGrow(QArrayData::GrowthPosition, long long, QtXmlToSphinx::TableCell const**, QArrayDataPointer<QtXmlToSphinx::TableCell>*) qarraydatapointer.h:201
+    #6 0x10066e0cc in void QtPrivate::QGenericArrayOps<QtXmlToSphinx::TableCell>::emplace<QtXmlToSphinx::TableCell const&>(long long, QtXmlToSphinx::TableCell const&) qarraydataops.h:568
+    #7 0x10066db08 in QtXmlToSphinx::TableCell& QList<QtXmlToSphinx::TableCell>::emplaceBack<QtXmlToSphinx::TableCell const&>(QtXmlToSphinx::TableCell const&) qlist.h:975
+    #8 0x10066d910 in QList<QtXmlToSphinx::TableCell>::append(QtXmlToSphinx::TableCell const&) qlist.h:524
+    #9 0x1005f94ac in QList<QtXmlToSphinx::TableCell>::operator<<(QtXmlToSphinx::TableCell const&) qlist.h:798
+    #10 0x1005dcd40 in QtXmlToSphinx::handleItemTag(QXmlStreamReader&) qtxmltosphinx.cpp:1017
+    #11 0x1005d76a4 in QtXmlToSphinx::callHandler(WebXmlTag, QXmlStreamReader&) qtxmltosphinx.cpp:356
+    #12 0x1005d6920 in QtXmlToSphinx::transform(QXmlStreamReader&) qtxmltosphinx.cpp:539
+    #13 0x1005d5448 in QtXmlToSphinx::transform(QString const&) qtxmltosphinx.cpp:510
+    #14 0x1005d585c in QtXmlToSphinx::QtXmlToSphinx(QtXmlToSphinxDocGeneratorInterface const*, QtXmlToSphinxParameters const&, QString const&, QString const&) qtxmltosphinx.cpp:296
+    #15 0x10060f39c in QtXmlToSphinxTest::transformXml(QString const&) const qtxmltosphinxtest.cpp:48
+    #16 0x1005cb824 in QtXmlToSphinxTest::testTable() qtxmltosphinxtest.cpp:385
+    #17 0x1005c9d18 in QtXmlToSphinxTest::qt_static_metacall(QObject*, QMetaObject::Call, int, void**) moc_qtxmltosphinxtest.cpp:94
+    #18 0x10161c5ec in QMetaMethodInvoker::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x410 (QtCore:arm64+0x20c5ec)
+    #19 0x1016215c0 in QMetaMethod::invokeImpl(QMetaMethod, void*, Qt::ConnectionType, long long, void const* const*, char const* const*, QtPrivate::QMetaTypeInterface const* const*)+0x48 (QtCore:arm64+0x2115c0)
+    #20 0x100c3642c in QTest::TestMethods::invokeTestOnData(int) const+0x1fc (QtTest:arm64+0x1642c)
+    #21 0x100c37bd8 in QTest::TestMethods::invokeTest(int, QLatin1String, std::__1::optional<QTest::WatchDog>&) const+0x60c (QtTest:arm64+0x17bd8)
+    #22 0x100c39154 in QTest::TestMethods::invokeTests(QObject*) const+0x3c0 (QtTest:arm64+0x19154)
+    #23 0x100c3a250 in QTest::qRun()+0x5fc (QtTest:arm64+0x1a250)
+    #24 0x100c39a20 in QTest::qExec(QObject*, int, char**)+0x10 (QtTest:arm64+0x19a20)
+    #25 0x1006109c8 in main qtxmltosphinxtest.cpp:519
+    #26 0x198e63150 in start+0x9a8 (dyld:arm64e+0xfffffffffff4d150)
+
+SUMMARY: AddressSanitizer: heap-use-after-free qtxmltosphinx.cpp:1436 in QtXmlToSphinx::Table::normalize()
+Shadow bytes around the buggy address:
+  0x60400000ce00: fa fa fd fd fd fd fd fa fa fa 00 00 00 00 00 00
+  0x60400000ce80: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 00
+  0x60400000cf00: fa fa 00 00 00 00 00 00 fa fa 00 00 00 00 00 00
+  0x60400000cf80: fa fa fd fd fd fd fd fd fa fa fd fd fd fd fd fd
+  0x60400000d000: fa fa fd fd fd fd fd fd fa fa fd fd fd fd fd fd
+=>0x60400000d080: fa fa fd fd fd fd fd fd fa fa fd fd[fd]fd fd fd
+  0x60400000d100: fa fa fd fd fd fd fd fd fa fa fd fd fd fd fd fd
+  0x60400000d180: fa fa fd fd fd fd fd fd fa fa fd fd fd fd fd fd
+  0x60400000d200: fa fa fd fd fd fd fd fd fa fa fd fd fd fd fd fd
+  0x60400000d280: fa fa fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x60400000d300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==83344==ABORTING
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.44 sec
+
+The following tests FAILED:
+	 37 - qtxmltosphinx (Failed)
+[ERROR_MESSAGE] 
+Errors while running CTest
+

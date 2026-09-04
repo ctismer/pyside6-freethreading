@@ -1,0 +1,323 @@
+[HANDLER_OUTPUT] 
+Test project /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/shiboken6
+
+        Start   1: minimal_brace_pattern
+  1/158 Test   #1: minimal_brace_pattern ..............................................   Passed    1.02 sec
+        Start   2: minimal_containeruser
+  2/158 Test   #2: minimal_containeruser ..............................................   Passed    0.85 sec
+        Start   3: minimal_listuser
+  3/158 Test   #3: minimal_listuser ...................................................   Passed    0.41 sec
+        Start   4: minimal_minbool
+  4/158 Test   #4: minimal_minbool ....................................................   Passed    0.41 sec
+        Start   5: minimal_obj
+  5/158 Test   #5: minimal_obj ........................................................   Passed    0.40 sec
+        Start   6: minimal_spanuser
+  6/158 Test   #6: minimal_spanuser ...................................................   Passed    0.39 sec
+        Start   7: minimal_typedef
+  7/158 Test   #7: minimal_typedef ....................................................   Passed    0.35 sec
+        Start   8: minimal_val
+  8/158 Test   #8: minimal_val ........................................................   Passed    0.40 sec
+        Start   9: other_collector_external_operator
+  9/158 Test   #9: other_collector_external_operator ..................................   Passed    1.33 sec
+        Start  10: other_conversion_operator_for_class_without_implicit_conversions
+ 10/158 Test  #10: other_conversion_operator_for_class_without_implicit_conversions ...   Passed    0.44 sec
+        Start  11: other_extended_multiply_operator
+ 11/158 Test  #11: other_extended_multiply_operator ...................................   Passed    0.42 sec
+        Start  12: other_module_reload
+ 12/158 Test  #12: other_module_reload ................................................   Passed    0.42 sec
+        Start  13: other_new_ctor_operator
+ 13/158 Test  #13: other_new_ctor_operator ............................................   Passed    0.41 sec
+        Start  14: other_objtypehashes
+ 14/158 Test  #14: other_objtypehashes ................................................   Passed    0.40 sec
+        Start  15: other_otherderived
+ 15/158 Test  #15: other_otherderived .................................................   Passed    0.42 sec
+        Start  16: other_othertypesystypedef
+ 16/158 Test  #16: other_othertypesystypedef ..........................................   Passed    0.57 sec
+        Start  17: other_signature
+ 17/158 Test  #17: other_signature ....................................................   Passed    0.42 sec
+        Start  18: other_smartptr
+ 18/158 Test  #18: other_smartptr .....................................................   Passed    0.41 sec
+        Start  19: other_star_import
+ 19/158 Test  #19: other_star_import ..................................................   Passed    0.41 sec
+        Start  20: other_typediscovery
+ 20/158 Test  #20: other_typediscovery ................................................   Passed    0.41 sec
+        Start  21: other_usersprimitivefromothermodule
+ 21/158 Test  #21: other_usersprimitivefromothermodule ................................   Passed    0.41 sec
+        Start  22: other_wrongctor
+ 22/158 Test  #22: other_wrongctor ....................................................   Passed    0.40 sec
+        Start  23: sample___del__
+ 23/158 Test  #23: sample___del__ .....................................................   Passed    0.41 sec
+        Start  24: sample_abstract
+ 24/158 Test  #24: sample_abstract ....................................................   Passed    0.41 sec
+        Start  25: sample_addedfunction
+ 25/158 Test  #25: sample_addedfunction ...............................................   Passed    0.40 sec
+        Start  26: sample_addedfunction_with_container_args
+ 26/158 Test  #26: sample_addedfunction_with_container_args ...........................   Passed    0.40 sec
+        Start  27: sample_argumentmodifications
+ 27/158 Test  #27: sample_argumentmodifications .......................................   Passed    0.44 sec
+        Start  28: sample_array_numpy
+ 28/158 Test  #28: sample_array_numpy .................................................   Passed    0.35 sec
+        Start  29: sample_array_sequence
+ 29/158 Test  #29: sample_array_sequence ..............................................   Passed    0.40 sec
+        Start  30: sample_bug_554
+ 30/158 Test  #30: sample_bug_554 .....................................................   Passed    0.35 sec
+        Start  31: sample_bug_704
+ 31/158 Test  #31: sample_bug_704 .....................................................   Passed    0.40 sec
+        Start  32: sample_bytearray
+ 32/158 Test  #32: sample_bytearray ...................................................   Passed    0.41 sec
+        Start  33: sample_child_return
+ 33/158 Test  #33: sample_child_return ................................................   Passed    0.58 sec
+        Start  34: sample_class_fields
+ 34/158 Test  #34: sample_class_fields ................................................   Passed    0.41 sec
+        Start  35: sample_collector
+ 35/158 Test  #35: sample_collector ...................................................   Passed    0.42 sec
+        Start  36: sample_complex
+ 36/158 Test  #36: sample_complex .....................................................   Passed    0.43 sec
+        Start  37: sample_conversion_operator
+ 37/158 Test  #37: sample_conversion_operator .........................................   Passed    0.41 sec
+        Start  38: sample_copy
+ 38/158 Test  #38: sample_copy ........................................................   Passed    0.43 sec
+        Start  39: sample_ctorconvrule
+ 39/158 Test  #39: sample_ctorconvrule ................................................   Passed    0.40 sec
+        Start  40: sample_cyclic
+ 40/158 Test  #40: sample_cyclic ......................................................   Passed    0.47 sec
+        Start  41: sample_date
+ 41/158 Test  #41: sample_date ........................................................   Passed    0.41 sec
+        Start  42: sample_dealloc_resurrect
+ 42/158 Test  #42: sample_dealloc_resurrect ...........................................   Passed    0.40 sec
+        Start  43: sample_decisor
+ 43/158 Test  #43: sample_decisor .....................................................   Passed    0.42 sec
+        Start  44: sample_delete
+ 44/158 Test  #44: sample_delete ......................................................   Passed    0.40 sec
+        Start  45: sample_deprecated
+ 45/158 Test  #45: sample_deprecated ..................................................   Passed    0.41 sec
+        Start  46: sample_derived
+ 46/158 Test  #46: sample_derived .....................................................   Passed    0.42 sec
+        Start  47: sample_duck_punching
+ 47/158 Test  #47: sample_duck_punching ...............................................   Passed    0.41 sec
+        Start  48: sample_echo
+ 48/158 Test  #48: sample_echo ........................................................   Passed    0.42 sec
+        Start  49: sample_enum
+ 49/158 Test  #49: sample_enum ........................................................   Passed    0.43 sec
+        Start  50: sample_enumfromremovednamespace
+ 50/158 Test  #50: sample_enumfromremovednamespace ....................................   Passed    0.55 sec
+        Start  51: sample_event_loop_call_virtual
+ 51/158 Test  #51: sample_event_loop_call_virtual .....................................   Passed    0.40 sec
+        Start  52: sample_event_loop_thread
+ 52/158 Test  #52: sample_event_loop_thread ...........................................   Passed    0.57 sec
+        Start  53: sample_exception
+ 53/158 Test  #53: sample_exception ...................................................   Passed    0.41 sec
+        Start  54: sample_filter
+ 54/158 Test  #54: sample_filter ......................................................   Passed    0.41 sec
+        Start  55: sample_free_threading_stress
+ 55/158 Test  #55: sample_free_threading_stress .......................................   Passed    1.05 sec
+        Start  56: sample_handleholder
+ 56/158 Test  #56: sample_handleholder ................................................   Passed    0.41 sec
+        Start  57: sample_hashabletype
+ 57/158 Test  #57: sample_hashabletype ................................................   Passed    0.42 sec
+        Start  58: sample_ignorederefop
+ 58/158 Test  #58: sample_ignorederefop ...............................................   Passed    0.40 sec
+        Start  59: sample_implicitconv_numerical
+ 59/158 Test  #59: sample_implicitconv_numerical ......................................   Passed    0.41 sec
+        Start  60: sample_implicitconv
+ 60/158 Test  #60: sample_implicitconv ................................................   Passed    0.40 sec
+        Start  61: sample_inheritanceandscope
+ 61/158 Test  #61: sample_inheritanceandscope .........................................   Passed    0.42 sec
+        Start  62: sample_injectcode
+ 62/158 Test  #62: sample_injectcode ..................................................   Passed    0.41 sec
+        Start  63: sample_innerclass
+ 63/158 Test  #63: sample_innerclass ..................................................   Passed    0.44 sec
+        Start  64: sample_intlist
+ 64/158 Test  #64: sample_intlist .....................................................   Passed    0.42 sec
+        Start  65: sample_intwrapper
+ 65/158 Test  #65: sample_intwrapper ..................................................   Passed    0.42 sec
+        Start  66: sample_invalid_virtual_return
+ 66/158 Test  #66: sample_invalid_virtual_return ......................................   Passed    0.40 sec
+        Start  67: sample_keep_reference
+ 67/158 Test  #67: sample_keep_reference ..............................................   Passed    0.41 sec
+        Start  68: sample_list
+ 68/158 Test  #68: sample_list ........................................................   Passed    0.43 sec
+        Start  69: sample_lock
+ 69/158 Test  #69: sample_lock ........................................................   Passed    0.41 sec
+        Start  70: sample_map
+ 70/158 Test  #70: sample_map .........................................................   Passed    0.41 sec
+        Start  71: sample_metaclass
+ 71/158 Test  #71: sample_metaclass ...................................................   Passed    0.36 sec
+        Start  72: sample_mi_virtual_methods
+ 72/158 Test  #72: sample_mi_virtual_methods ..........................................   Passed    0.44 sec
+        Start  73: sample_mixed_mi
+ 73/158 Test  #73: sample_mixed_mi ....................................................   Passed    0.41 sec
+        Start  74: sample_modelindex
+ 74/158 Test  #74: sample_modelindex ..................................................   Passed    0.41 sec
+        Start  75: sample_modelview
+ 75/158 Test  #75: sample_modelview ...................................................   Passed    0.39 sec
+        Start  76: sample_modifications
+ 76/158 Test  #76: sample_modifications ...............................................   Passed    0.48 sec
+        Start  77: sample_modified_constructor
+ 77/158 Test  #77: sample_modified_constructor ........................................   Passed    0.39 sec
+        Start  78: sample_modifiedvirtualmethods
+ 78/158 Test  #78: sample_modifiedvirtualmethods ......................................   Passed    0.44 sec
+        Start  79: sample_multi_cpp_inheritance
+ 79/158 Test  #79: sample_multi_cpp_inheritance .......................................   Passed    0.39 sec
+        Start  80: sample_multiple_derived
+ 80/158 Test  #80: sample_multiple_derived ............................................   Passed    0.40 sec
+        Start  81: sample_namespace
+ 81/158 Test  #81: sample_namespace ...................................................   Passed    0.41 sec
+        Start  82: sample_newdivision
+ 82/158 Test  #82: sample_newdivision .................................................   Passed    0.41 sec
+        Start  83: sample_nondefaultctor
+ 83/158 Test  #83: sample_nondefaultctor ..............................................   Passed    0.42 sec
+        Start  84: sample_nontypetemplate
+ 84/158 Test  #84: sample_nontypetemplate .............................................   Passed    0.42 sec
+        Start  85: sample_nonzero
+ 85/158 Test  #85: sample_nonzero .....................................................   Passed    0.43 sec
+        Start  86: sample_numericaltypedef
+ 86/158 Test  #86: sample_numericaltypedef ............................................   Passed    0.42 sec
+        Start  87: sample_numpy
+ 87/158 Test  #87: sample_numpy .......................................................   Passed    0.13 sec
+        Start  88: sample_objecttype
+ 88/158 Test  #88: sample_objecttype ..................................................   Passed    0.45 sec
+        Start  89: sample_objecttype_with_named_args
+ 89/158 Test  #89: sample_objecttype_with_named_args ..................................   Passed    0.43 sec
+        Start  90: sample_objecttypebyvalue
+ 90/158 Test  #90: sample_objecttypebyvalue ...........................................   Passed    0.42 sec
+        Start  91: sample_objecttypelayout
+ 91/158 Test  #91: sample_objecttypelayout ............................................   Passed    0.45 sec
+        Start  92: sample_objecttypeoperators
+ 92/158 Test  #92: sample_objecttypeoperators .........................................   Passed    0.41 sec
+        Start  93: sample_objecttypereferenceasvirtualmethodargument
+ 93/158 Test  #93: sample_objecttypereferenceasvirtualmethodargument ..................   Passed    0.41 sec
+        Start  94: sample_oddbool
+ 94/158 Test  #94: sample_oddbool .....................................................   Passed    0.41 sec
+        Start  95: sample_onlycopyclass
+ 95/158 Test  #95: sample_onlycopyclass ...............................................   Passed    0.41 sec
+        Start  96: sample_overflow
+ 96/158 Test  #96: sample_overflow ....................................................   Passed    0.41 sec
+        Start  97: sample_overload_sorting
+ 97/158 Test  #97: sample_overload_sorting ............................................   Passed    0.40 sec
+        Start  98: sample_overload
+ 98/158 Test  #98: sample_overload ....................................................   Passed    0.44 sec
+        Start  99: sample_overloadwithdefault
+ 99/158 Test  #99: sample_overloadwithdefault .........................................   Passed    0.38 sec
+        Start 100: sample_ownership_argument_invalidation
+100/158 Test #100: sample_ownership_argument_invalidation .............................   Passed    0.39 sec
+        Start 101: sample_ownership_delete_child_in_cpp
+101/158 Test #101: sample_ownership_delete_child_in_cpp ...............................   Passed    0.39 sec
+        Start 102: sample_ownership_delete_child_in_python
+102/158 Test #102: sample_ownership_delete_child_in_python ............................   Passed    0.41 sec
+        Start 103: sample_ownership_delete_parent
+103/158 Test #103: sample_ownership_delete_parent .....................................   Passed    0.42 sec
+        Start 104: sample_ownership_invalidate_after_use
+104/158 Test #104: sample_ownership_invalidate_after_use ..............................   Passed    0.44 sec
+        Start 105: sample_ownership_invalidate_child
+105/158 Test #105: sample_ownership_invalidate_child ..................................   Passed    0.44 sec
+        Start 106: sample_ownership_invalidate_nonpolymorphic
+106/158 Test #106: sample_ownership_invalidate_nonpolymorphic .........................   Passed    0.46 sec
+        Start 107: sample_ownership_invalidate_parent
+107/158 Test #107: sample_ownership_invalidate_parent .................................   Passed    0.43 sec
+        Start 108: sample_ownership_invalidate_referred
+108/158 Test #108: sample_ownership_invalidate_referred ...............................   Passed    0.43 sec
+        Start 109: sample_ownership_reparenting
+109/158 Test #109: sample_ownership_reparenting .......................................   Passed    0.44 sec
+        Start 110: sample_ownership_transference
+110/158 Test #110: sample_ownership_transference ......................................   Passed    0.44 sec
+        Start 111: sample_pair
+111/158 Test #111: sample_pair ........................................................   Passed    0.43 sec
+        Start 112: sample_pen
+112/158 Test #112: sample_pen .........................................................   Passed    0.43 sec
+        Start 113: sample_point
+113/158 Test #113: sample_point .......................................................   Passed    0.44 sec
+        Start 114: sample_pointerholder
+114/158 Test #114: sample_pointerholder ...............................................   Passed    0.43 sec
+        Start 115: sample_pointerprimitivetype
+115/158 Test #115: sample_pointerprimitivetype ........................................   Passed    0.45 sec
+        Start 116: sample_pointf
+116/158 Test #116: sample_pointf ......................................................   Passed    0.43 sec
+        Start 117: sample_primitivereferenceargument
+117/158 Test #117: sample_primitivereferenceargument ..................................   Passed    0.43 sec
+        Start 118: sample_privatector
+118/158 Test #118: sample_privatector .................................................   Passed    0.44 sec
+        Start 119: sample_privatedtor
+119/158 Test #119: sample_privatedtor .................................................   Passed    0.41 sec
+        Start 120: sample_protected
+120/158 Test #120: sample_protected ...................................................   Passed    0.59 sec
+        Start 121: sample_pstrlist
+121/158 Test #121: sample_pstrlist ....................................................   Passed    0.38 sec
+        Start 122: sample_pystr
+122/158 Test #122: sample_pystr .......................................................   Passed    0.38 sec
+        Start 123: sample_python_thread
+123/158 Test #123: sample_python_thread ...............................................   Passed    0.55 sec
+        Start 124: sample_receive_null_cstring
+124/158 Test #124: sample_receive_null_cstring ........................................   Passed    0.39 sec
+        Start 125: sample_reference
+125/158 Test #125: sample_reference ...................................................   Passed    0.40 sec
+        Start 126: sample_referencetopointer
+126/158 Test #126: sample_referencetopointer ..........................................   Passed    0.40 sec
+        Start 127: sample_renaming
+127/158 Test #127: sample_renaming ....................................................   Passed    0.40 sec
+        Start 128: sample_return_null
+128/158 Test #128: sample_return_null .................................................   Passed    0.40 sec
+        Start 129: sample_richcompare
+129/158 Test #129: sample_richcompare .................................................   Passed    0.40 sec
+        Start 130: sample_sample
+130/158 Test #130: sample_sample ......................................................   Passed    0.41 sec
+        Start 131: sample_simplefile
+131/158 Test #131: sample_simplefile ..................................................   Passed    0.38 sec
+        Start 132: sample_size
+132/158 Test #132: sample_size ........................................................   Passed    0.38 sec
+        Start 133: sample_snakecase
+133/158 Test #133: sample_snakecase ...................................................   Passed    0.38 sec
+        Start 134: sample_spaceship
+134/158 Test #134: sample_spaceship ...................................................   Passed    0.38 sec
+        Start 135: sample_static_nonstatic_methods
+135/158 Test #135: sample_static_nonstatic_methods ....................................   Passed    0.39 sec
+        Start 136: sample_stdcomplex
+136/158 Test #136: sample_stdcomplex ..................................................   Passed    0.39 sec
+        Start 137: sample_str
+137/158 Test #137: sample_str .........................................................   Passed    0.39 sec
+        Start 138: sample_strlist
+138/158 Test #138: sample_strlist .....................................................   Passed    0.39 sec
+        Start 139: sample_templateinheritingclass
+139/158 Test #139: sample_templateinheritingclass .....................................   Passed    0.39 sec
+        Start 140: sample_time
+140/158 Test #140: sample_time ........................................................   Passed    0.39 sec
+        Start 141: sample_transform
+141/158 Test #141: sample_transform ...................................................   Passed    0.38 sec
+        Start 142: sample_typeconverters
+142/158 Test #142: sample_typeconverters ..............................................   Passed    0.39 sec
+        Start 143: sample_typedealloc
+143/158 Test #143: sample_typedealloc .................................................   Passed    0.40 sec
+        Start 144: sample_typedtordoublefree
+144/158 Test #144: sample_typedtordoublefree ..........................................   Passed    0.38 sec
+        Start 145: sample_typesystypedef
+145/158 Test #145: sample_typesystypedef ..............................................   Passed    0.38 sec
+        Start 146: sample_unsafe_parent
+146/158 Test #146: sample_unsafe_parent ...............................................   Passed    0.38 sec
+        Start 147: sample_useraddedctor
+147/158 Test #147: sample_useraddedctor ...............................................   Passed    0.38 sec
+        Start 148: sample_virtualdtor
+148/158 Test #148: sample_virtualdtor .................................................   Passed    0.47 sec
+        Start 149: sample_virtualmethods
+149/158 Test #149: sample_virtualmethods ..............................................   Passed    0.41 sec
+        Start 150: sample_visibilitychange
+150/158 Test #150: sample_visibilitychange ............................................   Passed    0.38 sec
+        Start 151: sample_voidholder
+151/158 Test #151: sample_voidholder ..................................................   Passed    0.38 sec
+        Start 152: sample_weakref
+152/158 Test #152: sample_weakref .....................................................   Passed    0.39 sec
+        Start 153: sample_writableclassdict
+153/158 Test #153: sample_writableclassdict ...........................................   Passed    0.38 sec
+        Start 154: shiboken_module
+154/158 Test #154: shiboken_module ....................................................   Passed    0.41 sec
+        Start 155: smart_smart_pointer
+155/158 Test #155: smart_smart_pointer ................................................   Passed    0.47 sec
+        Start 156: smart_std_optional
+156/158 Test #156: smart_std_optional .................................................   Passed    0.38 sec
+        Start 157: smart_std_shared_ptr
+157/158 Test #157: smart_std_shared_ptr ...............................................   Passed    0.38 sec
+        Start 158: smart_std_unique_ptr
+158/158 Test #158: smart_std_unique_ptr ...............................................   Passed    0.38 sec
+
+100% tests passed, 0 tests failed out of 158
+
+Total Test time (real) =  67.96 sec

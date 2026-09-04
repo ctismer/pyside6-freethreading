@@ -1,0 +1,597 @@
+[HANDLER_OUTPUT] 
+Test project /Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6
+
+      Start  38: QtAsyncio_bug_2790
+ 1/12 Test  #38: QtAsyncio_bug_2790 .........................***Failed    0.55 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  default_policy = asyncio.get_event_loop_policy()
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseBug2790.task' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_timeout (__main__.QAsyncioTestCaseBug2790.test_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/bug_2790.py", line 49, in test_timeout
+    QtAsyncio.run(self.task(outputs_real), keep_running=False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+    ret = asyncio.run(coro, debug=debug)
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.019s
+
+FAILED (errors=1)
+
+      Start  39: QtAsyncio_bug_2799
+ 2/12 Test  #39: QtAsyncio_bug_2799 .........................***Failed    0.57 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  default_policy = asyncio.get_event_loop_policy()
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/traceback.py:312: RuntimeWarning: coroutine 'QAsyncioTestCaseBug2799.main' was never awaited
+  tb.tb_frame.clear()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+E
+======================================================================
+ERROR: test_exception_group (__main__.QAsyncioTestCaseBug2799.test_exception_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/bug_2799.py", line 32, in test_exception_group
+    QtAsyncio.run(self.main(), keep_running=False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+    ret = asyncio.run(coro, debug=debug)
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.019s
+
+FAILED (errors=1)
+
+      Start  40: QtAsyncio_qasyncio_test
+ 3/12 Test  #40: QtAsyncio_qasyncio_test ....................***Failed    1.03 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:48: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:48: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:52: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCase.gather' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:34: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:34: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py:38: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCase.sleep' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_gather (__main__.QAsyncioTestCase.test_gather)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py", line 53, in test_gather
+    asyncio.run(self.gather(outputs_real))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+======================================================================
+ERROR: test_sleep (__main__.QAsyncioTestCase.test_sleep)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test.py", line 39, in test_sleep
+    asyncio.run(self.sleep(outputs_real))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.462s
+
+FAILED (errors=2)
+
+      Start  41: QtAsyncio_qasyncio_test_cancel_task
+ 4/12 Test  #41: QtAsyncio_qasyncio_test_cancel_task ........***Failed    0.65 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  default_policy = asyncio.get_event_loop_policy()
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseCancelTask.main' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_await_tasks (__main__.QAsyncioTestCaseCancelTask.test_await_tasks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_cancel_task.py", line 48, in test_await_tasks
+    QtAsyncio.run(self.main(output_real), keep_running=False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+    ret = asyncio.run(coro, debug=debug)
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.122s
+
+FAILED (errors=1)
+
+      Start  42: QtAsyncio_qasyncio_test_cancel_taskgroup
+ 5/12 Test  #42: QtAsyncio_qasyncio_test_cancel_taskgroup ...***Failed    0.54 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  default_policy = asyncio.get_event_loop_policy()
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseCancelTaskGroup.main' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_cancel_taskgroup (__main__.QAsyncioTestCaseCancelTaskGroup.test_cancel_taskgroup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_cancel_taskgroup.py", line 68, in test_cancel_taskgroup
+    QtAsyncio.run(self.main(coro), keep_running=False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+    ret = asyncio.run(coro, debug=debug)
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (errors=1)
+
+      Start  43: QtAsyncio_qasyncio_test_chain
+ 6/12 Test  #43: QtAsyncio_qasyncio_test_chain ..............***Failed    1.28 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:48: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:48: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py:55: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseChain.gather' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_chain (__main__.QAsyncioTestCaseChain.test_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_chain.py", line 57, in test_chain
+    asyncio.run(self.gather(outputs_real, *args))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.755s
+
+FAILED (errors=1)
+
+      Start  45: QtAsyncio_qasyncio_test_queues
+ 7/12 Test  #45: QtAsyncio_qasyncio_test_queues .............***Failed    1.66 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:61: DeprecationWarning: 'asyncio.DefaultEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py:68: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseQueues.main' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_queues (__main__.QAsyncioTestCaseQueues.test_queues)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_queues.py", line 69, in test_queues
+    asyncio.run(self.main(outputs_real1, outputs_real2, *arg))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 1.135s
+
+FAILED (errors=1)
+
+      Start  47: QtAsyncio_qasyncio_test_time
+ 8/12 Test  #47: QtAsyncio_qasyncio_test_time ...............***Failed    0.53 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_time.py:41: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy())
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_time (__main__.QAsyncioTestCaseTime.test_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_time.py", line 42, in test_time
+    loop = asyncio.new_event_loop()
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (errors=1)
+
+      Start  48: QtAsyncio_qasyncio_test_uncancel
+ 9/12 Test  #48: QtAsyncio_qasyncio_test_uncancel ...........***Failed    3.08 sec
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py:98: DeprecationWarning: 'asyncio.AbstractEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  class QAsyncioEventLoopPolicy(asyncio.AbstractEventLoopPolicy):
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:60: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  default_policy = asyncio.get_event_loop_policy()
+/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py:61: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(
+E/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/base_events.py:763: ResourceWarning: unclosed event loop <QAsyncioEventLoop running=False closed=False debug=False>
+  _warn(f"unclosed event loop {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/case.py:690: RuntimeWarning: coroutine 'QAsyncioTestCaseUncancel.main' was never awaited
+  with outcome.testPartExecutor(self):
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_uncancel (__main__.QAsyncioTestCaseUncancel.test_uncancel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtAsyncio/qasyncio_test_uncancel.py", line 62, in test_uncancel
+    QtAsyncio.run(self.main(outputs_expected), keep_running=False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/__init__.py", line 73, in run
+    ret = asyncio.run(coro, debug=debug)
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 204, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 60, in __enter__
+    self._lazy_init()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/runners.py", line 147, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/asyncio/events.py", line 847, in new_event_loop
+    return _get_event_loop_policy().new_event_loop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 137, in new_event_loop
+    return QAsyncioEventLoop(self._application, quit_qapp=self._quit_qapp)
+  File "/Users/tismer/src/QtC/pyside-setup/build-asan/qfpdp-py3.15-qt6.12.0-64bit-debug/build/pyside6/PySide6/QtAsyncio/events.py", line 213, in __init__
+    self._default_executor = concurrent.futures.ThreadPoolExecutor()
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'lazy_import' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 2.561s
+
+FAILED (errors=1)
+
+      Start 104: pyside6-deploy_test_pyside6_deploy
+10/12 Test #104: pyside6-deploy_test_pyside6_deploy .........***Failed    7.04 sec
+..s/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQml not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtQml.framework/Versions/A/QtQml.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtCore not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtCore.framework/Versions/A/QtCore.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtGui not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtGui.framework/Versions/A/QtGui.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQuick not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtQuick.framework/Versions/A/QtQuick.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+.F.s.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtNetwork not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtNetwork.framework/Versions/A/QtNetwork.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtWidgets not found in /Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/site-packages/PySide6/Qt/lib/QtWidgets.framework/Versions/A/QtWidgets.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.
+======================================================================
+FAIL: testQmlConfigFile (__main__.TestPySide6DeployQml.testQmlConfigFile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+    return func(*newargs, **newkeywargs)
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 416, in testQmlConfigFile
+    self.assertEqual(obtained_modules, expected_modules)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'DBus'
+'QmlModels'
+'QmlMeta'
+'OpenGL'
+'Network'
+'QmlWorkerScript'
+
+======================================================================
+FAIL: testExtraIgnoreDirs (__main__.TestPySide6DeployWidgets.testExtraIgnoreDirs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+    return func(*newargs, **newkeywargs)
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 271, in testExtraIgnoreDirs
+    self.assertEqual(obtained_modules, expected_modules)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'DBus'
+
+======================================================================
+FAIL: testExtraModules (__main__.TestPySide6DeployWidgets.testExtraModules)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+    return func(*newargs, **newkeywargs)
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 244, in testExtraModules
+    self.assertEqual(obtained_modules, expected_modules)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'DBus'
+
+======================================================================
+FAIL: testWidgetConfigFile (__main__.TestPySide6DeployWidgets.testWidgetConfigFile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.15.0b4t-asan/lib/python3.15t/unittest/mock.py", line 1439, in patched
+    return func(*newargs, **newkeywargs)
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 206, in testWidgetConfigFile
+    self.assertEqual(obtained_modules, expected_modules)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'Network'
+Items in the second set but not the first:
+'DBus'
+
+----------------------------------------------------------------------
+Ran 17 tests in 6.525s
+
+FAILED (failures=4, skipped=2)
+
+      Start 492: QtQml_registertype
+11/12 Test #492: QtQml_registertype .........................***Failed    0.95 sec
+AddressSanitizer: CHECK failed: sanitizer_posix_libcdep.cpp:189 "((0)) == ((sigaltstack(&altstack, &oldstack)))" (0x0, 0xffffffffffffffff) (tid=46001569)
+    <empty stack>
+
+
+      Start 538: QtUiTools_loadUiType_test
+12/12 Test #538: QtUiTools_loadUiType_test ..................***Failed    0.59 sec
+loadUiType: pyside6-uic could not be found in the standard location.
+F
+======================================================================
+FAIL: testFunction (__main__.loadUiTypeTester.testFunction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtUiTools/loadUiType_test.py", line 28, in testFunction
+    self.assertNotEqual(loaded, None)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: None == None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.095s
+
+FAILED (failures=1)
+
+
+0% tests passed, 12 tests failed out of 12
+
+Total Test time (real) =  18.49 sec
+
+The following tests FAILED:
+	 38 - QtAsyncio_bug_2790 (Failed)
+	 39 - QtAsyncio_bug_2799 (Failed)
+	 40 - QtAsyncio_qasyncio_test (Failed)
+	 41 - QtAsyncio_qasyncio_test_cancel_task (Failed)
+	 42 - QtAsyncio_qasyncio_test_cancel_taskgroup (Failed)
+	 43 - QtAsyncio_qasyncio_test_chain (Failed)
+	 45 - QtAsyncio_qasyncio_test_queues (Failed)
+	 47 - QtAsyncio_qasyncio_test_time (Failed)
+	 48 - QtAsyncio_qasyncio_test_uncancel (Failed)
+	104 - pyside6-deploy_test_pyside6_deploy (Failed)
+	492 - QtQml_registertype (Failed)
+	538 - QtUiTools_loadUiType_test (Failed)
+[ERROR_MESSAGE] 
+Errors while running CTest
+

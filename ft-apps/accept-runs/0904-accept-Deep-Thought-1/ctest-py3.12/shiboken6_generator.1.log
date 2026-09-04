@@ -1,0 +1,81 @@
+[HANDLER_OUTPUT] 
+Test project /Users/tismer/src/QtC/pyside-setup/build/qfpd-py3.12-qt6.12.0-64bit-debug/build/shiboken6_generator
+
+      Start  1: testabstractmetaclass
+ 1/37 Test  #1: testabstractmetaclass ............   Passed    1.00 sec
+      Start  2: testabstractmetatype
+ 2/37 Test  #2: testabstractmetatype .............   Passed    0.35 sec
+      Start  3: testaddfunction
+ 3/37 Test  #3: testaddfunction ..................   Passed    0.49 sec
+      Start  4: testarrayargument
+ 4/37 Test  #4: testarrayargument ................   Passed    0.27 sec
+      Start  5: testclangparser
+ 5/37 Test  #5: testclangparser ..................   Passed    0.20 sec
+      Start  6: testcodeinjection
+ 6/37 Test  #6: testcodeinjection ................   Passed    0.27 sec
+      Start  7: testcontainer
+ 7/37 Test  #7: testcontainer ....................   Passed    0.22 sec
+      Start  8: testconversionoperator
+ 8/37 Test  #8: testconversionoperator ...........   Passed    0.30 sec
+      Start  9: testconversionruletag
+ 9/37 Test  #9: testconversionruletag ............   Passed    0.27 sec
+      Start 10: testctorinformation
+10/37 Test #10: testctorinformation ..............   Passed    0.22 sec
+      Start 11: testdroptypeentries
+11/37 Test #11: testdroptypeentries ..............   Passed    0.27 sec
+      Start 12: testdtorinformation
+12/37 Test #12: testdtorinformation ..............   Passed    0.29 sec
+      Start 13: testenum
+13/37 Test #13: testenum .........................   Passed    0.39 sec
+      Start 14: testextrainclude
+14/37 Test #14: testextrainclude .................   Passed    0.23 sec
+      Start 15: testfunctiontag
+15/37 Test #15: testfunctiontag ..................   Passed    0.35 sec
+      Start 16: testimplicitconversions
+16/37 Test #16: testimplicitconversions ..........   Passed    0.27 sec
+      Start 17: testinserttemplate
+17/37 Test #17: testinserttemplate ...............   Passed    0.23 sec
+      Start 18: testmodifyfunction
+18/37 Test #18: testmodifyfunction ...............   Passed    0.50 sec
+      Start 19: testmultipleinheritance
+19/37 Test #19: testmultipleinheritance ..........   Passed    0.20 sec
+      Start 20: testnamespace
+20/37 Test #20: testnamespace ....................   Passed    0.22 sec
+      Start 21: testnestedtypes
+21/37 Test #21: testnestedtypes ..................   Passed    0.22 sec
+      Start 22: testnumericaltypedef
+22/37 Test #22: testnumericaltypedef .............   Passed    0.22 sec
+      Start 23: testprimitivetypetag
+23/37 Test #23: testprimitivetypetag .............   Passed    0.20 sec
+      Start 24: testrefcounttag
+24/37 Test #24: testrefcounttag ..................   Passed    0.22 sec
+      Start 25: testreferencetopointer
+25/37 Test #25: testreferencetopointer ...........   Passed    0.20 sec
+      Start 26: testremovefield
+26/37 Test #26: testremovefield ..................   Passed    0.22 sec
+      Start 27: testremoveimplconv
+27/37 Test #27: testremoveimplconv ...............   Passed    0.20 sec
+      Start 28: testremoveoperatormethod
+28/37 Test #28: testremoveoperatormethod .........   Passed    0.20 sec
+      Start 29: testresolvetype
+29/37 Test #29: testresolvetype ..................   Passed    0.59 sec
+      Start 30: testreverseoperators
+30/37 Test #30: testreverseoperators .............   Passed    0.25 sec
+      Start 31: testtemplates
+31/37 Test #31: testtemplates ....................   Passed    0.69 sec
+      Start 32: testtoposort
+32/37 Test #32: testtoposort .....................   Passed    0.16 sec
+      Start 33: testvaluetypedefaultctortag
+33/37 Test #33: testvaluetypedefaultctortag ......   Passed    0.20 sec
+      Start 34: testvoidarg
+34/37 Test #34: testvoidarg ......................   Passed    0.25 sec
+      Start 35: testtyperevision
+35/37 Test #35: testtyperevision .................   Passed    0.29 sec
+      Start 36: testmodifydocumentation
+36/37 Test #36: testmodifydocumentation ..........   Passed    0.22 sec
+      Start 37: qtxmltosphinx
+37/37 Test #37: qtxmltosphinx ....................   Passed    0.16 sec
+
+100% tests passed, 0 tests failed out of 37
+
+Total Test time (real) =  11.07 sec

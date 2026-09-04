@@ -1,0 +1,130 @@
+[HANDLER_OUTPUT] 
+Test project /Users/tismer/src/QtC/pyside-setup/build/qfpd-py3.12-qt6.12.0-64bit-debug/build/pyside6
+
+    Start 104: pyside6-deploy_test_pyside6_deploy
+1/2 Test #104: pyside6-deploy_test_pyside6_deploy ...***Failed    1.85 sec
+..s/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtCore not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtCore.framework/Versions/A/QtCore.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtGui not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtGui.framework/Versions/A/QtGui.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQml not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtQml.framework/Versions/A/QtQml.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtQuick not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtQuick.framework/Versions/A/QtQuick.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+.F.s.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtWidgets not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtWidgets.framework/Versions/A/QtWidgets.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+/Users/tismer/src/QtC/pyside-setup/sources/pyside-tools/deploy_lib/dependency_util.py:263: RuntimeWarning: [DEPLOY] QtNetwork not found in /Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/site-packages/PySide6/Qt/lib/QtNetwork.framework/Versions/A/QtNetwork.Skipping finding its dependencies.
+  warnings.warn(f"[DEPLOY] {qt_module_path.name} not found in {str(qt_module_path)}."
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+FWARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.WARNING:root:[DEPLOY] Unable to resolve a valid project file. Proceeding without a project file. Details:
+No project file found in the current directory.
+.
+======================================================================
+FAIL: testQmlConfigFile (__main__.TestPySide6DeployQml.testQmlConfigFile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 416, in testQmlConfigFile
+    self.assertEqual(obtained_modules, expected_modules)
+AssertionError: Items in the second set but not the first:
+'QmlModels'
+'QmlMeta'
+'QmlWorkerScript'
+'Network'
+'DBus'
+'OpenGL'
+
+======================================================================
+FAIL: testExtraIgnoreDirs (__main__.TestPySide6DeployWidgets.testExtraIgnoreDirs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 271, in testExtraIgnoreDirs
+    self.assertEqual(obtained_modules, expected_modules)
+AssertionError: Items in the second set but not the first:
+'DBus'
+
+======================================================================
+FAIL: testExtraModules (__main__.TestPySide6DeployWidgets.testExtraModules)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 244, in testExtraModules
+    self.assertEqual(obtained_modules, expected_modules)
+AssertionError: Items in the second set but not the first:
+'DBus'
+
+======================================================================
+FAIL: testWidgetConfigFile (__main__.TestPySide6DeployWidgets.testWidgetConfigFile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/.pyenv/versions/3.12.11/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/tools/pyside6-deploy/test_pyside6_deploy.py", line 206, in testWidgetConfigFile
+    self.assertEqual(obtained_modules, expected_modules)
+AssertionError: Items in the first set but not the second:
+'Network'
+Items in the second set but not the first:
+'DBus'
+
+----------------------------------------------------------------------
+Ran 17 tests in 1.738s
+
+FAILED (failures=4, skipped=2)
+
+    Start 538: QtUiTools_loadUiType_test
+2/2 Test #538: QtUiTools_loadUiType_test ............***Failed    0.21 sec
+loadUiType: pyside6-uic could not be found in the standard location.
+F
+======================================================================
+FAIL: testFunction (__main__.loadUiTypeTester.testFunction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tismer/src/QtC/pyside-setup/sources/pyside6/tests/QtUiTools/loadUiType_test.py", line 28, in testFunction
+    self.assertNotEqual(loaded, None)
+AssertionError: None == None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.075s
+
+FAILED (failures=1)
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =   2.08 sec
+
+The following tests FAILED:
+	104 - pyside6-deploy_test_pyside6_deploy (Failed)
+	538 - QtUiTools_loadUiType_test (Failed)
+[ERROR_MESSAGE] 
+Errors while running CTest
+

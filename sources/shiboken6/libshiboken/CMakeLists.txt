@@ -108,6 +108,18 @@ signature/signature_extend.cpp
 signature/signature_helper.cpp
 )
 
+# Free-threaded builds only.
+if(SHIBOKEN_PYTHON_FREE_THREADED)
+    set(libshiboken_FT_HEADERS
+        sbkfailpoint.h
+        sbkftoptions.h
+    )
+    list(APPEND libshiboken_SRC
+         sbkfailpoint.cpp
+         sbkftoptions.cpp
+         ${libshiboken_FT_HEADERS})
+endif()
+
 # This is needed to let the header obey a variable in "pep384impl.h".
 # Note: This must be set on the cpp file!
 set_property(SOURCE "pep384impl.cpp" PROPERTY SKIP_UNITY_BUILD_INCLUSION ON)
@@ -168,6 +180,13 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     endif()
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(libshiboken PUBLIC "-DNDEBUG")
+endif()
+
+if(SHIBOKEN_PYTHON_FREE_THREADED)
+    # Windows' pyconfig.h leaves Py_GIL_DISABLED to the build.
+    if(WIN32)
+        target_compile_definitions(libshiboken PUBLIC "-DPy_GIL_DISABLED=1")
+    endif()
 endif()
 
 set(set_props_args DEFINE_SYMBOL BUILD_LIBSHIBOKEN)
@@ -236,6 +255,10 @@ install(FILES
         signature_p.h
 
         DESTINATION include/shiboken6${shiboken6_SUFFIX})
+if(SHIBOKEN_PYTHON_FREE_THREADED)
+    install(FILES ${libshiboken_FT_HEADERS}
+            DESTINATION include/shiboken6${shiboken6_SUFFIX})
+endif()
 install(TARGETS libshiboken EXPORT Shiboken6Targets
                             LIBRARY DESTINATION "${LIB_INSTALL_DIR}"
                             ARCHIVE DESTINATION "${LIB_INSTALL_DIR}"

@@ -62,6 +62,8 @@ enum class Option : std::uint64_t
     QmlPlacementType = 0x80000000000,
     QmlImportGlobalsOwned = 0x100000000000,
     QmlHelperModuleOnce = 0x200000000000,
+    SourcePropertyCopy = 0x400000000000,
+    RepRegistryLock = 0x800000000000,
 };
 
 LIBSHIBOKEN_API bool optionEnabled(Option opt);

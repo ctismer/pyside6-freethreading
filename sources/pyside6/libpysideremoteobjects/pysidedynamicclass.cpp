@@ -30,6 +30,10 @@
 
 #include <cstring>
 #include <cctype>
+#ifdef Py_GIL_DISABLED
+#  include <sbkftoptions.h>
+#  include <utility>
+#endif
 
 using namespace Shiboken;
 
@@ -50,6 +54,44 @@ PyObject *propertiesAttr()
     static PyObject *const s = Shiboken::String::createStaticString("__PROPERTIES__");
     return s;
 }
+
+#ifdef Py_GIL_DISABLED
+// Another thread may set a source property while it is read: reads copy,
+// writes swap, under the object's critical section.
+static bool readSourceProperty(PyObject *self, const QVariantList *list, qsizetype index,
+                               QVariant *value)
+{
+    if (!Shiboken::FreeThreading::optionEnabled(
+            Shiboken::FreeThreading::Option::SourcePropertyCopy)) {
+        if (index < 0 || index >= list->size())
+            return false;
+        *value = list->at(index);
+        return true;
+    }
+    bool found = false;
+    Py_BEGIN_CRITICAL_SECTION(self);
+    if (index >= 0 && index < list->size()) {
+        *value = list->at(index);
+        found = true;
+    }
+    Py_END_CRITICAL_SECTION();
+    return found;
+}
+
+static void writeSourceProperty(PyObject *self, QVariantList *list, qsizetype index,
+                                QVariant value)
+{
+    if (!Shiboken::FreeThreading::optionEnabled(
+            Shiboken::FreeThreading::Option::SourcePropertyCopy)) {
+        list->replace(index, value);
+        return;
+    }
+    // The old value goes after the section
+    Py_BEGIN_CRITICAL_SECTION(self);
+    std::swap((*list)[index], value);
+    Py_END_CRITICAL_SECTION();
+}
+#endif // Py_GIL_DISABLED
 
 struct SourceDefs
 {
@@ -94,6 +136,9 @@ struct SourceDefs
 
     static PyObject *capsule_method_handler(PyObject *payload, PyObject *args)
     {
+#ifdef Py_GIL_DISABLED
+        payload = capsuleMethodPayload(payload);
+#endif
         auto *methodData = reinterpret_cast<CapsuleDescriptorData *>(PyCapsule_GetPointer(payload,
                                                                                           "Payload"));
         if (!methodData) {
@@ -110,13 +155,21 @@ struct SourceDefs
                                                      nullptr);
                 auto *currentProperties = reinterpret_cast<QVariantList *>(propPtr);
                 auto *callData = reinterpret_cast<PropertyCapsule *>(capsule);
+#ifdef Py_GIL_DISABLED
+                QVariant currentVariant;
+                if (!readSourceProperty(self, currentProperties, callData->indexInObject,
+                                        &currentVariant)) {
+#else
                 if (callData->indexInObject < 0
                     || callData->indexInObject >= currentProperties->size()) {
+#endif
                     PyErr_Format(PyExc_RuntimeError, "Unknown property method: %s",
                                  callData->name.constData());
                     return nullptr;
                 }
+#ifndef Py_GIL_DISABLED
                 const QVariant &currentVariant = currentProperties->at(callData->indexInObject);
+#endif
 
                 // Handle getter
                 if (PyTuple_Size(args) == 0)
@@ -145,7 +198,11 @@ struct SourceDefs
                 if (variant == currentVariant)
                     Py_RETURN_NONE;
 
+#ifdef Py_GIL_DISABLED
+                writeSourceProperty(self, currentProperties, callData->indexInObject, variant);
+#else
                 currentProperties->replace(callData->indexInObject, variant);
+#endif
                 // Get the QMetaObject and emit the property changed signal if there is one
                 const auto *metaObject = PySide::retrieveMetaObject(self);
                 auto metaProperty = metaObject->property(callData->propertyIndex);
@@ -272,6 +329,9 @@ struct ReplicaDefs
 
     static PyObject *capsule_method_handler(PyObject *payload, PyObject *args)
     {
+#ifdef Py_GIL_DISABLED
+        payload = capsuleMethodPayload(payload);
+#endif
         auto *methodData = reinterpret_cast<CapsuleDescriptorData *>(PyCapsule_GetPointer(payload,
                                                                                           "Payload"));
         if (!methodData) {

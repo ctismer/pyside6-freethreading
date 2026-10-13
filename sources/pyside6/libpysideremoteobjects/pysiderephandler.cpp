@@ -222,6 +222,18 @@ static int parseArgsToAST(PyObject *args, PySideRepFile *repFile)
     return 0;
 }
 
+#ifdef Py_GIL_DISABLED
+// a type is made in Qt's registry of QtRemoteObjects, see RepRegistryGuard
+extern "C++" {
+template <class Make>
+static QMetaObject *registered(Make make)
+{
+    RepRegistryGuard guard;
+    return make();
+}
+} // extern "C++"
+#endif
+
 static const char *repName(QMetaObject *meta)
 {
     const int ind = meta->indexOfClassInfo(QCLASSINFO_REMOTEOBJECT_TYPE);
@@ -237,7 +249,11 @@ static int RepFile_tp_init(PyObject *self, PyObject *args, PyObject * /* kwds */
     for (const auto &pod : std::as_const(cppSelf->d->ast.pods)) {
         cppSelf->d->pods << pod.name;
         auto *qobject = new QObject;
+#ifdef Py_GIL_DISABLED
+        auto *meta = registered([&] { return createAndRegisterMetaTypeFromPOD(pod, qobject); });
+#else
         auto *meta = createAndRegisterMetaTypeFromPOD(pod, qobject);
+#endif
         if (!meta) {
             delete qobject;
             PyErr_Format(PyExc_RuntimeError, "Failed to create meta object for POD '%s'",
@@ -272,7 +288,13 @@ static int RepFile_tp_init(PyObject *self, PyObject *args, PyObject * /* kwds */
         // Create Source type
         {
             auto *qobject = new QObject;
+#ifdef Py_GIL_DISABLED
+            auto *meta = registered([&] {
+                return createAndRegisterSourceFromASTClass(cls, qobject);
+            });
+#else
             auto *meta = createAndRegisterSourceFromASTClass(cls, qobject);
+#endif
             if (!meta) {
                 delete qobject;
                 PyErr_Format(PyExc_RuntimeError, "Failed to create Source meta object for class '%s'",
@@ -312,7 +334,13 @@ static int RepFile_tp_init(PyObject *self, PyObject *args, PyObject * /* kwds */
         // Create Replica type
         {
             auto *qobject = new QObject;
+#ifdef Py_GIL_DISABLED
+            auto *meta = registered([&] {
+                return createAndRegisterReplicaFromASTClass(cls, qobject);
+            });
+#else
             auto *meta = createAndRegisterReplicaFromASTClass(cls, qobject);
+#endif
             if (!meta) {
                 delete qobject;
                 PyErr_Format(PyExc_RuntimeError,

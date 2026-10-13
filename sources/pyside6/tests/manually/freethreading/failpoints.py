@@ -392,6 +392,18 @@ def test_qml_helper_component() -> str:
     return run_qml("testFirstComponentLoadFromTwoThreads")
 
 
+def test_source_property() -> str:
+    """A source property read while another thread sets it is intact."""
+    return run_unittest(TESTS_DIR / "pysidetest" / "remoteobjects_freethreading_test.py",
+                        "RemoteObjectsFreeThreadedTest.testPropertyReadWhileSet")
+
+
+def test_dynamic_types() -> str:
+    """Dynamic types created in several threads all succeed."""
+    return run_unittest(TESTS_DIR / "pysidetest" / "remoteobjects_freethreading_test.py",
+                        "RemoteObjectsFreeThreadedTest.testTypesFromThreads")
+
+
 def test_one_wrapper_per_address() -> str:
     """Two threads converting one C++ object get one wrapper."""
     if gil_enabled():
@@ -586,6 +598,15 @@ TESTS = {
     "proof-qml-helper-component": Test(lambda: counterproof(
         "QmlHelperModuleOnce", "qml-helper-component",
         "the helper module was published twice")),
+    "dynamic-types": Test(test_dynamic_types),
+    "proof-dynamic-types": Test(lambda: counterproof(
+        "TypeFactoryLock", "dynamic-types", "a type creation failed")),
+    "proof-dynamic-types-registry": Test(lambda: counterproof(
+        "RepRegistryLock", "dynamic-types", "a type creation failed")),
+    "source-property": Test(test_source_property),
+    "proof-source-property": Test(lambda: counterproof(
+        "SourcePropertyCopy", "source-property",
+        "a source property was read while another thread set it")),
 }
 
 

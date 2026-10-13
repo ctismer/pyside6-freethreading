@@ -23,6 +23,9 @@ namespace PySide
     \a class_name.
 */
 PYSIDE_API bool inherits(PyTypeObject *self, const char *class_name);
+#ifdef Py_GIL_DISABLED
+PYSIDE_API bool wrapperInherits(const void *cppSelf, const char *class_name);
+#endif
 
 /*!
     Given a PyObject \a str representing Unicode data, returns an

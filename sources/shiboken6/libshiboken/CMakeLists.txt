@@ -90,6 +90,7 @@ sbkstaticstrings.cpp sbkstaticstrings.h sbkstaticstrings_p.h
 sbkstring.cpp sbkstring.h
 sbktypefactory.cpp sbktypefactory.h
 sbkwindows.h
+sbkwrapperref.h
 shiboken.h
 shibokenbuffer.cpp shibokenbuffer.h
 shibokenmacros.h shibokenclasshelpermacros.h
@@ -110,10 +111,15 @@ if(SHIBOKEN_PYTHON_FREE_THREADED)
     set(libshiboken_FT_HEADERS
         sbkfailpoint.h
         sbkftoptions.h
+        sbkheldlocks.h
+        sbkrelaxedflag.h
+        sbkstatelock.h
     )
     list(APPEND libshiboken_SRC
          sbkfailpoint.cpp
          sbkftoptions.cpp
+         sbkheldlocks.cpp
+         sbkstatelock.cpp
          ${libshiboken_FT_HEADERS})
 endif()
 
@@ -231,6 +237,7 @@ install(FILES
         sbkpepbuffer.h
         sbkpython.h
         sbkwindows.h
+        sbkwrapperref.h
         pep384impl.h
         pep384impl_p.h
         pep384ext.h

@@ -80,6 +80,10 @@ PYSIDE_API void setNextQObjectMemoryAddr(void *addr);
 
 PYSIDE_API PyObject *getWrapperForQObject(QObject *cppSelf, PyTypeObject *sbk_type);
 
+#ifdef Py_GIL_DISABLED
+PYSIDE_API const QMetaObject *retrieveMetaObjectForCppObject(const void *cppSelf);
+#endif
+
 /*!
     Returns the best-matching type for the QObject \a cppSelf
     (Helper for \c{QObject.findType()}).

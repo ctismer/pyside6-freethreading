@@ -127,6 +127,9 @@ static int SbkObjectType_meta_setattro(PyObject *obj, PyObject *name, PyObject *
         // Call `class_property.__set__()` instead of replacing the `class_property`.
         return PepExt_Type_GetDescrSetSlot(Py_TYPE(descr))(descr, obj, value);
     } // Replace existing attribute.
+#ifdef Py_GIL_DISABLED
+    Shiboken::ObjectType::ClassWrite write(type); // For the signal lists, see pysidesignal.cpp
+#endif
     return PepExt_Type_GetSetAttroSlot(&PyType_Type)(obj, name, value);
 }
 

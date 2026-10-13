@@ -563,6 +563,14 @@ static int _finishSignaturesCommon(PyObject *module)
      */
     auto *pyside_globals = signatureGlobals();
     PyObject *obdict = PyModule_GetDict(module);
+#ifdef Py_GIL_DISABLED
+    // A copy: another thread may change the module dict.
+    AutoDecRef snapshot(PepDict_IterationSnapshot(obdict));
+    if (snapshot.isNull())
+        PyErr_Clear();
+    else
+        obdict = snapshot.object();
+#endif
 
     // Here we collect all global functions to finish our mapping.
     for (auto [key, func] : PyDictRange(obdict)) {

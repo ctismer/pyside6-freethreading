@@ -340,6 +340,13 @@ static PyObject *lookupUnqualifiedOrOldEnum(PyTypeObject *type, PyObject *name)
         }
         if (useFakeShortcuts) {
             AutoDecRef tpDict(PepType_GetDict(type_base));
+#ifdef Py_GIL_DISABLED
+            // A copy: another thread may change the class.
+            if (PyObject *snapshot = PepDict_IterationSnapshot(tpDict.object()))
+                tpDict.reset(snapshot);
+            else
+                PyErr_Clear();
+#endif
             auto *dict = tpDict.object();
             for (auto [key, value] : PyDictRange(dict)) {
                 /*

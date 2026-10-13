@@ -475,6 +475,22 @@ static bool inOtherRunningThread(const QObject *qobject)
     return owner != nullptr && owner != QThread::currentThread() && owner->isRunning();
 }
 
+// QObjects handed to their owner thread for deletion; the pointer tells a
+// destroyed one from a new object at its address.
+using PendingDeletions = QHash<const QObject *, QPointer<QObject>>;
+
+static std::mutex &pendingDeletionMutex()
+{
+    static std::mutex mutex;
+    return mutex;
+}
+
+static PendingDeletions &pendingDeletions()
+{
+    static PendingDeletions result;
+    return result;
+}
+
 // Deletes an object whose deferred deletion may have come after the last flush
 // of its finishing owner, once the owner has finished. It never waits: a slot
 // of the owner's finished() may wait for the caller. The main thread asks again.
@@ -501,6 +517,20 @@ static void deleteWhenOwnerFinished(const QPointer<QObject> &object,
 static void deleteLaterEntry(void *qobject)
 {
     auto *object = static_cast<QObject *>(qobject);
+    if (Shiboken::FreeThreading::optionEnabled(
+            Shiboken::FreeThreading::Option::SourceDeletionPending)) {
+        Shiboken::TrackedGuard<std::mutex, Shiboken::RawLock::PendingDeletion>
+            guard(pendingDeletionMutex());
+        auto &pending = pendingDeletions();
+        static qsizetype sweepAt = 64;
+        if (pending.size() >= sweepAt) {
+            pending.removeIf([](const PendingDeletions::iterator &it) {
+                return it.value().isNull();
+            });
+            sweepAt = std::max(qsizetype(64), 2 * pending.size());
+        }
+        pending.insert(object, QPointer<QObject>(object));
+    }
     Shiboken::failpoint("delete-later-before-post");
     if (!Shiboken::FreeThreading::optionEnabled(
             Shiboken::FreeThreading::Option::FinishedOwnerCleanup)) {
@@ -514,6 +544,25 @@ static void deleteLaterEntry(void *qobject)
     object->deleteLater();
     if (owner.isNull() || !owner->isRunning())
         deleteWhenOwnerFinished(guard, owner);
+}
+
+/*!
+    \ingroup freethreading
+    \inmodule libpyside
+
+    Returns whether \a qobject waits in its owner thread for deletion. Its
+    wrapper is gone; with a GIL, the object would be gone too.
+*/
+bool isDeletionPending(const QObject *qobject)
+{
+    if (!Shiboken::FreeThreading::optionEnabled(
+            Shiboken::FreeThreading::Option::SourceDeletionPending))
+        return false;
+    Shiboken::TrackedGuard<std::mutex, Shiboken::RawLock::PendingDeletion>
+        guard(pendingDeletionMutex());
+    const auto &pending = pendingDeletions();
+    const auto it = pending.constFind(qobject);
+    return it != pending.cend() && !it.value().isNull();
 }
 
 // Hook of setDeleteInOwnerThread(): a running owner thread deletes its QObject itself.
@@ -626,10 +675,18 @@ TypeUserData *retrieveTypeUserData(PyObject *pyObj)
     return retrieveTypeUserData(pyTypeObj);
 }
 
+/*!
+    Returns the meta object of the type \a pyTypeObj, or nullptr. On
+    free-threaded builds, it may wait detached for the builder lock.
+*/
 const QMetaObject *retrieveMetaObject(PyTypeObject *pyTypeObj)
 {
     TypeUserData *userData = retrieveTypeUserData(pyTypeObj);
+#ifdef Py_GIL_DISABLED
+    return userData ? SignalManager::updateTypeMetaObject(userData->mo) : nullptr;
+#else
     return userData ? userData->mo.update() : nullptr;
+#endif
 }
 
 const QMetaObject *retrieveMetaObject(PyObject *pyObj)
@@ -664,7 +721,12 @@ void initQObjectSubType(PyTypeObject *type, PyObject *args, PyObject * /* kwds *
     // This behavior is observed with PySide 6.
     PySide::Feature::Enable(false);
     // create DynamicMetaObject based on python type
+#ifdef Py_GIL_DISABLED
+    auto *subTypeData = new TypeUserData(type, SignalManager::updateTypeMetaObject(userData->mo),
+                                         userData->cppObjSize);
+#else
     auto *subTypeData = new TypeUserData(type, userData->mo.update(), userData->cppObjSize);
+#endif
     initDynamicMetaObjectHelper(type, subTypeData);
     PySide::Feature::Enable(true);
 }

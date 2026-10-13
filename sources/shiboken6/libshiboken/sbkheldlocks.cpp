@@ -21,6 +21,9 @@
     destructor unless noted. Debug builds assert both rules.
 
     \value ClassHierarchy    The class hierarchy, held to publish a snapshot.
+    \value MetaObject        The meta-object builders (libpyside), recursive;
+                             waiters detach. No Python runs under it.
+    \value ConnectionHash    The slot connection hash (libpyside), container work only.
     \value WrapperMap        The wrapper map, recursive.
     \value MainThreadDelete  The main-thread deletion queue, one operation.
     \value State             The state lock, a leaf: nothing is taken under it.
@@ -30,6 +33,9 @@
     \value ModuleRegistry   The module tables, a leaf.
     \value EnumPrivate      The private data of enum types, a leaf.
     \value GenericEnumRegistry The Python enum types of the meta-object system (libpyside), a leaf.
+    \value SenderTracker    The published sender tracker (libpyside), a leaf.
+    \value PendingDeletion  The QObjects handed to their owner thread for
+                            deletion (libpyside), a leaf.
 */
 
 /*!
@@ -65,9 +71,9 @@
 namespace Shiboken
 {
 
-static constexpr std::size_t LockCount = 10;
+static constexpr std::size_t LockCount = 14;
 // Index of the first leaf; the enum is in rank order up to it.
-static constexpr std::size_t FirstLeaf = 3;
+static constexpr std::size_t FirstLeaf = 5;
 
 static std::array<unsigned, LockCount> &heldCounts()
 {
@@ -89,6 +95,10 @@ static const char *lockName(RawLock lock)
     switch (lock) {
     case RawLock::ClassHierarchy:
         return "class hierarchy";
+    case RawLock::MetaObject:
+        return "meta object";
+    case RawLock::ConnectionHash:
+        return "connection hash";
     case RawLock::WrapperMap:
         return "wrapper map";
     case RawLock::MainThreadDelete:
@@ -107,6 +117,10 @@ static const char *lockName(RawLock lock)
         return "enum private data";
     case RawLock::GenericEnumRegistry:
         return "generic enum registry";
+    case RawLock::SenderTracker:
+        return "sender tracker";
+    case RawLock::PendingDeletion:
+        return "pending deletion";
     }
     return "unknown";
 }

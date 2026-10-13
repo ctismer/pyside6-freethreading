@@ -19,6 +19,11 @@
 #include <sbkconverter.h>
 #include <sbkenum.h>
 #include <sbkerrors.h>
+#ifdef Py_GIL_DISABLED
+#  include "pyside_p.h"
+#  include <sbkfailpoint.h>
+#  include <sbkftoptions.h>
+#endif
 #include <sbkstaticstrings.h>
 #include <sbkstring.h>
 #include <sbktypefactory.h>
@@ -79,6 +84,19 @@ QDebug operator<<(QDebug debug, const PySideSignalInstancePrivate &d)
     return debug;
 }
 
+#ifdef Py_GIL_DISABLED
+// A source handed over for deletion counts as dead, as it would with a GIL.
+static inline QObject *sender(const PySideSignalInstance *p)
+{
+    QObject *source = p->d != nullptr ? p->d->shared->source.data() : nullptr;
+    return source != nullptr && PySide::isDeletionPending(source) ? nullptr : source;
+}
+
+static bool isSourceDeleted(const PySideSignalInstance *p)
+{
+    return sender(p) == nullptr;
+}
+#else
 static bool isSourceDeleted(const PySideSignalInstance *p)
 {
     return p->d == nullptr || p->d->shared->source.isNull();
@@ -88,6 +106,7 @@ static inline QObject *sender(const PySideSignalInstance *p)
 {
     return p->d != nullptr ? p->d->shared->source.data() : nullptr;
 }
+#endif // Py_GIL_DISABLED
 
 static inline QByteArray qSignalSignature(const PySideSignalInstance *p)
 {
@@ -813,6 +832,25 @@ static PyObject *signalDescrGet(PyObject *self, PyObject *obj, PyObject * /*type
     // PYSIDE-68-bis: It is important to respect the already cached instance.
     Shiboken::AutoDecRef name(Py_BuildValue("s", signal->data->signalName.data()));
     auto *dict = SbkObject_GetDict_NoRef(obj);
+#ifdef Py_GIL_DISABLED
+    // First binds in several threads: the lookup owns what it finds, the first
+    // stored wins.
+    PyObject *inst{};
+    if (PyDict_GetItemRef(dict, name, &inst) != 0)
+        return inst;
+    inst = reinterpret_cast<PyObject *>(PySide::Signal::initialize(signal, name, obj));
+    Shiboken::failpoint("signal-instance-before-store");
+    if (inst == nullptr
+        || !Shiboken::FreeThreading::optionEnabled(
+               Shiboken::FreeThreading::Option::SignalInstancePublishOnce)) {
+        PyObject_SetAttr(obj, name, inst);
+        return inst;
+    }
+    PyObject *stored{};
+    PyDict_SetDefaultRef(dict, name, inst, &stored);
+    Py_DECREF(inst);
+    return stored;
+#else // Py_GIL_DISABLED
     auto *inst = PyDict_GetItem(dict, name);
     if (inst) {
         Py_INCREF(inst);
@@ -821,6 +859,7 @@ static PyObject *signalDescrGet(PyObject *self, PyObject *obj, PyObject * /*type
     inst = reinterpret_cast<PyObject *>(PySide::Signal::initialize(signal, name, obj));
     PyObject_SetAttr(obj, name, inst);
     return inst;
+#endif // Py_GIL_DISABLED
 }
 
 static PyObject *signalCall(PyObject *self, PyObject *args, PyObject *kw)

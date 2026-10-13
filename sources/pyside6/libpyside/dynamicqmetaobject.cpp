@@ -19,6 +19,9 @@
 #include <pep384ext.h>
 #include <sbkstaticstrings.h>
 #include <sbkstring.h>
+#ifdef Py_GIL_DISABLED
+#  include <sbkfailpoint.h>
+#endif
 
 #include <QtCore/qbytearray.h>
 #include <QtCore/qobject.h>
@@ -190,7 +193,18 @@ int MetaObjectBuilder::indexOfProperty(const QByteArray &name) const
     return m_d->indexOfProperty(name);
 }
 
+#ifdef Py_GIL_DISABLED
+/*!
+    \ingroup freethreading
+    \inmodule libpyside
+
+    Returns whether \a signature has its parentheses, and warns if not.
+    Called before the builder lock is taken: the warning runs Python.
+*/
+bool PySide::checkMethodSignature(const QByteArray &signature)
+#else
 static bool checkMethodSignature(const QByteArray &signature)
+#endif
 {
     // Common mistake not to add parentheses to the signature.
     const auto openParen = signature.indexOf('(');
@@ -445,6 +459,9 @@ const QMetaObject *MetaObjectBuilderPrivate::update()
         // This was moved from SignalManager::retrieveMetaObject to here,
         // which is only the update in "return builder->update()".
         Shiboken::GilState gil;
+#ifdef Py_GIL_DISABLED
+        Shiboken::failpoint("builder-before-build");
+#endif
         m_cachedMetaObjects.push_back(m_builder->toMetaObject());
         m_dirty = false;
     }

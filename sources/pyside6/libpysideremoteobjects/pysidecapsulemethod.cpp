@@ -47,7 +47,8 @@ extern "C"
     from a CapsuleMethod or CapsuleProperty to the associated handler method. The
     handler method (which should look like a standard PyMethodDef method) should
     parse it into the payload (the "lambda variables") and the actual instance
-    (the "self").
+    (the "self"). On free-threaded builds, the pseudo \c self is a tuple of
+    the instance and the capsule; see capsuleMethodPayload().
 
     \ingroup pysidecapsule
 */
@@ -185,6 +186,55 @@ static void CapsuleDescriptor_free(PyObject *self)
     free(const_cast<char*>(d->methodDef.ml_doc));
 }
 
+#ifdef Py_GIL_DISABLED
+// self is a tuple of instance and payload: a bound method holds its instance
+static PyObject *newCapsuleMethod(PyObject *descriptor, PyObject *instance)
+{
+    auto *d = reinterpret_cast<CapsuleDescriptor *>(descriptor);
+    auto *data = new CapsuleDescriptorData{instance, d->capsule};
+    PyObject *payload = PyCapsule_New(data, "Payload", [](PyObject *capsule) {
+        delete reinterpret_cast<CapsuleDescriptorData *>(PyCapsule_GetPointer(capsule, "Payload"));
+    });
+    if (!payload) {
+        delete data;
+        return nullptr;
+    }
+    PyObject *self = PyTuple_Pack(2, instance, payload);
+    Py_DECREF(payload);
+    if (!self)
+        return nullptr;
+    PyObject *method = PyCFunction_New(&d->methodDef, self);
+    Py_DECREF(self);
+    return method;
+}
+
+/*!
+    \group freethreading
+    \title Free-threaded builds
+    \inmodule libpysideremoteobjects
+
+    \brief What libpysideremoteobjects adds when Python runs without a GIL.
+
+    Only where \c Py_GIL_DISABLED is defined.
+
+    A capsule method handler receives as \c self a tuple of the instance and
+    the payload capsule, so that a bound method holds its instance.
+*/
+
+/*!
+    \fn PyObject *capsuleMethodPayload(PyObject *self)
+    \ingroup freethreading
+    \inmodule libpysideremoteobjects
+
+    Returns the payload capsule from the \a self tuple of a capsule method
+    handler, borrowed.
+*/
+PyObject *capsuleMethodPayload(PyObject *self)
+{
+    return PyTuple_GetItem(self, 1);
+}
+#endif // Py_GIL_DISABLED
+
 static PyObject *CapsuleMethod_descr_get(PyObject *self, PyObject *instance, PyObject * /* owner */)
 {
     if (instance == nullptr) {
@@ -193,6 +243,9 @@ static PyObject *CapsuleMethod_descr_get(PyObject *self, PyObject *instance, PyO
         return self;
     }
 
+#ifdef Py_GIL_DISABLED
+    return newCapsuleMethod(self, instance);
+#else
     auto *d = reinterpret_cast<CapsuleDescriptor *>(self);
     auto *data = new CapsuleDescriptorData{instance, d->capsule};
     PyObject *payload = PyCapsule_New(data, "Payload", [](PyObject *capsule) {
@@ -203,6 +256,7 @@ static PyObject *CapsuleMethod_descr_get(PyObject *self, PyObject *instance, PyO
 
     Py_INCREF(payload);
     return PyCFunction_New(&d->methodDef, payload);
+#endif // Py_GIL_DISABLED
 }
 
 bool add_capsule_method_to_type(PyTypeObject *type, PyMethodDef *method, PyObject *capsule)
@@ -235,6 +289,14 @@ static PyObject *CapsuleProperty_descr_get(PyObject *self, PyObject *instance, P
         return self;
     }
 
+#ifdef Py_GIL_DISABLED
+    PyObject *method = newCapsuleMethod(self, instance);
+    if (!method)
+        return nullptr;
+    PyObject *result = PyObject_CallFunctionObjArgs(method, nullptr);
+    Py_DECREF(method);
+    return result;
+#else
     auto *d = reinterpret_cast<CapsuleDescriptor *>(self);
     auto *data = new CapsuleDescriptorData{instance, d->capsule};
     PyObject *payload = PyCapsule_New(data, "Payload", [](PyObject *capsule) {
@@ -244,10 +306,18 @@ static PyObject *CapsuleProperty_descr_get(PyObject *self, PyObject *instance, P
         return nullptr;
 
     return PyObject_CallFunctionObjArgs(PyCFunction_New(&d->methodDef, payload), nullptr);
+#endif // Py_GIL_DISABLED
 }
 
 static int CapsuleProperty_descr_set(PyObject *self, PyObject *instance, PyObject *value)
 {
+#ifdef Py_GIL_DISABLED
+    PyObject *method = newCapsuleMethod(self, instance);
+    if (!method)
+        return -1;
+    PyObject *result = PyObject_CallFunctionObjArgs(method, value, nullptr);
+    Py_DECREF(method);
+#else
     auto *d = reinterpret_cast<CapsuleDescriptor *>(self);
     auto *data = new CapsuleDescriptorData{instance, d->capsule};
     PyObject *payload = PyCapsule_New(data, "Payload", [](PyObject *capsule) {
@@ -259,6 +329,7 @@ static int CapsuleProperty_descr_set(PyObject *self, PyObject *instance, PyObjec
     Py_INCREF(payload);
     PyObject *result = PyObject_CallFunctionObjArgs(PyCFunction_New(&d->methodDef, payload),
                                                     value, nullptr);
+#endif // Py_GIL_DISABLED
     if (!result)
         return -1;
 

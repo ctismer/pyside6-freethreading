@@ -209,6 +209,10 @@ using DeleteInOwnerThreadHook = void (*)(SbkObject *sbkObj, DestructorEntry &ent
 
 LIBSHIBOKEN_API void setDeleteInOwnerThread(DeleteInOwnerThreadHook func);
 
+using DeletionQueuedHook = void (*)(SbkObject *sbkObj, const DestructorEntry &entry);
+
+LIBSHIBOKEN_API void setDeletionQueued(DeletionQueuedHook func);
+
 // A private copy of a list, dict or set argument, made before the overload is
 // chosen or when read from the keywords, held until the function returns.
 class LIBSHIBOKEN_API ContainerArgumentCopy

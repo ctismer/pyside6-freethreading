@@ -171,6 +171,22 @@ void setDeleteInOwnerThread(DeleteInOwnerThreadHook func)
     DeleteInOwnerThread = func;
 }
 
+static DeletionQueuedHook DeletionQueued = nullptr;
+
+/*!
+    \ingroup freethreading
+    \inmodule libshiboken
+
+    Sets \a func, which the deallocation of an owning wrapper in another
+    thread than the main one offers each destructor entry it queues for the
+    main thread, before the main thread can see it. libpyside marks such a
+    QObject as pending deletion.
+*/
+void setDeletionQueued(DeletionQueuedHook func)
+{
+    DeletionQueued = func;
+}
+
 /*!
     \class Shiboken::ContainerArgumentCopy
     \ingroup freethreading
@@ -670,6 +686,17 @@ static void SbkDeallocWrapperCommon(PyObject *pyObj, bool canDelete)
     // If I have ownership and is valid delete C++ pointer
     auto *sotp = PepType_SOTP(pyType);
     canDelete &= sbkObj->d->hasOwnership && sbkObj->d->validCppObject;
+#ifdef Py_GIL_DISABLED
+    // Reported before the main thread can delete the entries queued below
+    if (canDelete && sotp->delete_in_main_thread && Shiboken::DeletionQueued != nullptr
+        && Shiboken::currentThreadId() != Shiboken::mainThreadId()) {
+        const auto entries = sotp->is_multicpp
+            ? Shiboken::getDestructorEntries(sbkObj)
+            : Shiboken::DestructorEntries{{sotp->cpp_dtor, Shiboken::cppPointer(sbkObj->d)}};
+        for (const auto &e : entries)
+            Shiboken::DeletionQueued(sbkObj, e);
+    }
+#endif
     if (canDelete) {
         if (sotp->delete_in_main_thread && Shiboken::currentThreadId() != Shiboken::mainThreadId()) {
             if (sotp->is_multicpp) {

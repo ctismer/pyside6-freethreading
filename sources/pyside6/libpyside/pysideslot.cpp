@@ -82,9 +82,14 @@ int slotTpInit(PyObject *self, PyObject *args, PyObject *kw)
     PyObject *argResult = nullptr;
     char *tag = nullptr;
 
+#ifdef Py_GIL_DISABLED
+    // Slot() constructors in several threads share one tuple
+    static PyObject *const emptyTuple = PyTuple_New(0);
+#else
     PyObject *& emptyTuple = PySide::globals()->emptyTuple;
     if (emptyTuple == nullptr)
         emptyTuple = PyTuple_New(0);
+#endif
 
     if (!PyArg_ParseTupleAndKeywords(emptyTuple, kw, "|sOs:QtCore.Slot",
                                      const_cast<char **>(kwlist),

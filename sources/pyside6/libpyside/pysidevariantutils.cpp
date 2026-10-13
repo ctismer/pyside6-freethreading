@@ -10,7 +10,7 @@
 #include <autodecref.h>
 #include <sbkconverter.h>
 #include <sbkpep.h>
-#include <sbkpytuplerange.h>
+#include <sbktypetupleref.h>
 #include <basewrapper.h>
 
 using namespace Qt::StringLiterals;
@@ -127,7 +127,7 @@ QMetaType resolveMetaType(PyTypeObject *type)
     // tp_base does not always point to the first base class, but rather to the first
     // that has added any python fields or slots to its object layout.
     // See https://mail.python.org/pipermail/python-list/2009-January/520733.html
-    if (Shiboken::PyTupleTypeRange basesRange(type->tp_bases); !basesRange.isEmpty()) {
+    if (PepBasesRef basesRange(type); !basesRange.isEmpty()) {
         auto basesIt = basesRange.begin();
         // PYSIDE-1887, PYSIDE-86: Skip QObject base class of QGraphicsObject;
         // it needs to use always QGraphicsItem as a QVariant type for
@@ -201,6 +201,13 @@ QVariant convertToVariantMap(PyObject *map)
         return result;
 
     Py_ssize_t pos = 0;
+#ifdef Py_GIL_DISABLED
+    // A copy first: another thread may change the caller's dict
+    Shiboken::AutoDecRef snapshot(PepDict_IterationSnapshot(map));
+    if (snapshot.isNull())
+        return {};
+    map = snapshot.object();
+#endif
     Shiboken::AutoDecRef keys(PyDict_Keys(map));
     if (!isStringList(keys))
         return {};

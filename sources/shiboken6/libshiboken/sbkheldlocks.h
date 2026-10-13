@@ -10,19 +10,31 @@
 
 #ifdef Py_GIL_DISABLED
 
+#include "sbkftoptions.h"
 #include "shibokenclasshelpermacros.h"
 
+#include <atomic>
 #include <cassert>
 #include <cstdint>
+#include <mutex>
+#include <thread>
 
 namespace Shiboken
 {
 
 enum class RawLock : std::uint16_t
 {
-    WrapperMap       = 1U << 0,
-    MainThreadDelete = 1U << 1,
-    State            = 1U << 2,
+    ClassHierarchy   = 1U << 0,
+    WrapperMap       = 1U << 1,
+    MainThreadDelete = 1U << 2,
+    // The leaves: nothing may be taken while one of them is held.
+    State            = 1U << 3,
+    PostRoutine      = 1U << 4,
+    QObjectMetaType  = 1U << 5,
+    ConverterRegistry = 1U << 6,
+    ModuleRegistry   = 1U << 7,
+    EnumPrivate      = 1U << 8,
+    GenericEnumRegistry = 1U << 9,
 };
 
 #ifndef NDEBUG
@@ -65,6 +77,83 @@ public:
     LIBSHIBOKEN_DISABLE_COPY_MOVE(TrackedGuard)
 private:
     Mutex &m_mutex;
+};
+
+// Takes a lock under which Python can run, so that its holder may need the
+// GIL: a thread that has to wait does so detached and takes the lock only
+// attached again, like PyMutex. One that finalization keeps from attaching
+// holds nothing. A raw lock admits no Python, and its waiters stay attached.
+template <typename Mutex>
+void lockDetached(Mutex &mutex)
+{
+    while (!mutex.try_lock()) {
+        if (PyThreadState_GetUnchecked() == nullptr) {
+            mutex.lock();
+            return;
+        }
+        PyThreadState *saved = PyEval_SaveThread();
+        mutex.lock();
+        mutex.unlock();
+        PyEval_RestoreThread(saved);
+    }
+}
+
+// A one-time init that runs Python: with a plain flag, two module inits would
+// both run it, or one would use what the other half did. The first thread
+// runs it, others wait detached (it may stop the world), a nested call passes.
+// Not a raw lock: Python runs under it.
+struct OnceFlag
+{
+    std::mutex mutex;
+    std::atomic<bool> done{false};
+    std::atomic<std::thread::id> owner{};
+
+    // Not done, and not running in this thread
+    bool pending() const
+    {
+        return !done.load(std::memory_order_acquire)
+            && owner.load(std::memory_order_relaxed) != std::this_thread::get_id();
+    }
+};
+
+class OnceGate
+{
+public:
+    // finished(): whether the init got through, else the first pass counts;
+    // a failed init leaves the gate in place
+    explicit OnceGate(OnceFlag &flag, bool (*finished)() = nullptr)
+        : m_finished(finished)
+    {
+        if (!FreeThreading::optionEnabled(FreeThreading::Option::FirstUseOnce)
+            || flag.done.load(std::memory_order_acquire)
+            || flag.owner.load(std::memory_order_relaxed) == std::this_thread::get_id()) {
+            return;
+        }
+        checkNoRawLock("OnceGate");
+        lockDetached(flag.mutex);
+        if (flag.done.load(std::memory_order_acquire)) {
+            flag.mutex.unlock();
+            return;
+        }
+        flag.owner.store(std::this_thread::get_id(), std::memory_order_relaxed);
+        m_flag = &flag;
+    }
+
+    ~OnceGate()
+    {
+        if (m_flag == nullptr)
+            return;
+        m_flag->owner.store({}, std::memory_order_relaxed);
+        if (m_finished == nullptr || m_finished())
+            m_flag->done.store(true, std::memory_order_release);
+        m_flag->mutex.unlock();
+    }
+
+    LIBSHIBOKEN_DISABLE_COPY_MOVE(OnceGate)
+
+private:
+    OnceFlag *m_flag = nullptr;
+    bool (*m_finished)() = nullptr;
 };
 
 } // namespace Shiboken

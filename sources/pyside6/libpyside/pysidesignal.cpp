@@ -20,6 +20,7 @@
 #include <sbkenum.h>
 #include <sbkerrors.h>
 #include <sbkpytuplerange.h>
+#include <sbktypetupleref.h>
 #include <sbkstaticstrings.h>
 #include <sbkstring.h>
 #include <sbktypefactory.h>
@@ -878,7 +879,8 @@ static PyObject *_getHomonymousMethod(PySideSignalInstance *inst)
     Shiboken::AutoDecRef name(Shiboken::String::fromCString(signalName));
 
     auto *sourceType = inst->d->shared->sourceType;
-    for (PyTypeObject *sub_type : Shiboken::PyTupleTypeRange(sourceType->tp_mro)) {
+    PepMroRef mroRef(sourceType);
+    for (PyTypeObject *sub_type : mroRef) {
         Shiboken::AutoDecRef tpDict(PepType_GetDict(sub_type));
         auto *hom = PyDict_GetItem(tpDict, name);
         if (hom != nullptr && PyCallable_Check(hom) != 0) {
@@ -985,7 +987,8 @@ void updateSourceObject(PyObject *source)
     if (source == nullptr)      // Bad input
        return;
 
-    Shiboken::AutoDecRef mroIterator(PyObject_GetIter(source->ob_type->tp_mro));
+    PepMroRef mroRef(Py_TYPE(source));
+    Shiboken::AutoDecRef mroIterator(PyObject_GetIter(mroRef.object()));
 
     if (mroIterator.isNull())   // Not iterable
        return;

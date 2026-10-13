@@ -107,12 +107,18 @@ signature/signature_helper.cpp
 # Free-threaded builds only.
 if(SHIBOKEN_PYTHON_FREE_THREADED)
     set(libshiboken_FT_HEADERS
+        sbkacquiredwrapper.h
         sbkfailpoint.h
         sbkftoptions.h
+        sbkheldlocks.h
+        sbkrelaxedflag.h
+        sbkstatelock.h
     )
     list(APPEND libshiboken_SRC
          sbkfailpoint.cpp
          sbkftoptions.cpp
+         sbkheldlocks.cpp
+         sbkstatelock.cpp
          ${libshiboken_FT_HEADERS})
 endif()
 

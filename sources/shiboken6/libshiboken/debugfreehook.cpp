@@ -33,10 +33,17 @@ static int testPointerBeingFreed(void *ptr)
     if (Shiboken::BindingManager::instance().hasWrapper(ptr)) {
         Shiboken::GilState state;
 
+#ifdef Py_GIL_DISABLED
+        auto wrapper = Shiboken::BindingManager::instance().acquireWrapper(ptr);
+
+        fprintf(stderr, "SbkObject still in binding map when deleted: ");
+        PyObject_Print(wrapper.pyObject(), stderr, 0);
+#else
         SbkObject *wrapper = Shiboken::BindingManager::instance().retrieveWrapper(ptr);
 
         fprintf(stderr, "SbkObject still in binding map when deleted: ");
         PyObject_Print(reinterpret_cast<PyObject *>(wrapper), stderr, 0);
+#endif
         fprintf(stderr, "\n");
 
 #ifdef _WIN32

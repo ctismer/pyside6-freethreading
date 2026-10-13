@@ -21,6 +21,14 @@
 #include "signature_p.h"
 #include "threadstatesaver.h"
 #include "voidptr.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkfailpoint.h"
+#  include "sbkftoptions.h"
+#  include "sbkheldlocks.h"
+#  include "sbkstatelock.h"
+#  include <utility>
+#  include <vector>
+#endif
 
 #include <algorithm>
 #include <cctype>
@@ -74,6 +82,10 @@ namespace Shiboken
 template <class Predicate>
 bool walkThroughBases(PyTypeObject *currentType, Predicate predicate)
 {
+#ifdef Py_GIL_DISABLED
+    // Reads tp_bases and calls PyType_IsSubtype(): never in a transaction
+    SBK_ASSERT_LOCK_NOT_HELD(State);
+#endif
     PyObject *bases = currentType->tp_bases;
     const Py_ssize_t numBases = PyTuple_Size(bases);
     bool result = false;
@@ -159,6 +171,79 @@ void setDeleteInOwnerThread(DeleteInOwnerThreadHook func)
 {
     DeleteInOwnerThread = func;
 }
+
+/*!
+    \class Shiboken::ContainerArgumentCopy
+    \ingroup freethreading
+    \inmodule libshiboken
+    \internal
+
+    \brief Holds a private copy of a container argument for one call.
+
+    Without a GIL, another thread may change a list between the overload
+    check, the conversion and the ownership transfer of a generated function,
+    or drop an item C++ still uses. A private copy of the same type closes
+    that. Subclasses are left alone.
+*/
+
+/*!
+    Replaces \a arg by a copy if it is a list, a dict or a set, and holds the
+    copy. Without memory for it, \a arg stays as it is.
+*/
+ContainerArgumentCopy::ContainerArgumentCopy(PyObject *&arg)
+{
+    copy(arg);
+}
+
+/*!
+    Copies \a arg, filled from a keyword argument, like the constructor
+    does, unless a copy is held. Returns \c true, for use in a condition.
+*/
+bool ContainerArgumentCopy::copyKeywordArgument(PyObject *&arg)
+{
+    if (m_copy == nullptr)
+        copy(arg);
+    return true;
+}
+
+void ContainerArgumentCopy::copy(PyObject *&arg)
+{
+    if (arg == nullptr
+        || !FreeThreading::optionEnabled(FreeThreading::Option::ContainerArgumentCopy)) {
+        return;
+    }
+    if (PyList_CheckExact(arg))
+        m_copy = PyList_GetSlice(arg, 0, PY_SSIZE_T_MAX);
+    else if (PyDict_CheckExact(arg))
+        m_copy = PyDict_Copy(arg);
+    else if (PySet_CheckExact(arg))
+        m_copy = PySet_New(arg);
+    else
+        return;
+    if (m_copy == nullptr) {
+        PyErr_Clear();
+        return;
+    }
+    m_original = arg;
+    arg = m_copy;
+}
+
+/*!
+    Returns the object the caller passed if \a arg is the copy, else \a arg.
+    A reference C++ keeps goes to the caller's object, as with a GIL.
+*/
+PyObject *ContainerArgumentCopy::original(PyObject *arg) const
+{
+    return m_copy != nullptr && arg == m_copy ? m_original : arg;
+}
+
+/*!
+    Releases the copy.
+*/
+ContainerArgumentCopy::~ContainerArgumentCopy()
+{
+    Py_XDECREF(m_copy);
+}
 #endif // Py_GIL_DISABLED
 
 } // namespace Shiboken
@@ -198,11 +283,37 @@ LIBSHIBOKEN_API PyObject *SbkObject_GetDict_NoRef(PyObject *op)
     return ret;
 #else
     auto *sbkObj = reinterpret_cast<SbkObject *>(op);
+#  ifdef Py_GIL_DISABLED
+    if (Shiboken::FreeThreading::optionEnabled(Shiboken::FreeThreading::Option::DictPublishOnce)) {
+        // Created once, never replaced: the borrowed dict lives as long as the wrapper
+        auto *dict = static_cast<PyObject *>(_Py_atomic_load_ptr_acquire(&sbkObj->ob_dict));
+        if (dict == nullptr) {
+            Shiboken::GilState state;
+            Shiboken::failpoint("dict-before-publish");
+            PyCriticalSection section;
+            PyCriticalSection_Begin(&section, op);
+            dict = sbkObj->ob_dict;
+            if (dict == nullptr) {
+                dict = PyDict_New();
+                _Py_atomic_store_ptr_release(&sbkObj->ob_dict, dict);
+            }
+            PyCriticalSection_End(&section);
+        }
+        return dict;
+    }
+    if (!sbkObj->ob_dict) {
+        Shiboken::GilState state;
+        Shiboken::failpoint("dict-before-publish");
+        sbkObj->ob_dict = PyDict_New();
+    }
+    return sbkObj->ob_dict;
+#  else // Py_GIL_DISABLED
     if (!sbkObj->ob_dict) {
         Shiboken::GilState state;
         sbkObj->ob_dict = PyDict_New();
     }
     return sbkObj->ob_dict;
+#  endif // Py_GIL_DISABLED
 #endif
 }
 
@@ -309,8 +420,39 @@ static PyObject *SbkObjectGetDict(PyObject *pObj, void *)
     return ret;
 }
 
+#ifdef Py_GIL_DISABLED
+static PyObject *SbkObjectGetClass(PyObject *self, void *)
+{
+    return Py_NewRef(reinterpret_cast<PyObject *>(Py_TYPE(self)));
+}
+
+// The C++ objects follow the C++ bases of the type: a class with other C++
+// bases would make dealloc read past them or skip some, so it is refused.
+static int SbkObjectSetClass(PyObject *self, PyObject *value, void *)
+{
+    if (value != nullptr && PyType_Check(value) != 0
+        && Shiboken::FreeThreading::optionEnabled(
+               Shiboken::FreeThreading::Option::ClassAssignCheck)) {
+        auto *newType = reinterpret_cast<PyTypeObject *>(value);
+        if (SbkObjectType_Check(newType)
+            && Shiboken::getCppBaseClasses(newType) != Shiboken::getCppBaseClasses(Py_TYPE(self))) {
+            PyErr_Format(PyExc_TypeError,
+                         "__class__ assignment: '%s' has other C++ bases than '%s'",
+                         newType->tp_name, Py_TYPE(self)->tp_name);
+            return -1;
+        }
+    }
+    Shiboken::AutoDecRef objectDict(PepType_GetDict(&PyBaseObject_Type));
+    PyObject *descr = PyDict_GetItemString(objectDict, "__class__");
+    return Py_TYPE(descr)->tp_descr_set(descr, self, value);
+}
+#endif // Py_GIL_DISABLED
+
 static PyGetSetDef SbkObject_tp_getset[] = {
     {const_cast<char *>("__dict__"), SbkObjectGetDict, nullptr, nullptr, nullptr},
+#ifdef Py_GIL_DISABLED
+    {const_cast<char *>("__class__"), SbkObjectGetClass, SbkObjectSetClass, nullptr, nullptr},
+#endif
     {nullptr, nullptr, nullptr, nullptr, nullptr} // Sentinel
 };
 
@@ -348,11 +490,26 @@ static int SbkObject_tp_clear(PyObject *self)
     // delete it a second time. The reference cycle is broken by clearing the
     // instance dict below, and the parent link is torn down when the parent
     // itself is cleared or deallocated.
+#ifdef Py_GIL_DISABLED
+    // No precheck: parentInfo is read under the state lock. gc runs this on
+    // the collecting thread while the owner thread may attach a child.
+    _detachChildren(sbkSelf, true);
+#else
     if (sbkSelf->d->parentInfo)
         _detachChildren(sbkSelf, true);
+#endif
 
     Shiboken::Object::clearReferences(sbkSelf);
 
+#ifdef Py_GIL_DISABLED
+    // The contents go, breaking the cycle; the dict stays for concurrent readers
+    Shiboken::failpoint("clear-before-dict");
+    if (Shiboken::FreeThreading::optionEnabled(Shiboken::FreeThreading::Option::DictPublishOnce)) {
+        if (auto *dict = static_cast<PyObject *>(_Py_atomic_load_ptr_acquire(&sbkSelf->ob_dict)))
+            PyDict_Clear(dict);
+        return 0;
+    }
+#endif
     if (sbkSelf->ob_dict)
         Py_CLEAR(sbkSelf->ob_dict);
     return 0;
@@ -459,6 +616,11 @@ static void SbkDeallocWrapperCommon(PyObject *pyObj, bool canDelete)
     // progress from the first time around, resulting in a double delete and a
     // crash.
     PyObject_GC_UnTrack(pyObj);
+
+#ifdef Py_GIL_DISABLED
+    // Count zero, entry still in the map: another thread's lookup may find it
+    Shiboken::failpoint("dealloc-before-unregister");
+#endif
 
     // Take the object out of the wrapper map before anything below can run
     // Python code. The refcount is already zero here, but the map used to keep
@@ -869,6 +1031,74 @@ static PyObject *overrideMethodName(PyObject *pySelf, const char *methodName,
     return pyMethodName;
 }
 
+#ifdef Py_GIL_DISABLED
+// Free-threaded twin of the function below: the wrapper is held from the
+// attach on, as the thread dropping its last reference may deallocate it.
+PyObject *Sbk_GetPyOverride(const void *voidThis, PyTypeObject *typeObject,
+                            Shiboken::GilState &gil, const char *funcName,
+                            PyObject *&resultCache, PyObject **nameCache)
+{
+    if (Py_IsInitialized() == 0 || resultCache == Py_None)
+        return nullptr; // Bail out, execute C++ call (wrappers may outlive Python).
+
+    auto &bindingManager = Shiboken::BindingManager::instance();
+    // Presence check only; a reference needs the thread attached
+    if (!bindingManager.hasWrapper(voidThis, typeObject))
+        return nullptr;
+
+    gil.acquire();
+    // Empty also while the wrapper is deallocated (a virtual called from its
+    // destructor). Reset before the thread state is released: it decrefs.
+    auto wrapperRef = bindingManager.acquireWrapper(voidThis, typeObject);
+    if (wrapperRef.isNull() || resultCache == Py_None) { // PYSIDE 3246
+        wrapperRef.reset();
+        gil.release();
+        return nullptr;
+    }
+    auto *wrapper = wrapperRef.object();
+    auto *pySelf = wrapperRef.pyObject();
+
+    if (resultCache != nullptr) // recreate the callable from function/self
+        return PepExt_Type_CallDescrGet(resultCache, pySelf, nullptr);
+
+    PyObject *pyMethodName = overrideMethodName(pySelf, funcName, nameCache);
+    auto *wrapper_dict = SbkObject_GetDict_NoRef(pySelf);
+
+    // Note: This special case was implemented for duck-punching, which happens
+    // in the instance dict. It does not work with properties.
+    // This is not cached to avoid leaking. FIXME PYSIDE 7: Remove (PYSIDE-2916)?
+    // Owned: another thread may replace the entry.
+    PyObject *method = nullptr;
+    if (PyDict_GetItemRef(wrapper_dict, pyMethodName, &method) > 0)
+        return method;
+
+    auto *pyOverride = Shiboken::BindingManager::getOverride(wrapper, pyMethodName);
+    if (pyOverride == nullptr) {
+        // Not cached on error: that would disable the override for good
+        if (Shiboken::Errors::occurred() == nullptr) {
+            resultCache = Py_None;
+            Py_INCREF(resultCache);
+        }
+        wrapperRef.reset();
+        gil.release();
+        return nullptr; // No override, execute C++ call
+    }
+
+    if (Shiboken::Errors::occurred() != nullptr) {
+        // Give up.
+        Py_XDECREF(pyOverride);
+        resultCache = Py_None;
+        Py_INCREF(resultCache);
+        wrapperRef.reset();
+        gil.release();
+        return nullptr; // // Give up.
+    }
+
+    resultCache = pyOverride;
+    // recreate the callable from function/self
+    return PepExt_Type_CallDescrGet(resultCache, pySelf, nullptr);
+}
+#else // Py_GIL_DISABLED
 // The virtual function call
 PyObject *Sbk_GetPyOverride(const void *voidThis, PyTypeObject *typeObject,
                             Shiboken::GilState &gil, const char *funcName,
@@ -928,10 +1158,34 @@ PyObject *Sbk_GetPyOverride(const void *voidThis, PyTypeObject *typeObject,
     // recreate the callable from function/self
     return PepExt_Type_CallDescrGet(resultCache, pySelf, nullptr);
 }
+#endif // Py_GIL_DISABLED
+
+#ifdef Py_GIL_DISABLED
+namespace Shiboken::Object
+{
+static bool detachFirstChild(SbkObject *parent, bool keepReference);
+}
+#endif
 
 namespace
 {
 
+#ifdef Py_GIL_DISABLED
+// One child per transaction, picked, invalidated and detached at once, so a
+// reparent by another thread cannot come in between.
+void _detachChildren(SbkObject *obj, bool keepReference)
+{
+    while (Shiboken::Object::detachFirstChild(obj, keepReference)) {
+    }
+}
+
+void _destroyParentInfo(SbkObject *obj, bool keepReference)
+{
+    // No precheck: the helpers read parentInfo under the state lock
+    _detachChildren(obj, keepReference);
+    Shiboken::Object::removeParent(obj, false);
+}
+#else // Py_GIL_DISABLED
 // Invalidate and detach the children of obj. Their C++ instances belong to
 // obj's C++ instance and are deleted by it, so no ownership is handed back.
 void _detachChildren(SbkObject *obj, bool keepReference)
@@ -954,6 +1208,7 @@ void _destroyParentInfo(SbkObject *obj, bool keepReference)
         Shiboken::Object::removeParent(obj, false);
     }
 }
+#endif // Py_GIL_DISABLED
 
 }
 
@@ -1204,6 +1459,10 @@ namespace ObjectType
 
 bool checkType(PyTypeObject *type)
 {
+#ifdef Py_GIL_DISABLED
+    // Reads the type hierarchy: never in a transaction
+    SBK_ASSERT_LOCK_NOT_HELD(State);
+#endif
     return PyType_IsSubtype(type, SbkObject_TypeF()) != 0;
 }
 
@@ -1463,7 +1722,9 @@ bool canDowncastTo(PyTypeObject *baseType, PyTypeObject *targetType)
 namespace Object
 {
 
+#ifndef Py_GIL_DISABLED
 static void recursive_invalidate(SbkObject *self, std::set<SbkObject *> &seen);
+#endif
 
 bool checkType(PyObject *pyObj)
 {
@@ -1544,6 +1805,7 @@ bool hasOwnership(SbkObject *pyObj)
     return pyObj->d->hasOwnership;
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 void getOwnership(SbkObject *sbkObj)
 {
     // skip if already have the ownership
@@ -1562,6 +1824,7 @@ void getOwnership(SbkObject *sbkObj)
     else
         makeValid(sbkObj); // Make the object valid again
 }
+#endif // !Py_GIL_DISABLED
 
 void getOwnership(PyObject *pyObj)
 {
@@ -1569,6 +1832,7 @@ void getOwnership(PyObject *pyObj)
         setSequenceOwnership(pyObj, true);
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 void releaseOwnership(SbkObject *sbkObj)
 {
     // skip if the ownership have already moved to c++
@@ -1586,12 +1850,14 @@ void releaseOwnership(SbkObject *sbkObj)
     else
         invalidate(sbkObj); // If I do not know when this object will die We need to invalidate this to avoid use after
 }
+#endif // !Py_GIL_DISABLED
 
 void releaseOwnership(PyObject *pyObj)
 {
     setSequenceOwnership(pyObj, false);
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 /* Needed forward declarations */
 static void recursive_invalidate(PyObject *pyobj, std::set<SbkObject *> &seen);
 
@@ -1671,6 +1937,7 @@ void makeValid(SbkObject *self)
         }
     }
 }
+#endif // !Py_GIL_DISABLED
 
 void *cppPointer(SbkObject *pyObj)
 {
@@ -1703,17 +1970,119 @@ std::vector<void *> cppPointers(SbkObject *pyObj)
                : std::vector<void *>(1, static_cast<SbkObjectPrivate1 *>(pyObj->d)->cptr);
 }
 
+#ifdef Py_GIL_DISABLED
+// Two threads may run the base __init__ of one published object: checked
+// again under the state lock, the loser gets the second __init__ error.
+static bool installCppPointer(void *&slot, void *cptr)
+{
+    if (!FreeThreading::optionEnabled(FreeThreading::Option::ConstructorInstallOnce)) {
+        if (slot != nullptr)
+            return false;
+        Shiboken::failpoint("cptr-before-install");
+        slot = cptr;
+        return true;
+    }
+    Shiboken::failpoint("cptr-before-install");
+    StateLockGuard guard;
+    if (slot != nullptr)
+        return false;
+    slot = cptr;
+    return true;
+}
+
+// Pointers claimed by running constructors as (object, index), under the
+// state lock; a claim lasts one constructor call.
+using CppPointerClaims = std::vector<std::pair<SbkObject *, unsigned>>;
+
+static CppPointerClaims &cppPointerClaims()
+{
+    static CppPointerClaims claims;
+    return claims;
+}
+
+/*!
+    \class Shiboken::Object::CppPointerClaim
+    \internal
+
+    Taken by a generated constructor before the overload decision, the
+    inherited Python \c __init__ and the C++ constructor run.
+*/
+
+/*!
+    Claims the C++ pointer of type \a desiredType of \a sbkObj; fails with
+    the second \c __init__ error if it is set or claimed. Takes the state
+    lock.
+*/
+CppPointerClaim::CppPointerClaim(SbkObject *sbkObj, PyTypeObject *desiredType)
+{
+    if (!FreeThreading::optionEnabled(FreeThreading::Option::ConstructorInstallOnce)) {
+        m_ok = true;
+        return;
+    }
+    PyTypeObject *type = Shiboken::pyType(sbkObj);
+    unsigned index = 0;
+    if (sbkObj->d->is_multicpp != 0) {
+        index = getTypeIndexOnHierarchy(type, desiredType);
+        if (index >= static_cast<SbkObjectMultiInheritancePrivate *>(sbkObj->d)->cptrs.size()) {
+            setBaseClassIndexError(type, desiredType);
+            return;
+        }
+    }
+    const auto claim = std::make_pair(sbkObj, index);
+    bool taken = false;
+    {
+        StateLockGuard guard;
+        void *cptr = sbkObj->d->is_multicpp != 0
+            ? static_cast<SbkObjectMultiInheritancePrivate *>(sbkObj->d)->cptrs[index]
+            : static_cast<SbkObjectPrivate1 *>(sbkObj->d)->cptr;
+        auto &claims = cppPointerClaims();
+        taken = cptr != nullptr
+            || std::find(claims.cbegin(), claims.cend(), claim) != claims.cend();
+        if (!taken)
+            claims.push_back(claim);
+    }
+    if (taken) {
+        setAlreadyInitializedError(type, desiredType);
+        return;
+    }
+    m_object = sbkObj;
+    m_index = index;
+    m_ok = true;
+}
+
+/*!
+    Releases the claim, whether the constructor set the pointer or failed.
+*/
+CppPointerClaim::~CppPointerClaim()
+{
+    if (m_object == nullptr)
+        return;
+    StateLockGuard guard;
+    auto &claims = cppPointerClaims();
+    const auto it = std::find(claims.begin(), claims.end(), std::make_pair(m_object, m_index));
+    assert(it != claims.end());
+    claims.erase(it);
+}
+#endif // Py_GIL_DISABLED
+
 bool setCppPointer(SbkObject *sbkObj, PyTypeObject *desiredType, void *cptr)
 {
     PyTypeObject *type = Shiboken::pyType(sbkObj);
 
     if (sbkObj->d->is_multicpp == 0) {
         auto *d = static_cast<SbkObjectPrivate1 *>(sbkObj->d);
+#ifdef Py_GIL_DISABLED
+        if (!installCppPointer(d->cptr, cptr)) {
+            setAlreadyInitializedError(type, desiredType);
+            return false;
+        }
+#else
         if (d->cptr != nullptr) {
             setAlreadyInitializedError(type, desiredType);
             return false;
         }
         d->cptr = cptr;
+#endif
     } else {
         const unsigned idx = getTypeIndexOnHierarchy(type, desiredType);
         auto *mid = static_cast<SbkObjectMultiInheritancePrivate *>(sbkObj->d);
@@ -1721,11 +2090,18 @@ bool setCppPointer(SbkObject *sbkObj, PyTypeObject *desiredType, void *cptr)
             setBaseClassIndexError(type, desiredType);
             return false;
         }
+#ifdef Py_GIL_DISABLED
+        if (!installCppPointer(mid->cptrs[idx], cptr)) {
+            setAlreadyInitializedError(type, desiredType);
+            return false;
+        }
+#else
         if (mid->cptrs[idx] != nullptr) {
             setAlreadyInitializedError(type, desiredType);
             return false;
         }
         mid->cptrs[idx] = cptr;
+#endif
     }
 
     sbkObj->d->cppObjectCreated = true;
@@ -1982,6 +2358,25 @@ PyObject *newObjectWithHeuristics(PyTypeObject *instanceType,
 PyObject *newObjectForType(PyTypeObject *instanceType, void *cptr, bool hasOwnership)
 {
     auto &bindingManager = BindingManager::instance();
+#ifdef Py_GIL_DISABLED
+    if (auto existing = bindingManager.acquireWrapper(cptr, instanceType))
+        return reinterpret_cast<PyObject *>(existing.release());
+
+    auto *self = reinterpret_cast<SbkObject *>(SbkObject_tp_new(instanceType, nullptr, nullptr));
+    Shiboken::setCppPointer(self, cptr);
+    self->d->hasOwnership = hasOwnership;
+    self->d->validCppObject = true;
+    // Creating the wrapper runs Python: another thread's wrapper may have won
+    if (auto reg = bindingManager.registerWrapperUnlessPresent(self, cptr, instanceType)) {
+        // Ours never reached the map: detached, its dealloc leaves the C++ object
+        Shiboken::setCppPointer(self, nullptr);
+        self->d->hasOwnership = false;
+        self->d->validCppObject = false;
+        Py_DECREF(reinterpret_cast<PyObject *>(self));
+        return reinterpret_cast<PyObject *>(reg.winner.release());
+    }
+    return reinterpret_cast<PyObject *>(self);
+#else // Py_GIL_DISABLED
     SbkObject *self = bindingManager.retrieveWrapper(cptr, instanceType);
     if (self != nullptr) {
         Py_IncRef(reinterpret_cast<PyObject *>(self));
@@ -1993,6 +2388,7 @@ PyObject *newObjectForType(PyTypeObject *instanceType, void *cptr, bool hasOwner
         bindingManager.registerWrapper(self, cptr);
     }
     return reinterpret_cast<PyObject *>(self);
+#endif // Py_GIL_DISABLED
 }
 
 void destroy(SbkObject *self, void *cppData)
@@ -2010,6 +2406,16 @@ void destroy(SbkObject *self, void *cppData)
     // Remove the object from parent control
 
     // Verify if this object has parent
+#ifdef Py_GIL_DISABLED
+    bool hasParent = false;
+    {
+        StateLockGuard guard;
+        hasParent = self->d->parentInfo && self->d->parentInfo->parent;
+    }
+
+    // No precheck: the helpers read parentInfo under the state lock
+    _destroyParentInfo(self, true);
+#else
     bool hasParent = (self->d->parentInfo && self->d->parentInfo->parent);
 
     if (self->d->parentInfo) {
@@ -2017,6 +2423,7 @@ void destroy(SbkObject *self, void *cppData)
         _destroyParentInfo(self, true);
         // If this object has parent then the pyobject can be invalid now, because we remove the last ref after remove from parent
     }
+#endif // Py_GIL_DISABLED
 
     //if !hasParent this object could still alive
     if (!hasParent && self->d->containsCppWrapper && !self->d->hasOwnership) {
@@ -2038,6 +2445,7 @@ void destroy(SbkObject *self, void *cppData)
     // After this point the object can be death do not use the self pointer bellow
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 void removeParent(SbkObject *child, bool giveOwnershipBack, bool keepReference)
 {
     ParentInfo *pInfo = child->d->parentInfo;
@@ -2075,7 +2483,9 @@ void removeParent(SbkObject *child, bool giveOwnershipBack, bool keepReference)
     // Remove parent ref
     Py_DECREF(child);
 }
+#endif // !Py_GIL_DISABLED
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 void setParent(PyObject *parent, PyObject *child)
 {
     if (!child || child == Py_None || child == parent)
@@ -2146,6 +2556,7 @@ void setParent(PyObject *parent, PyObject *child)
     // Remove previous safe ref
     Py_DECREF(child);
 }
+#endif // !Py_GIL_DISABLED
 
 void deallocData(SbkObject *self, bool cleanup)
 {
@@ -2153,8 +2564,13 @@ void deallocData(SbkObject *self, bool cleanup)
     if(cleanup) {
         removeParent(self);
 
+#ifdef Py_GIL_DISABLED
+        // No precheck: the helpers read parentInfo under the state lock
+        _destroyParentInfo(self, true);
+#else
         if (self->d->parentInfo)
             _destroyParentInfo(self, true);
+#endif
 
         clearReferences(self);
     }
@@ -2195,6 +2611,7 @@ static inline bool isNone(const PyObject *o)
     return o == nullptr || o == Py_None;
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 static void removeRefCountKey(SbkObject *self, const std::string &key)
 {
     if (self->d->referredObjects) {
@@ -2205,6 +2622,50 @@ static void removeRefCountKey(SbkObject *self, const std::string &key)
         }
     }
 }
+#endif
+
+#ifdef Py_GIL_DISABLED
+static void removeRefCountKeyLocked(SbkObject *self, const std::string &key,
+                                    DeferredDecrefs &deferred)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    if (self->d->referredObjects) {
+        const auto iterPair = self->d->referredObjects->equal_range(key);
+        for (auto it = iterPair.first; it != iterPair.second; ++it)
+            deferred.addDecref(it->second);
+        self->d->referredObjects->erase(iterPair.first, iterPair.second);
+    }
+}
+
+static void keepReferenceLocked(SbkObject *self, const std::string &key,
+                                PyObject *referredObject, bool append,
+                                DeferredDecrefs &deferred)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    if (!self->d->referredObjects) {
+        self->d->referredObjects =
+            new Shiboken::RefCountMap{RefCountMap::value_type{key, referredObject}};
+        Py_INCREF(referredObject);
+        return;
+    }
+
+    RefCountMap &refCountMap = *(self->d->referredObjects);
+    const auto iterPair = refCountMap.equal_range(key);
+    if (std::any_of(iterPair.first, iterPair.second,
+                    [referredObject](const RefCountMap::value_type &v) { return v.second == referredObject; })) {
+        return;
+    }
+
+    if (!append && iterPair.first != iterPair.second) {
+        for (auto it = iterPair.first; it != iterPair.second; ++it)
+            deferred.addDecref(it->second);
+        refCountMap.erase(iterPair.first, iterPair.second);
+    }
+
+    refCountMap.insert(RefCountMap::value_type{key, referredObject});
+    Py_INCREF(referredObject);
+}
+#endif // Py_GIL_DISABLED
 
 /*!
     Increments the reference count of the referred Python object.
@@ -2235,9 +2696,24 @@ static void removeRefCountKey(SbkObject *self, const std::string &key)
             \li If true, \a referredObject is appended to the list of
                 references kept under \a keyC instead of replacing them.
     \endtable
+
+    On free-threaded builds, it takes the state lock, which the caller must not hold.
 */
 void keepReference(SbkObject *self, const char *keyC, PyObject *referredObject, bool append)
 {
+#ifdef Py_GIL_DISABLED
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    std::string key(keyC);
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        if (isNone(referredObject))
+            removeRefCountKeyLocked(self, key, deferred);
+        else
+            keepReferenceLocked(self, key, referredObject, append, deferred);
+    }
+    deferred.run();
+#else
     std::string key(keyC);
 
     if (isNone(referredObject)) {
@@ -2266,6 +2742,7 @@ void keepReference(SbkObject *self, const char *keyC, PyObject *referredObject, 
 
     refCountMap.insert(RefCountMap::value_type{key, referredObject});
     Py_INCREF(referredObject);
+#endif // Py_GIL_DISABLED
 }
 
 /*!
@@ -2286,13 +2763,29 @@ void keepReference(SbkObject *self, const char *keyC, PyObject *referredObject, 
             \li \a referredObject
             \li The object whose reference is used by the \a self object.
     \endtable
+
+    On free-threaded builds, it takes the state lock, which the caller must not hold.
 */
 void removeReference(SbkObject *self, const char *key, PyObject *referredObject)
 {
+#ifdef Py_GIL_DISABLED
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    if (isNone(referredObject))
+        return;
+    const std::string keyString(key);
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        removeRefCountKeyLocked(self, keyString, deferred);
+    }
+    deferred.run();
+#else
     if (!isNone(referredObject))
         removeRefCountKey(self, std::string(key));
+#endif // Py_GIL_DISABLED
 }
 
+#ifndef Py_GIL_DISABLED // free-threaded twin: see the state-lock twins below
 void clearReferences(SbkObject *self)
 {
     if (!self->d->referredObjects)
@@ -2303,6 +2796,420 @@ void clearReferences(SbkObject *self)
         Py_DECREF(it->second);
     self->d->referredObjects->clear();
 }
+#endif
+
+#ifdef Py_GIL_DISABLED
+// ---- State-lock twins ------------------------------------------------------
+//
+// Free-threaded versions of the functions above that touch the object graph.
+// A "Locked" function runs inside a transaction: decrefs go into DeferredDecrefs,
+// other locks and Python into a plan run after the unlock. Fix both twins.
+
+// Pinned: running the plan decrefs, which could free an object a later
+// step touches.
+static void pinForPlan(PyObject *pyObj, std::vector<PyObject *> &pins)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    Py_INCREF(pyObj);
+    pins.push_back(pyObj);
+}
+
+static void dropPins(const std::vector<PyObject *> &pins)
+{
+    Shiboken::checkNoRawLock(__func__);
+    for (PyObject *o : pins)
+        Py_DECREF(o);
+}
+
+static void removeParentLocked(SbkObject *child, bool giveOwnershipBack,
+                               bool keepReference, DeferredDecrefs &deferred)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    ParentInfo *pInfo = child->d->parentInfo;
+    if (!pInfo || !pInfo->parent) {
+        if (pInfo && pInfo->hasWrapperRef) {
+            pInfo->hasWrapperRef = false;
+        }
+        return;
+    }
+
+    ChildrenList &oldBrothers = pInfo->parent->d->parentInfo->children;
+    // Verify if this child is part of parent list
+    auto iChild = oldBrothers.find(child);
+    if (iChild == oldBrothers.end())
+        return;
+
+    oldBrothers.erase(iChild);
+
+    pInfo->parent = nullptr;
+
+    // This will keep the wrapper reference, will wait for wrapper destruction to remove that
+    if (keepReference &&
+        child->d->containsCppWrapper) {
+        //If have already a extra ref remove this one
+        if (pInfo->hasWrapperRef)
+            deferred.addDecref(child);
+        else
+            pInfo->hasWrapperRef = true;
+        return;
+    }
+
+    // Transfer ownership back to Python
+    child->d->hasOwnership = giveOwnershipBack;
+
+    // Remove parent ref; it can be the last one
+    deferred.addDecref(child);
+}
+
+void removeParent(SbkObject *child, bool giveOwnershipBack, bool keepReference)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        removeParentLocked(child, giveOwnershipBack, keepReference, deferred);
+    }
+    deferred.run();
+}
+
+// removeParent() for a plan: only the edge from \a parent goes, a child
+// reparented meanwhile keeps its new one.
+static void removeParentFrom(SbkObject *parent, SbkObject *child, bool giveOwnershipBack,
+                             bool keepReference)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        auto *pInfo = child->d->parentInfo;
+        if (pInfo == nullptr || pInfo->parent != parent)
+            return;
+        removeParentLocked(child, giveOwnershipBack, keepReference, deferred);
+    }
+    deferred.run();
+}
+
+// Decided under the state lock, done after it: releasing a wrapper takes the
+// map lock, detaching a child the state lock.
+struct InvalidationPlan
+{
+    struct Detach
+    {
+        SbkObject *parent;
+        SbkObject *child;
+    };
+    std::vector<SbkObject *> releaseWrappers;
+    std::vector<Detach> detachChildren;
+};
+
+// The object and its children, not referred objects, which it does not own
+// (PYSIDE-3468: the meta object all QObjects share).
+static void collectInvalidateLocked(SbkObject *self, std::set<SbkObject *> &seen,
+                                    InvalidationPlan &plan, std::vector<PyObject *> &pins)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    // Skip if this object not is a valid object or if it's already been seen
+    if (!self || reinterpret_cast<PyObject *>(self) == Py_None || seen.find(self) != seen.end())
+        return;
+    seen.insert(self);
+
+    if (!self->d->containsCppWrapper) {
+        self->d->validCppObject = false; // Mark object as invalid only if this is not a wrapper class
+        plan.releaseWrappers.push_back(self);
+        pinForPlan(reinterpret_cast<PyObject *>(self), pins);
+    }
+
+    // If it is a parent invalidate all children.
+    if (self->d->parentInfo) {
+        for (SbkObject *child : self->d->parentInfo->children) {
+            // invalidate the child
+            collectInvalidateLocked(child, seen, plan, pins);
+
+            // if the parent not is a wrapper class, then remove children from him, because We do not know when this object will be destroyed
+            if (!self->d->validCppObject) {
+                plan.detachChildren.push_back({self, child});
+                pinForPlan(reinterpret_cast<PyObject *>(child), pins);
+            }
+        }
+    }
+}
+
+static void runInvalidationPlan(const InvalidationPlan &plan)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    auto &bindingManager = BindingManager::instance();
+    for (SbkObject *o : plan.releaseWrappers)
+        bindingManager.releaseWrapper(o);
+    for (const auto &edge : plan.detachChildren)
+        removeParentFrom(edge.parent, edge.child, true, true);
+}
+
+static void invalidateRoots(const std::vector<SbkObject *> &roots)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    std::vector<PyObject *> pins;
+    std::set<SbkObject *> seen;
+    InvalidationPlan plan;
+    {
+        StateLockGuard guard;
+        for (SbkObject *o : roots)
+            collectInvalidateLocked(o, seen, plan, pins);
+    }
+    runInvalidationPlan(plan);
+    dropPins(pins);
+}
+
+void invalidate(PyObject *pyobj)
+{
+    // traverseSequence() runs the sequence protocol: never under the lock.
+    // The roots are held, another thread may free an item meanwhile.
+    const bool owned = FreeThreading::optionEnabled(FreeThreading::Option::InvalidateRootsOwned);
+    std::vector<SbkObject *> roots;
+    traverseSequence(pyobj, [&roots, owned](SbkObject *o) {
+        if (owned)
+            Py_INCREF(reinterpret_cast<PyObject *>(o));
+        roots.push_back(o);
+    });
+    Shiboken::failpoint("invalidate-after-collect");
+    invalidateRoots(roots);
+    if (owned) {
+        for (SbkObject *o : roots)
+            Py_DECREF(reinterpret_cast<PyObject *>(o));
+    }
+}
+
+void invalidate(SbkObject *self)
+{
+    invalidateRoots({self});
+}
+
+// One round of _detachChildren(); false once parent has no child left
+static bool detachFirstChild(SbkObject *parent, bool keepReference)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    InvalidationPlan plan;
+    std::vector<PyObject *> pins;
+    std::set<SbkObject *> seen;
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        ParentInfo *pInfo = parent->d->parentInfo;
+        if (pInfo == nullptr || pInfo->children.empty())
+            return false;
+        SbkObject *first = *pInfo->children.begin();
+        // Nothing else keeps the child alive once the edge reference is back
+        pinForPlan(reinterpret_cast<PyObject *>(first), pins);
+        collectInvalidateLocked(first, seen, plan, pins);
+        removeParentLocked(first, false, keepReference, deferred);
+    }
+    runInvalidationPlan(plan);
+    deferred.run();
+    dropPins(pins);
+    return true;
+}
+
+void getOwnership(SbkObject *sbkObj)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    DeferredDecrefs deferred;
+    bool revalidate = false;
+    {
+        StateLockGuard guard;
+        auto *priv = sbkObj->d;
+        // skip if already have the ownership
+        if (priv->hasOwnership)
+            return;
+        // skip if this object has parent
+        if (priv->parentInfo && priv->parentInfo->parent)
+            return;
+        // Get back the ownership
+        priv->hasOwnership = true;
+        if (priv->containsCppWrapper)
+            deferred.addDecref(sbkObj); // Remove extra ref
+        else
+            revalidate = true;
+    }
+    if (revalidate)
+        makeValid(sbkObj); // Make the object valid again
+    deferred.run();
+}
+
+void releaseOwnership(SbkObject *sbkObj)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    auto *ob  = reinterpret_cast<PyObject *>(sbkObj);
+    auto *selfType = Py_TYPE(ob);
+    const bool isValueType =
+        Shiboken::Conversions::pythonTypeIsValueType(PepType_SOTP(selfType)->converter);
+    bool needsInvalidate = false;
+    {
+        StateLockGuard guard;
+        auto *priv = sbkObj->d;
+        // skip if the ownership have already moved to c++
+        if (!priv->hasOwnership || isValueType)
+            return;
+        // remove object ownership
+        priv->hasOwnership = false;
+        // If We have control over object life
+        if (priv->containsCppWrapper)
+            Py_INCREF(ob); // keep the python object alive until the wrapper destructor call
+        else
+            needsInvalidate = true;
+    }
+    if (needsInvalidate)
+        invalidate(sbkObj); // If I do not know when this object will die We need to invalidate this to avoid use after
+}
+
+// Marks self and its children valid in one transaction; their referred
+// objects are pinned and classified after the unlock. \a seen is the
+// visited marker: another thread may clear validCppObject meanwhile.
+static void collectMakeValidLocked(SbkObject *self, std::set<SbkObject *> &seen,
+                                   std::vector<PyObject *> &referred)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    // Skip if this object not is a valid object
+    if (!self || reinterpret_cast<PyObject *>(self) == Py_None
+        || self->d->validCppObject || !seen.insert(self).second) {
+        return;
+    }
+
+    // Mark object as invalid only if this is not a wrapper class
+    self->d->validCppObject = true;
+
+    // If it is a parent make  all children valid
+    if (self->d->parentInfo) {
+        for (SbkObject *child : self->d->parentInfo->children)
+            collectMakeValidLocked(child, seen, referred);
+    }
+
+    // If has ref to other objects make all valid again
+    if (self->d->referredObjects) {
+        for (const auto &p : *(self->d->referredObjects))
+            pinForPlan(p.second, referred);
+    }
+}
+
+static void makeValid(SbkObject *self, std::set<SbkObject *> &seen)
+{
+    std::vector<PyObject *> referred;
+    {
+        StateLockGuard guard;
+        collectMakeValidLocked(self, seen, referred);
+    }
+    for (PyObject *o : referred) {
+        if (Shiboken::Object::checkType(o))
+            makeValid(reinterpret_cast<SbkObject *>(o), seen);
+    }
+    dropPins(referred);
+}
+
+void makeValid(SbkObject *self)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    std::set<SbkObject *> seen;
+    makeValid(self, seen);
+}
+
+// The setParent() transaction; the caller prints its warning
+static bool setParentLocked(SbkObject *parent, SbkObject *child, DeferredDecrefs &deferred)
+{
+    assert(Shiboken::stateLockHeldByCurrentThread());
+    const bool parentIsNull = parent == nullptr;
+
+    if (!parentIsNull) {
+        if (!parent->d->parentInfo)
+            parent->d->parentInfo = new ParentInfo;
+
+        // do not re-add a child
+        if (child->d->parentInfo && (child->d->parentInfo->parent == parent))
+            return false;
+    }
+
+    ParentInfo *pInfo = child->d->parentInfo;
+    bool hasAnotherParent = pInfo && pInfo->parent && pInfo->parent != parent;
+
+    // check if we need to remove this child from the old parent
+    if (parentIsNull || hasAnotherParent)
+        removeParentLocked(child, true, false, deferred);
+
+    // Add the child to the new parent
+    pInfo = child->d->parentInfo;
+    if (!parentIsNull) {
+        if (!pInfo)
+            pInfo = child->d->parentInfo = new ParentInfo;
+
+        pInfo->parent = parent;
+        parent->d->parentInfo->children.insert(child);
+
+        // Add Parent ref; an increment only pins
+        Py_INCREF(reinterpret_cast<PyObject *>(child));
+
+        // Remove ownership
+        child->d->hasOwnership = false;
+    }
+    return true;
+}
+
+void setParent(PyObject *parent, PyObject *child)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    if (!child || child == Py_None || child == parent)
+        return;
+
+    /*
+     * setParent is recursive when the child is a native Python sequence, i.e. objects not binded by Shiboken
+     * like tuple and list.
+     *
+     * This "limitation" exists to fix the following problem: A class multiple inherits QObject and QString,
+     * so if you pass this class to someone that takes the ownership, we CAN'T enter in this if, but hey! QString
+     * follows the sequence protocol.
+     */
+    if (PySequence_Check(child) && !Object::checkType(child)) {
+        Shiboken::AutoDecRef seq(PySequence_Fast(child, nullptr));
+        for (Py_ssize_t i = 0, max = PySequence_Size(seq); i < max; ++i) {
+            Shiboken::AutoDecRef obj(PySequence_GetItem(seq.object(), i));
+            setParent(parent, obj);
+        }
+        return;
+    }
+
+    const bool parentIsNull = !parent || parent == Py_None;
+    auto *parent_ = parentIsNull ? nullptr : reinterpret_cast<SbkObject *>(parent);
+    auto *child_ = reinterpret_cast<SbkObject *>(child);
+
+    //Avoid destroy child during reparent operation
+    Shiboken::AutoDecRef pin(Py_NewRef(child));
+
+    DeferredDecrefs deferred;
+    bool added = false;
+    {
+        StateLockGuard guard;
+        added = setParentLocked(parent_, child_, deferred);
+    }
+    deferred.run();
+
+    if (!added && Shiboken::pyVerbose()) {
+        std::cerr << "Warning: Attempt to re-add child "
+                  << child << '/' << Py_TYPE(child)->tp_name << " to parent "
+                  << parent << '/' << Py_TYPE(parent)->tp_name << '\n';
+    }
+}
+
+void clearReferences(SbkObject *self)
+{
+    assert(!Shiboken::stateLockHeldByCurrentThread());
+    DeferredDecrefs deferred;
+    {
+        StateLockGuard guard;
+        if (auto *refCountMap = self->d->referredObjects) {
+            for (const auto &p : *refCountMap)
+                deferred.addDecref(p.second);
+            refCountMap->clear();
+        }
+    }
+    deferred.run();
+}
+#endif // Py_GIL_DISABLED
 
 SbkConverter *getConverter(PyTypeObject *type)
 {

@@ -91,6 +91,7 @@ sbksmartpointer.cpp sbksmartpointer.h
 sbkstaticstrings.cpp sbkstaticstrings.h sbkstaticstrings_p.h
 sbkstring.cpp sbkstring.h
 sbktypefactory.cpp sbktypefactory.h
+sbktypetupleref.h
 sbkwindows.h
 sbkwrapperref.h
 shiboken.h
@@ -122,6 +123,7 @@ if(SHIBOKEN_PYTHON_FREE_THREADED)
          sbkftoptions.cpp
          sbkheldlocks.cpp
          sbkstatelock.cpp
+         sbktypetupleref.cpp
          ${libshiboken_FT_HEADERS})
 endif()
 
@@ -239,6 +241,7 @@ install(FILES
         sbksmartpointer.h
         sbkstaticstrings.h
         sbktypefactory.h
+        sbktypetupleref.h
         shiboken.h
         shibokenmacros.h
         shibokenclasshelpermacros.h

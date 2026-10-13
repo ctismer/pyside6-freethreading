@@ -7,6 +7,9 @@
 
 #include "autodecref.h"
 #include "shibokenclasshelpermacros.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkpep.h"
+#endif
 
 #include <cassert>
 
@@ -26,6 +29,21 @@ struct AutoDecRefLifetimePolicy : public Shiboken::AutoDecRef
 };
 
 #ifdef Py_GIL_DISABLED
+// Keeps a copy of the dict (PepDict_IterationSnapshot()) for the range to
+// iterate, so that another thread changing the dict cannot free the borrowed
+// items. If copying fails, the range iterates the dict itself.
+struct DictSnapshotLifetimePolicy : public Shiboken::AutoDecRef
+{
+    explicit DictSnapshotLifetimePolicy(PyObject *dict) noexcept
+        : Shiboken::AutoDecRef(dict != nullptr ? PepDict_IterationSnapshot(dict) : nullptr)
+    {
+        if (dict != nullptr && isNull()) {
+            PyErr_Clear();
+            reset(Py_NewRef(dict));
+        }
+    }
+};
+
 class CriticalSectionLifetimePolicy
 {
 public:

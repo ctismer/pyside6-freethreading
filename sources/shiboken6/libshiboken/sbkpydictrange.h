@@ -105,6 +105,19 @@ private:
     PyObject *m_dict;
 };
 
+#ifdef Py_GIL_DISABLED
+// Iterates the copy that the policy keeps.
+template <>
+class PyDictRangeT<DictSnapshotLifetimePolicy> : private DictSnapshotLifetimePolicy
+{
+public:
+    explicit PyDictRangeT(PyObject *dict) noexcept : DictSnapshotLifetimePolicy(dict) {}
+
+    PyDictIterator begin() const { return PyDictIterator(object()); }
+    PyDictIterator end() const { return {}; }
+};
+#endif // Py_GIL_DISABLED
+
 } // namespace Detail
 
 /*!
@@ -119,10 +132,16 @@ for (auto [key, value] : Shiboken::PyDictRange(dict))
     ...
 \endcode
 
+In a free-threaded build, the range iterates a copy of the dict.
+
 \sa PyDictIterator
 \inmodule libshiboken
 */
+#ifdef Py_GIL_DISABLED
+using PyDictRange = Detail::PyDictRangeT<Detail::DictSnapshotLifetimePolicy>;
+#else
 using PyDictRange = Detail::PyDictRangeT<Detail::PyRangeDefaultLifetimePolicy>;
+#endif
 
 #ifdef Py_GIL_DISABLED
 /*!

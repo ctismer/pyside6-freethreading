@@ -32,6 +32,9 @@ PYSIDE_API TypeUserData *retrieveTypeUserData(PyObject *pyObj);
 // For QML
 PYSIDE_API const QMetaObject *retrieveMetaObject(PyTypeObject *pyTypeObj);
 PYSIDE_API const QMetaObject *retrieveMetaObject(PyObject *pyObj);
+#ifdef Py_GIL_DISABLED
+PYSIDE_API bool isDeletionPending(const QObject *qobject);
+#endif
 
 } //namespace PySide
 

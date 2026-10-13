@@ -287,6 +287,100 @@ def test_bases_snapshot() -> str:
     return run_type_state("testBasesWalkSurvivesBasesSwap")
 
 
+def run_signal_slot(method: str) -> str:
+    """One method of pysidetest/signal_slot_freethreading_test.py."""
+    return run_unittest(TESTS_DIR / "pysidetest" / "signal_slot_freethreading_test.py",
+                        f"SignalSlotFreeThreadedTest.{method}")
+
+
+def test_builder_lock() -> str:
+    """Dynamic signals added from two threads: none is lost."""
+    return run_signal_slot("testDynamicMethodsFromTwoThreads")
+
+
+def test_instance_builder() -> str:
+    """First dynamic signals of an object share one meta object."""
+    return run_signal_slot("testFirstDynamicMethodFromTwoThreads")
+
+
+def test_connection_hash() -> str:
+    """Connect and disconnect from threads keeps the hash intact."""
+    return run_signal_slot("testConnectionsFromThreads")
+
+
+def test_receiver_upgrade() -> str:
+    """A delivery binds only a receiver it holds."""
+    return run_signal_slot("testReceiverDropsMidDelivery")
+
+
+def test_weakrefless_receiver() -> str:
+    """A receiver without weak references stays alive."""
+    return run_signal_slot("testReceiverWithoutWeakref")
+
+
+def test_same_dynamic_method() -> str:
+    """One dynamic signal added from two threads exists once."""
+    return run_signal_slot("testSameDynamicMethodFromTwoThreads")
+
+
+def test_decorated_class() -> str:
+    """A subclass made during the first read shares the meta object."""
+    if gil_enabled():
+        return ("skipped: the failpoint parks inside a raw lock, which must not "
+                "detach; with the GIL enabled the second thread cannot run")
+    return run_signal_slot("testDecoratedClassFromTwoThreads")
+
+
+def test_repeated_receiver() -> str:
+    """Both connections of a method go with its receiver."""
+    return run_signal_slot("testRepeatedConnectionsGoWithReceiver")
+
+
+def test_repeated_disconnect() -> str:
+    """A method connected twice is disconnected twice."""
+    return run_signal_slot("testRepeatedConnectionsDisconnect")
+
+
+def test_source_ops() -> str:
+    """A source dropped during a connect or disconnect in another thread lasts it."""
+    return run_signal_slot("testSourceDroppedDuringOperation")
+
+
+def test_main_queued_source() -> str:
+    """A widget queued for deletion in the main thread counts as deleted."""
+    return run_signal_slot("testMainQueuedSourceCountsAsDeleted")
+
+
+def test_source_lease() -> str:
+    """A source dropped during an emit in another thread lasts the emit."""
+    return run_signal_slot("testSourceDroppedDuringEmit")
+
+
+def test_dropped_source() -> str:
+    """A source dropped in another thread counts as deleted."""
+    return run_signal_slot("testSourceDroppedInAnotherThread")
+
+
+def test_signature_warning() -> str:
+    """A signature warning hook waiting for a thread does not hang."""
+    return run_signal_slot("testSignatureWarningHookWaits")
+
+
+def test_lookup_key() -> str:
+    """A dict key's __eq__ waiting for a thread does not hang."""
+    return run_signal_slot("testLookupKeyWaits")
+
+
+def test_sender_tracker() -> str:
+    """The process's first connections in two threads make one tracker."""
+    return run_signal_slot("testFirstConnectsFromTwoThreads")
+
+
+def test_signal_instance() -> str:
+    """First binding of a signal in two threads gives one instance."""
+    return run_signal_slot("testFirstSignalAccessFromTwoThreads")
+
+
 def test_one_wrapper_per_address() -> str:
     """Two threads converting one C++ object get one wrapper."""
     if gil_enabled():
@@ -414,6 +508,66 @@ TESTS = {
     "bases-snapshot": Test(test_bases_snapshot),
     "proof-bases-snapshot": Test(lambda: counterproof(
         "MroSnapshot", "bases-snapshot", "the walk left the bases it started on")),
+    "builder-lock": Test(test_builder_lock),
+    "proof-builder-lock": Test(lambda: counterproof(
+        "MetaObjectBuilderLock", "builder-lock", "a dynamic method was lost")),
+    "instance-builder": Test(test_instance_builder),
+    "proof-instance-builder": Test(lambda: counterproof(
+        "InstanceBuilderPublishOnce", "instance-builder",
+        "the object got two meta-object builders")),
+    "connection-hash": Test(test_connection_hash),
+    "proof-connection-hash": Test(lambda: counterproof(
+        "ConnectionHashLock", "connection-hash", "the connection hash broke")),
+    "receiver-upgrade": Test(test_receiver_upgrade),
+    "proof-receiver-upgrade": Test(lambda: counterproof(
+        "MethodReceiverUpgrade", "receiver-upgrade",
+        "the delivery bound a receiver it did not hold")),
+    "weakrefless-receiver": Test(test_weakrefless_receiver),
+    "proof-weakrefless-receiver": Test(lambda: counterproof(
+        "MethodReceiverUpgrade", "weakrefless-receiver", "the connection outlived its receiver")),
+    "same-dynamic-method": Test(test_same_dynamic_method),
+    "proof-same-dynamic-method": Test(lambda: counterproof(
+        "DynamicMethodOnce", "same-dynamic-method", "one dynamic signal was added twice")),
+    "decorated-class": Test(test_decorated_class),
+    "proof-decorated-class": Test(lambda: counterproof(
+        "TypeBuilderLock", "decorated-class", "one class got two meta objects")),
+    "source-ops": Test(test_source_ops),
+    "proof-source-ops": Test(lambda: counterproof(
+        "SourceDeletionPending", "source-ops", "a signal operation used a dropped source")),
+    "main-queued-source": Test(test_main_queued_source),
+    "proof-main-queued-source": Test(lambda: counterproof(
+        "SourceDeletionPending", "main-queued-source",
+        "a signal used a source queued for the main thread")),
+    "source-lease": Test(test_source_lease),
+    "proof-source-lease": Test(lambda: counterproof(
+        "SourceDeletionPending", "source-lease", "crashed")),
+    "dropped-source": Test(test_dropped_source),
+    "proof-dropped-source": Test(lambda: counterproof(
+        "SourceDeletionPending", "dropped-source", "a signal used a dropped source")),
+    "signature-warning": Test(test_signature_warning),
+    # With the GIL on, the hook under the lock needs the GIL a waiter holds: a hang
+    "proof-signature-warning": Test(lambda: counterproof(
+        "BuilderWarningUnlocked", "signature-warning",
+        "a warning hook waited for the builder lock", gil_expect="hang")),
+    "lookup-key": Test(test_lookup_key),
+    # With the GIL on, the key under the lock needs the GIL a waiter holds: a hang
+    "proof-lookup-key": Test(lambda: counterproof(
+        "BuilderLookupUnlocked", "lookup-key",
+        "a dictionary key waited for the builder lock", gil_expect="hang")),
+    "repeated-receiver": Test(test_repeated_receiver),
+    "proof-repeated-receiver": Test(lambda: counterproof(
+        "RepeatedConnections", "repeated-receiver",
+        "a repeated connection outlived its receiver")),
+    "repeated-disconnect": Test(test_repeated_disconnect),
+    "proof-repeated-disconnect": Test(lambda: counterproof(
+        "RepeatedConnections", "repeated-disconnect",
+        "a repeated connection could not be disconnected")),
+    "sender-tracker": Test(test_sender_tracker),
+    "proof-sender-tracker": Test(lambda: counterproof(
+        "SenderTrackerOnce", "sender-tracker", "two sender trackers")),
+    "signal-instance": Test(test_signal_instance),
+    "proof-signal-instance": Test(lambda: counterproof(
+        "SignalInstancePublishOnce", "signal-instance", "two SignalInstances for one signal")),
 }
 
 

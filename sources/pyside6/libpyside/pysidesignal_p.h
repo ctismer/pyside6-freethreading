@@ -12,6 +12,9 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qpointer.h>
 
+#ifdef Py_GIL_DISABLED
+#  include <atomic>
+#endif
 #include <memory>
 
 struct PySideSignalData
@@ -58,7 +61,12 @@ struct PySideSignalInstancePrivate
     PySideSignalInstance *next = nullptr;
     unsigned short attributes = 0;
     short argCount = 0;
+#ifdef Py_GIL_DISABLED
+    // Filled in by whichever thread emits first
+    std::atomic<short> signalIndex{-1};
+#else
     short signalIndex = -1; // lazily initialized by initPySideSignalInstancePrivate()
+#endif
 };
 
 namespace PySide::Signal {

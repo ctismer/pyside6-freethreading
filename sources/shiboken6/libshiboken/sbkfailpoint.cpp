@@ -20,8 +20,9 @@ namespace Shiboken
 
 // check_failpoint_names.py keeps this list and
 // the Shiboken::failpoint() call sites in step.
-static constexpr std::array<const char *, 20> KnownFailpoints = {
+static constexpr std::array<const char *, 28> KnownFailpoints = {
     "bases-after-snapshot",
+    "builder-before-build",
     "clear-before-dict",
     "conversions-mid-walk",
     "cptr-before-install",
@@ -33,12 +34,19 @@ static constexpr std::array<const char *, 20> KnownFailpoints = {
     "hierarchy-mid-traversal",
     "invalidate-after-collect",
     "main-delete-mid-run",
+    "metaobject-before-commit",
+    "method-before-add",
+    "method-receiver-before-bind",
     "mi-offsets-mid-fill",
     "module-dict-between-stores",
     "module-dir-before-table",
     "module-exec-before-types",
     "mro-after-snapshot",
     "register-after-lookup",
+    "sender-tracker-before-create",
+    "signal-emit-after-check",
+    "signal-instance-before-store",
+    "signal-op-after-check",
     "stream-helper-before-publish",
     "walk-after-collect",
 };

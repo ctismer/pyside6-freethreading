@@ -46,6 +46,18 @@ enum class Option : std::uint64_t
     WrapperDumpLocked = 0x8000000,
     MainThreadQueueLock = 0x10000000,
     ModuleDictKept = 0x20000000,
+    MetaObjectBuilderLock = 0x40000000,
+    InstanceBuilderPublishOnce = 0x80000000,
+    ConnectionHashLock = 0x100000000,
+    MethodReceiverUpgrade = 0x200000000,
+    SignalInstancePublishOnce = 0x400000000,
+    SenderTrackerOnce = 0x800000000,
+    RepeatedConnections = 0x1000000000,
+    DynamicMethodOnce = 0x2000000000,
+    TypeBuilderLock = 0x4000000000,
+    SourceDeletionPending = 0x8000000000,
+    BuilderWarningUnlocked = 0x10000000000,
+    BuilderLookupUnlocked = 0x20000000000,
 };
 
 LIBSHIBOKEN_API bool optionEnabled(Option opt);

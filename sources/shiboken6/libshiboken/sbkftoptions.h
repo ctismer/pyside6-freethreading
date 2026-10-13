@@ -58,6 +58,10 @@ enum class Option : std::uint64_t
     SourceDeletionPending = 0x8000000000,
     BuilderWarningUnlocked = 0x10000000000,
     BuilderLookupUnlocked = 0x20000000000,
+    QmlPlacementFree = 0x40000000000,
+    QmlPlacementType = 0x80000000000,
+    QmlImportGlobalsOwned = 0x100000000000,
+    QmlHelperModuleOnce = 0x200000000000,
 };
 
 LIBSHIBOKEN_API bool optionEnabled(Option opt);

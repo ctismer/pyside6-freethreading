@@ -20,7 +20,7 @@ namespace Shiboken
 
 // check_failpoint_names.py keeps this list and
 // the Shiboken::failpoint() call sites in step.
-static constexpr std::array<const char *, 25> KnownFailpoints = {
+static constexpr std::array<const char *, 27> KnownFailpoints = {
     "bases-after-snapshot",
     "builder-before-build",
     "clear-before-dict",
@@ -41,6 +41,8 @@ static constexpr std::array<const char *, 25> KnownFailpoints = {
     "module-dict-between-stores",
     "module-exec-before-types",
     "mro-after-snapshot",
+    "qml-global-before-read",
+    "qml-helper-before-publish",
     "register-after-lookup",
     "sender-tracker-before-create",
     "signal-instance-before-store",

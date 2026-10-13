@@ -43,8 +43,10 @@
 #ifdef Py_GIL_DISABLED
 #  include <sbkfailpoint.h>
 #  include <sbkftoptions.h>
+#  include <sbkheldlocks.h>
 #  include <QtCore/qpointer.h>
 #  include <QtCore/qtimer.h>
+#  include <mutex>
 #endif
 
 #include <QtCore/qabstracteventdispatcher.h>
@@ -250,7 +252,12 @@ static QByteArrayList _SbkType_LookupProperty(PyTypeObject *type,
     QByteArray origName(_sigWithOrigName(name, snake_flag));
     if (origName.isEmpty())
         return QByteArrayList{};
-    PyObject *mro = type->tp_mro;
+    PepMroRef mroRef(type);
+    if (mroRef.isNull()) {
+        Shiboken::Errors::storeErrorOrPrint();
+        return QByteArrayList{};
+    }
+    PyObject *mro = mroRef.object();
     auto n = PyTuple_Size(mro);
     auto len = std::strlen(origName);
     for (Py_ssize_t idx = 0; idx < n; idx++) {
@@ -1191,8 +1198,33 @@ using MetaTypeIf2QMetaObjectHash = QHash<const QtPrivate::QMetaTypeInterface *, 
 
 Q_GLOBAL_STATIC(MetaTypeIf2QMetaObjectHash, metaTypeIf2QMetaObjectHash);
 
+#ifdef Py_GIL_DISABLED
+// Qt calls metaObjectFunc() from any thread without a thread state (e.g. the
+// QML type loader) while a QML registration inserts.
+static std::mutex &metaTypeHashMutex()
+{
+    static std::mutex mutex;
+    return mutex;
+}
+
+using QObjectMetaTypeLock =
+    Shiboken::TrackedGuard<std::mutex, Shiboken::RawLock::QObjectMetaType>;
+
+static bool lockedMetaTypeHash()
+{
+    return Shiboken::FreeThreading::optionEnabled(
+               Shiboken::FreeThreading::Option::QObjectMetaTypeRecords);
+}
+#endif // Py_GIL_DISABLED
+
 static const QMetaObject *metaObjectFunc(const QtPrivate::QMetaTypeInterface *mif)
 {
+#ifdef Py_GIL_DISABLED
+    if (lockedMetaTypeHash()) {
+        QObjectMetaTypeLock lock(metaTypeHashMutex());
+        return metaTypeIf2QMetaObjectHash()->value(mif);
+    }
+#endif
     return metaTypeIf2QMetaObjectHash()->value(mif);
 }
 
@@ -1230,7 +1262,16 @@ QMetaType createQObjectPtrMetaType(const QMetaObject *metaObject)
         nullptr  // legacyRegisterOp
     };
 
+#ifdef Py_GIL_DISABLED
+    if (lockedMetaTypeHash()) {
+        QObjectMetaTypeLock lock(metaTypeHashMutex());
+        metaTypeIf2QMetaObjectHash()->insert(mti, metaObject);
+    } else {
+        metaTypeIf2QMetaObjectHash()->insert(mti, metaObject);
+    }
+#else
     metaTypeIf2QMetaObjectHash()->insert(mti, metaObject);
+#endif
 
     QMetaType metaType(mti);
     [[maybe_unused]] const int id = metaType.id(); // enforce registration

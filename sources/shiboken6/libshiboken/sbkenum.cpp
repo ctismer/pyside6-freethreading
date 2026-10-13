@@ -130,7 +130,10 @@ int enumIsFlag(PyObject *ob_type)
     auto *metatype = Py_TYPE(ob_type);
     if (metatype != globals->PyEnumMeta)
         return -1;
-    auto *mro = reinterpret_cast<PyTypeObject *>(ob_type)->tp_mro;
+    PepMroRef mroRef(reinterpret_cast<PyTypeObject *>(ob_type));
+    if (mroRef.isNull())
+        return -1;
+    auto *mro = mroRef.object();
     const Py_ssize_t n = PyTuple_Size(mro);
     for (Py_ssize_t idx = 0; idx < n; ++idx) {
         auto *sub_type = reinterpret_cast<PyTypeObject *>(PyTuple_GetItem(mro, idx));

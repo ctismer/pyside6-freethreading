@@ -876,7 +876,13 @@ static PyObject *_getHomonymousMethod(PySideSignalInstance *inst)
     // but walk through the whole mro to find a hidden method with the same name.
     auto signalName = inst->d->signalName;
     Shiboken::AutoDecRef name(Shiboken::String::fromCString(signalName));
-    auto *mro = inst->d->shared->sourceType->tp_mro;
+    // The loop runs Python.
+    PepMroRef mroRef(inst->d->shared->sourceType);
+    if (mroRef.isNull()) {
+        Shiboken::Errors::storeErrorOrPrint();
+        return nullptr;
+    }
+    auto *mro = mroRef.object();
     const Py_ssize_t n = PyTuple_Size(mro);
 
     for (Py_ssize_t idx = 0; idx < n; idx++) {
@@ -987,7 +993,13 @@ void updateSourceObject(PyObject *source)
     if (source == nullptr)      // Bad input
        return;
 
-    Shiboken::AutoDecRef mroIterator(PyObject_GetIter(source->ob_type->tp_mro));
+    // The iterator owns the tuple; the snapshot covers taking it.
+    PepMroRef mroRef(Py_TYPE(source));
+    if (mroRef.isNull()) {
+        Shiboken::Errors::storeErrorOrPrint();
+        return;
+    }
+    Shiboken::AutoDecRef mroIterator(PyObject_GetIter(mroRef.object()));
 
     if (mroIterator.isNull())   // Not iterable
        return;

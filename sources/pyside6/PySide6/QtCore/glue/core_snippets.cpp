@@ -16,6 +16,12 @@
 #include "autodecref.h"
 #include "gilstate.h"
 #include "pysideutils.h"
+#include "sbkerrors.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkftoptions.h"
+#  include "sbkheldlocks.h"
+#  include <mutex>
+#endif
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
@@ -32,6 +38,54 @@ namespace PySide {
 
 static QStack<PyObject *> globalPostRoutineFunctions;
 
+#ifdef Py_GIL_DISABLED
+// qAddPostRoutine() may come from any thread; the callbacks run after the lock
+static std::mutex &postRoutineMutex()
+{
+    static std::mutex mutex;
+    return mutex;
+}
+
+using PostRoutineLock = Shiboken::TrackedGuard<std::mutex, Shiboken::RawLock::PostRoutine>;
+
+static bool batchedPostRoutines()
+{
+    return Shiboken::FreeThreading::optionEnabled(
+               Shiboken::FreeThreading::Option::PostRoutineBatch);
+}
+
+void globalPostRoutineCallback()
+{
+    Shiboken::GilState state;
+    QStack<PyObject *> batch;
+    if (batchedPostRoutines()) {
+        PostRoutineLock lock(postRoutineMutex());
+        batch.swap(globalPostRoutineFunctions);
+    } else {
+        batch.swap(globalPostRoutineFunctions);
+    }
+    for (auto *callback : batch) {
+        Shiboken::AutoDecRef result(PyObject_CallObject(callback, nullptr));
+        Py_DECREF(callback);
+    }
+}
+
+void addPostRoutine(PyObject *callback)
+{
+    if (!PyCallable_Check(callback)) {
+        PyErr_SetString(PyExc_TypeError, "qAddPostRoutine: The argument must be a callable object.");
+        return;
+    }
+    // Owned before it is published: the runner may take it right away
+    Py_INCREF(callback);
+    if (batchedPostRoutines()) {
+        PostRoutineLock lock(postRoutineMutex());
+        globalPostRoutineFunctions << callback;
+    } else {
+        globalPostRoutineFunctions << callback;
+    }
+}
+#else // Py_GIL_DISABLED
 void globalPostRoutineCallback()
 {
     Shiboken::GilState state;
@@ -51,6 +105,7 @@ void addPostRoutine(PyObject *callback)
         PyErr_SetString(PyExc_TypeError, "qAddPostRoutine: The argument must be a callable object.");
     }
 }
+#endif // Py_GIL_DISABLED
 } // namespace PySide
 
 // Helpers for QObject::findChild(ren)()
@@ -137,7 +192,12 @@ void qObjectFindChildren(const QObject *parent, const QRegularExpression &patter
 
 QString qObjectTr(PyTypeObject *type, const char *sourceText, const char *disambiguation, int n)
 {
-    PyObject *mro = type->tp_mro;
+    PepMroRef mroRef(type);
+    if (mroRef.isNull()) {
+        Shiboken::Errors::storeErrorOrPrint();
+        return QString::fromUtf8(sourceText);
+    }
+    PyObject *mro = mroRef.object();
     auto len = PyTuple_Size(mro);
     QString result = QString::fromUtf8(sourceText);
     QString oldResult = result;

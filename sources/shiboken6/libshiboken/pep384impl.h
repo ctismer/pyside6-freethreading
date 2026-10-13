@@ -522,6 +522,78 @@ LIBSHIBOKEN_API int PepModule_AddType(PyObject *module, PyTypeObject *type);
 
 LIBSHIBOKEN_API int PepModule_Add(PyObject *module, const char *name, PyObject *value);
 
+#ifdef Py_GIL_DISABLED
+LIBSHIBOKEN_API PyObject *PepDict_IterationSnapshot(PyObject *dict);
+#endif
+
 } // extern "C"
+
+#include "shibokenclasshelpermacros.h"
+
+#ifdef Py_GIL_DISABLED
+class LIBSHIBOKEN_API PepTypeTupleRef
+{
+public:
+    LIBSHIBOKEN_DISABLE_COPY(PepTypeTupleRef)
+
+    PyObject *object() const { return m_tuple; }
+    bool isNull() const { return m_tuple == nullptr; }
+    Py_ssize_t size() const { return PyTuple_Size(m_tuple); }
+    PyTypeObject *operator[](Py_ssize_t i) const
+    { return reinterpret_cast<PyTypeObject *>(PyTuple_GetItem(m_tuple, i)); }
+
+protected:
+    PepTypeTupleRef(PyTypeObject *type, PyObject *name, PyObject **field);
+    ~PepTypeTupleRef();
+
+private:
+    PyObject *m_tuple = nullptr;
+    bool m_owned = false;
+};
+
+class LIBSHIBOKEN_API PepMroRef : public PepTypeTupleRef
+{
+public:
+    explicit PepMroRef(PyTypeObject *type);
+};
+
+class LIBSHIBOKEN_API PepBasesRef : public PepTypeTupleRef
+{
+public:
+    explicit PepBasesRef(PyTypeObject *type);
+};
+#else // Py_GIL_DISABLED
+// The GIL build walks the borrowed tuple: nothing can free it during the walk.
+class PepTypeTupleRef
+{
+public:
+    LIBSHIBOKEN_DISABLE_COPY(PepTypeTupleRef)
+
+    PyObject *object() const { return m_tuple; }
+    bool isNull() const { return m_tuple == nullptr; }
+    Py_ssize_t size() const { return PyTuple_Size(m_tuple); }
+    PyTypeObject *operator[](Py_ssize_t i) const
+    { return reinterpret_cast<PyTypeObject *>(PyTuple_GetItem(m_tuple, i)); }
+
+protected:
+    explicit PepTypeTupleRef(PyObject *tuple) noexcept : m_tuple(tuple) {}
+    ~PepTypeTupleRef() = default;
+
+private:
+    PyObject *m_tuple;
+};
+
+class PepMroRef : public PepTypeTupleRef
+{
+public:
+    explicit PepMroRef(PyTypeObject *type) noexcept : PepTypeTupleRef(type->tp_mro) {}
+};
+
+class PepBasesRef : public PepTypeTupleRef
+{
+public:
+    explicit PepBasesRef(PyTypeObject *type) noexcept : PepTypeTupleRef(type->tp_bases) {}
+};
+#endif // Py_GIL_DISABLED
 
 #endif // PEP384IMPL_H

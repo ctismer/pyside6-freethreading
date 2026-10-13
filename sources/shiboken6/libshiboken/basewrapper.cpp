@@ -1252,6 +1252,10 @@ namespace Conversions { void init(); }
 void init()
 {
     static bool shibokenAlreadInitialised = false;
+#ifdef Py_GIL_DISABLED
+    static OnceFlag once;
+    OnceGate gate(once, [] { return shibokenAlreadInitialised; });
+#endif
     if (shibokenAlreadInitialised) // Leave guard in place until fully ported to multi phase init
         return;
 
@@ -1272,6 +1276,11 @@ void init()
 
     VoidPtr::init();
 
+#ifdef Py_GIL_DISABLED
+    // Asked for in static initializers, where a waiting thread stays attached
+    if (FreeThreading::optionEnabled(FreeThreading::Option::FirstUseOnce))
+        Py_XDECREF(Pep_GetPartialFunction());
+#endif
     shibokenAlreadInitialised = true;
 }
 

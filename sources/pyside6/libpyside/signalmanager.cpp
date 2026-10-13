@@ -226,9 +226,13 @@ PyObject *methodGetAttr(PyObject *self, PyObject *name)
     if (result != nullptr || !_Pep_IsPrivateName(name))
         return result;
 
-    auto *type = Py_TYPE(self);
-    for (Py_ssize_t i = 0, size = PyTuple_Size(type->tp_mro); i < size; ++i) {
-        auto *candidate = reinterpret_cast<PyTypeObject *>(PyTuple_GetItem(type->tp_mro, i));
+    // No lookup with the AttributeError pending; the loop clears it anyway.
+    PyErr_Clear();
+    PepMroRef mro(Py_TYPE(self));
+    if (mro.isNull())
+        return nullptr;
+    for (Py_ssize_t i = 0, size = mro.size(); i < size; ++i) {
+        auto *candidate = mro[i];
         if (candidate != &PyBaseObject_Type) {
             PyErr_Clear();
             Shiboken::AutoDecRef mangledName(_Pep_TypePrivateMangle(candidate, name));

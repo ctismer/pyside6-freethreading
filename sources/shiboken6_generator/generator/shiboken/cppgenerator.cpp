@@ -4610,25 +4610,51 @@ void CppGenerator::writeMultipleInheritanceInitializerFunction(TextStream &s,
     s  << "int *\n"
         << multipleInheritanceInitializerFunctionName(metaClass) << "(const void *cptr)\n"
         << "{\n" << indent;
+    // The offsets are a property of the layout: computed once, in a static
+    // initializer, so two threads cannot sort the array at once. The sentinel
+    // stays for the bit-cleared side below.
+    s << "#ifdef Py_GIL_DISABLED\n"
+        << "static int mi_offsets[" << (ancestors.size() + 1) << "] = {-2};\n"
+        << "const auto mi_fill = [cptr]() {\n"
+        << "#else\n";
     s << "static int mi_offsets[] = {-2";
     for (qsizetype i = 0; i < ancestors.size(); i++)
         s << ", 0";
     s << "};\n"
-        << "if (mi_offsets[0] == -2) {\n" << indent
+        << "if (mi_offsets[0] == -2) {\n"
+        << "#endif\n" << indent
         << "const auto *class_ptr = reinterpret_cast<const " << className << " *>(cptr);\n"
         << "const auto base = reinterpret_cast<uintptr_t>(class_ptr);\n"
         << "int *p = mi_offsets;\n";
 
     for (const QString &ancestor : ancestors)
         s << "*p++ = int(" << ancestor << ");\n";
+    s << "#ifdef Py_GIL_DISABLED\n"
+        << "Shiboken::failpoint(\"mi-offsets-mid-fill\");\n"
+        << "#endif\n";
     s << "std::sort(mi_offsets, p);\n"
         << "auto *end = std::unique(mi_offsets, p);\n"
         << "*end++ = -1;\n"
         << "if (mi_offsets[0] == 0)\n"
         << indent
         << "std::memmove(&mi_offsets[0], &mi_offsets[1], (end - mi_offsets  - 1) * sizeof(int));\n"
-        << outdent << outdent
-        << "}\nreturn mi_offsets;\n" << outdent << "}\n";
+        << outdent
+        << "#ifdef Py_GIL_DISABLED\n"
+        << "return true;\n"
+        << outdent << "};\n"
+        << "if (!Shiboken::FreeThreading::optionEnabled("
+           "Shiboken::FreeThreading::Option::MiOffsetsOnce)) {\n" << indent
+        << "// The A/B side: the sentinel check as it was, which two threads\n"
+           "// reaching this type first can pass together.\n"
+        << "if (mi_offsets[0] == -2)\n" << indent
+        << "mi_fill();\n" << outdent
+        << "return mi_offsets;\n" << outdent
+        << "}\n"
+        << "[[maybe_unused]] static const bool mi_ready = mi_fill();\n"
+        << "#else\n"
+        << "}\n"
+        << "#endif\n"
+        << "return mi_offsets;\n" << outdent << "}\n";
 }
 
 void CppGenerator::writeSpecialCastFunction(TextStream &s, const AbstractMetaClassCPtr &metaClass)

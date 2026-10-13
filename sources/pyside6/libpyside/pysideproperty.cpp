@@ -19,6 +19,11 @@
 
 #include <utility>
 
+#include <sbkerrors.h>
+#ifdef Py_GIL_DISABLED
+#  include <sbkfailpoint.h>
+#endif
+
 using namespace Shiboken;
 
 using namespace Qt::StringLiterals;
@@ -591,7 +596,16 @@ static PyObject *getFromType(PyTypeObject *type, PyObject *name)
     AutoDecRef tpDict(PepType_GetDict(type));
     auto *attr = PyDict_GetItem(tpDict.object(), name);
     if (!attr) {
-        PyObject *bases = type->tp_bases;
+        // Each level walks one tuple, which a __bases__ assignment cannot free.
+        PepBasesRef basesRef(type);
+        if (basesRef.isNull()) {
+            Shiboken::Errors::storeErrorOrPrint();
+            return nullptr;
+        }
+        PyObject *bases = basesRef.object();
+#ifdef Py_GIL_DISABLED
+        Shiboken::failpoint("bases-after-snapshot");
+#endif
         const Py_ssize_t size = PyTuple_Size(bases);
         for (Py_ssize_t i = 0; i < size; ++i) {
             PyObject *base = PyTuple_GetItem(bases, i);

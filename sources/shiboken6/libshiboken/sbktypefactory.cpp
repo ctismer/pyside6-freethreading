@@ -8,10 +8,18 @@
 #include "sbkpepbuffer.h"
 #include "sbkstring.h"
 #include "sbkstaticstrings.h"
+#ifdef Py_GIL_DISABLED
+#  include "sbkftoptions.h"
+#  include "sbkheldlocks.h"
+#  include "shibokenclasshelpermacros.h"
+#endif
 
 #include <cstring>
 #include <iostream>
 #include <utility>
+#ifdef Py_GIL_DISABLED
+#  include <mutex>
+#endif
 
 extern "C"
 {
@@ -53,10 +61,49 @@ static PyObject *_PyType_FromSpecWithBases(PyType_Spec *, PyObject *);
 //              Hopefully, the Python devs will supply the missing support.
 //              It turned out that they will not fix that, as expected.
 // Note: Python 3.12 is the first version that grabs the metaclass from base classes.
+#ifdef Py_GIL_DISABLED
+// The hack below patches a metaclass's tp_new, a global, for one type: another
+// thread would see the patch, skip its own and create its type unpatched.
+// No Python runs under the lock; waiters detach for stop-the-world.
+class TypeFactoryGuard
+{
+public:
+    LIBSHIBOKEN_DISABLE_COPY(TypeFactoryGuard)
+
+    TypeFactoryGuard()
+    {
+        if (!Shiboken::FreeThreading::optionEnabled(
+                Shiboken::FreeThreading::Option::TypeFactoryLock))
+            return;
+        Shiboken::checkNoRawLock("TypeFactoryGuard");
+        Shiboken::lockDetached(mutex());
+        m_locked = true;
+    }
+
+    ~TypeFactoryGuard()
+    {
+        if (m_locked)
+            mutex().unlock();
+    }
+
+private:
+    static std::recursive_mutex &mutex()
+    {
+        static std::recursive_mutex result;
+        return result;
+    }
+
+    bool m_locked = false;
+};
+#endif // Py_GIL_DISABLED
+
 static PyObject *_PyType_FromSpecWithBasesHack(PyType_Spec *spec,
                                                PyObject *bases,
                                                PyTypeObject *meta)
 {
+#ifdef Py_GIL_DISABLED
+    TypeFactoryGuard guard;
+#endif
     PyTypeObject *keepMeta{};
     newfunc keepNew{};
     AutoDecRef basesPatch{};
@@ -109,6 +156,13 @@ static PyObject *_PyType_FromSpecWithBasesHack(PyType_Spec *spec,
     return ret;
 }
 
+/*!
+    \fn PyTypeObject *SbkType_FromSpec_BMDWB(PyType_Spec *spec, PyObject *bases, PyTypeObject *meta, int dictoffset, int weaklistoffset, PyBufferProcs *bufferprocs)
+
+    Creates a type from \a spec with \a bases, the metaclass \a meta, and
+    \a dictoffset, \a weaklistoffset and \a bufferprocs. On free-threaded
+    builds, one type is created at a time.
+*/
 PyTypeObject *SbkType_FromSpec_BMDWB(PyType_Spec *spec,
                                      PyObject *bases,
                                      PyTypeObject *meta,
